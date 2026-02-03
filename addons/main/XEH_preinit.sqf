@@ -7,7 +7,7 @@
 
 
 // --- Shared initializations migrated from fn_masterInit.sqf ---
-private _settings = "cba_settings.sqf";
+private _settings = "\z\viceroy_stalker_alife\addons\main\cba_settings.sqf";
 private _start = diag_tickTime;
 waitUntil {
     !isNil "CBA_fnc_addSetting" || {diag_tickTime - _start > 5}
@@ -17,7 +17,7 @@ if (isNil "CBA_fnc_addSetting") exitWith {
 };
 call compile preprocessFileLineNumbers _settings;
 
-VIC_fnc_debugLog                 = compile preprocessFileLineNumbers ("functions\core\fn_debugLog.sqf");
+VIC_fnc_debugLog                 = compile preprocessFileLineNumbers ("\z\viceroy_stalker_alife\addons\main\functions\core\fn_debugLog.sqf");
 ["preInit"] call VIC_fnc_debugLog;
 
 // Register emission event hooks early

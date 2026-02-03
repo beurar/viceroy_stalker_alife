@@ -1,7 +1,8 @@
 name = "Viceroy STALKER A-life (Humans)"
 author = "Viceroy and PG"
-prefix = "viceroy_stalker_alife_humans"
+prefix = "viceroy_stalker_alife"
 mainprefix = "z"
+files = [ ["logo.paa", "logo.paa"], ["Icon.paa", "Icon.paa"] ]
 
 [hemtt.launch.default]
 workshop = [

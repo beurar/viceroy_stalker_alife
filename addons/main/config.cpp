@@ -324,7 +324,7 @@ class Extended_PreInit_EventHandlers
 {
     class VIC_StalkerALife_PreInit
     {
-        init = "call compile preprocessFileLineNumbers 'main\functions\core\fn_masterInit.sqf'";
+        init = "call compile preprocessFileLineNumbers '\z\viceroy_stalker_alife\addons\main\XEH_preInit.sqf'";
     };
 };
 
@@ -332,6 +332,6 @@ class Extended_PostInit_EventHandlers
 {
     class VIC_StalkerALife_PostInit
     {
-        init = "call compile preprocessFileLineNumbers 'initServer.sqf'";
+        init = "call compile preprocessFileLineNumbers '\z\viceroy_stalker_alife\addons\main\initServer.sqf'";
     };
 };
