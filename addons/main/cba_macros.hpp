@@ -35,4 +35,9 @@
 #define ERROR(MESSAGE) diag_log LOG_SYS_FORMAT("ERROR",MESSAGE)
 #define ERROR_WITH_TITLE(TITLE,MESSAGE) diag_log LOG_SYS_FORMAT("ERROR",format ["%1: %2", TITLE, MESSAGE])
 
+// Versioning
+#ifndef VERSION_CONFIG
+  #define VERSION_CONFIG version = VERSION; versionStr = QUOTE(VERSION_STR); versionAr[] = {VERSION_AR}
+#endif
+
 #endif

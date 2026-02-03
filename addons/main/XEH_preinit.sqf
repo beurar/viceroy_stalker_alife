@@ -8,6 +8,8 @@
 
 
 // --- Shared initializations migrated from fn_masterInit.sqf ---
+#include "XEH_PREP.hpp"
+
 private _settings = QPATHTOF(cba_settings.sqf);
 private _start = diag_tickTime;
 waitUntil {

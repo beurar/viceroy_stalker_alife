@@ -2,6 +2,11 @@
 // Viceroy STALKER ALife script macros
 #include "cba_macros.hpp"
 
+#ifdef ADDON
+  #undef ADDON
+#endif
+#define ADDON VIC
+
 #ifdef DISABLE_COMPILE_CACHE
   #ifdef PREP
     #undef PREP
@@ -22,9 +27,9 @@
 
 
 #ifdef DISABLE_COMPILE_CACHE
-  #define SUBPREP(sub,fncName) DFUNC(fncName) = compileScript [format ["functions/%1/fn_%2.sqf", sub, fncName]]
+  #define SUBPREP(sub,fncName) DFUNC(fncName) = compileScript [QPATHTOF(functions\sub\fn_##fncName.sqf)]
 #else
-  #define SUBPREP(sub,fncName) [format ["functions/%1/fn_%2.sqf", sub, fncName], QFUNC(fncName)] call CBA_fnc_compileFunction
+  #define SUBPREP(sub,fncName) [QPATHTOF(functions\sub\fn_##fncName.sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
 #endif
 
 #define MACRO_ADDITEM(ITEM,COUNT) class _xx_##ITEM { \
