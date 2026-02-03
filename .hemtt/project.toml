@@ -6,9 +6,9 @@ files = [ ["logo.paa", "logo.paa"], ["Icon.paa", "Icon.paa"] ]
 
 [hemtt.launch.default]
 workshop = [
+    "450814997",   # CBA_A3
     "463939057",   # ACE
     "767380317",   # Blastcore Edited (standalone)
-    "450814997",   # CBA_A3
     "3295358796",  # Chemical Warfare PLUS
     "1128256978",  # Chernarus Redux
     "583496184",   # CUP Terrains - Core
