@@ -32,7 +32,7 @@ STALKER_panicGroups = [];
 STALKER_wanderers = [];
 
 // Prepare spook zone locations via debug action when needed
-//[] call compile preprocessFileLineNumbers "\Viceroys-STALKER-ALife\functions\spooks\fn_setupSpookZones.sqf";
+//[] call compile preprocessFileLineNumbers "\z\viceroy_stalker_alife\addons\main\functions\spooks\fn_setupSpookZones.sqf";
 
 // Anomaly fields, chemical zones and wrecks are now spawned through debug
 // actions rather than during startup to speed up initialization.
