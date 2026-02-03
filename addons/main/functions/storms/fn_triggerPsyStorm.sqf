@@ -63,7 +63,7 @@ for "_i" from 1 to _ticks do {
 
     for "_j" from 1 to _currentLightning do {
         private _center = getPos (selectRandom allPlayers);
-        private _pos = [_center, random _range, random 360] call BIS_fnc_relPos;
+        private _pos = _center getPos [random _range, random 360];
         private _surf = [_pos] call VIC_fnc_getSurfacePosition;
         // createAgent is required for Logic objects as they have a brain
         private _logic = createAgent ["Logic", _surf, [], 0, "CAN_COLLIDE"];
@@ -73,7 +73,7 @@ for "_i" from 1 to _ticks do {
 
     for "_j" from 1 to _currentDischarge do {
         private _center = getPos (selectRandom allPlayers);
-        private _pos = [_center, random _range, random 360] call BIS_fnc_relPos;
+        private _pos = _center getPos [random _range, random 360];
         private _surf = [_pos] call VIC_fnc_getSurfacePosition;
         private _fncDischarge = missionNamespace getVariable ["diwako_anomalies_main_fnc_createPsyDischarge", {}];
         if (_fncDischarge isEqualTo {}) then {

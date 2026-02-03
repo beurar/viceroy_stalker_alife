@@ -47,7 +47,7 @@ if (_fields isEqualTo []) exitWith {
     if (_field isNotEqualTo []) then {
         _field params ["_center","_radius"];
         private _dir = _unit getDir _center;
-        private _dest = [getPosATL _unit, (_radius + _buffer) * 1.2, _dir + 180] call BIS_fnc_relPos;
+        private _dest = (getPosATL _unit) getPos [(_radius + _buffer) * 1.2, _dir + 180];
         _unit doMove _dest;
     };
 } forEach allUnits;

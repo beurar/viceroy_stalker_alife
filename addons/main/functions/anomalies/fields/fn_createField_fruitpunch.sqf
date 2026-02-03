@@ -50,7 +50,7 @@ if (["VSA_enableChemicalZones", true] call VIC_fnc_getSetting) then {
 
 private _spawned = [];
 for "_i" from 1 to _count do {
-    private _off = [_site, random _size, random 360] call BIS_fnc_relPos;
+    private _off = _site getPos [random _size, random 360];
     private _surf = [_off] call VIC_fnc_getLandSurfacePosition;
     if (_surf isEqualTo []) then { continue };
     private _create = missionNamespace getVariable ["diwako_anomalies_main_fnc_createFruitPunch", {}];

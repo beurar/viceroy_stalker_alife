@@ -35,7 +35,7 @@ while {_queue isNotEqualTo []} do {
         _valley pushBack _p;
         {
             private _d = _x;
-            private _n = [_p, _step, _d] call BIS_fnc_relPos;
+            private _n = _p getPos [_step, _d];
             _queue pushBackUnique _n;
         } forEach _dirs;
     };

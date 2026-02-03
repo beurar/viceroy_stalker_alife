@@ -32,7 +32,7 @@ private _limit = count _buildings;
 
     for "_i" from 1 to _raysPerBuilding do {
         // Random point around building center
-        private _sample = [_bPos, random _spread, random 360] call BIS_fnc_relPos;
+        private _sample = _bPos getPos [random _spread, random 360];
         private _from = AGLToASL (_sample vectorAdd [0,0,200]);
         private _to   = AGLToASL (_sample vectorAdd [0,0,-200]);
 

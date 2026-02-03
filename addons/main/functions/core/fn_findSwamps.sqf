@@ -36,7 +36,7 @@ for "_x" from 0 to worldSize step _step do {
             // Sample neighboring grid positions for water
             {
                 private _dir = _x;
-                private _test = [_pos, _step / 2, _dir] call BIS_fnc_relPos;
+                private _test = _pos getPos [_step / 2, _dir];
                 if ([_test] call VIC_fnc_isWaterPosition) exitWith {
                     _waterNearby = true;
                     if ((abs (getTerrainHeightASL _test)) <= _maxDepth) then {

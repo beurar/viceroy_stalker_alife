@@ -45,7 +45,7 @@ for "_gx" from 0 to worldSize step _step do {
         {
             private _d = _x;
             for "_r" from 1 to 3 do {
-                private _pos = [_center, _r * _step, _d] call BIS_fnc_relPos;
+                private _pos = _center getPos [_r * _step, _d];
                 private _surf = [_pos] call VIC_fnc_getLandSurfacePosition;
                 if (_surf isEqualTo []) then { continue; };
                 private _h = _surf select 2;
@@ -77,7 +77,7 @@ for "_gx" from 0 to worldSize step _step do {
                 _valley pushBack _p;
                 {
                     private _d = _x;
-                    private _n = [_p, _step, _d] call BIS_fnc_relPos;
+                    private _n = _p getPos [_step, _d];
                     _queue pushBackUnique _n;
                 } forEach _dirs;
             };

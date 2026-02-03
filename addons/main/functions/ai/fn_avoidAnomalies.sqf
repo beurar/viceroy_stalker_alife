@@ -43,7 +43,7 @@ if (_anoms isEqualTo []) exitWith {};
 
     if (!isNull _near) then {
         private _dir = _unit getDir _near;
-        private _dest = [getPosATL _unit, _range * 2, _dir + 180] call BIS_fnc_relPos;
+        private _dest = (getPosATL _unit) getPos [_range * 2, _dir + 180];
         _unit doMove _dest;
     };
 } forEach allUnits;
