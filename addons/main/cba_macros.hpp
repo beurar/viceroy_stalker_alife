@@ -20,6 +20,7 @@
 #define QPATHTOF(var1) QUOTE(PATHTOF(var1))
 
 // Function Macros
+#define COMPILE_FILE(var1) compileScript [QPATHTOF(var1.sqf)]
 #define QFUNC(var1) QUOTE(DFUNC(var1))
 
 // Global Variables
