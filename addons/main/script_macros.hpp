@@ -1,12 +1,16 @@
 
 // Viceroy STALKER ALife script macros
-#include "\x\cba\addons\main\script_macros_common.hpp"
+#include "cba_macros.hpp"
 
 #ifdef DISABLE_COMPILE_CACHE
-  #undef PREP
+  #ifdef PREP
+    #undef PREP
+  #endif
   #define PREP(fncName) DFUNC(fncName) = compileScript [QPATHTOF(functions\DOUBLES(fn,fncName).sqf)]
 #else
-  #undef PREP
+  #ifdef PREP
+    #undef PREP
+  #endif
   #define PREP(fncName) [QPATHTOF(functions\DOUBLES(fn,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
 #endif
 
