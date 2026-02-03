@@ -22,6 +22,9 @@ class CfgMods {
         dir = "@viceroy_stalker_alife";
         name = "Viceroy's STALKER A-Life";
         picture = "logo.paa";
+        logo = "Icon.paa";
+        logoOver = "Icon.paa";
+        logoSmall = "Icon.paa";
         hidePicture = "false";
         hideName = "false";
         actionName = "Website";
