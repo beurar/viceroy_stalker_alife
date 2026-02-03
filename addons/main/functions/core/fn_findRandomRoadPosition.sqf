@@ -10,10 +10,7 @@
 */
 params [["_radius", 300], ["_maxTries", 20]];
 
-if (isNil "STALKER_roads" || { STALKER_roads isEqualTo [] }) then {
-    STALKER_roads = [] call VIC_fnc_findRoads;
-};
-
+private _result = nil;
 private _attempt = 0;
 
 while { _attempt < _maxTries } do {
@@ -22,11 +19,14 @@ while { _attempt < _maxTries } do {
         _attempt = _attempt + 1;
         continue;
     };
-
-    private _roads = STALKER_roads select { _x distance2D _randomPos < _radius };
-    if (!(_roads isEqualTo [])) exitWith { selectRandom _roads };
+    
+    // Optimized: Use native nearRoads
+    private _list = _randomPos nearRoads _radius;
+    if (_list isNotEqualTo []) exitWith {
+        _result = getPosATL (selectRandom _list);
+    };
 
     _attempt = _attempt + 1;
 };
 
-nil
+_result

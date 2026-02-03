@@ -34,8 +34,12 @@ _allRocks = _allRocks arrayIntersect _allRocks; // Remove duplicates
 
 private _clusters = [];
 private _remaining = +_allRocks;
+private _counter = 0;
 
 while {_remaining isNotEqualTo []} do {
+    _counter = _counter + 1;
+    if (_counter % 50 == 0) then { sleep 0.01; };
+
     private _stack = [_remaining deleteAt 0];
     private _cluster = [];
 

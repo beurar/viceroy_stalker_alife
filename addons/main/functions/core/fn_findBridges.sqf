@@ -32,6 +32,7 @@ private _size = worldSize;
 
 // Loop over the grid
 for "_x" from 0 to _size step _step do {
+    sleep 0.1; // Yield to prevent lockup due to heavy nearObjects calls
     for "_y" from 0 to _size step _step do {
         private _center = [_x + _halfStep, _y + _halfStep, 0];
 

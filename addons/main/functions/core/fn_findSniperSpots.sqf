@@ -23,7 +23,9 @@ private _buildings = nearestObjects [_center, ["House"], worldSize];
 _buildings append (allMissionObjects "building");
 _buildings = _buildings arrayIntersect _buildings; // remove duplicates
 
+private _limit = count _buildings;
 {
+    if (_forEachIndex % 100 == 0) then { sleep 0.01; };
     private _bPos = getPosASL _x;
     private _highestPos = [];
     private _highestZ = -1e9;

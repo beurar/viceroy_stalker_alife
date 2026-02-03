@@ -68,35 +68,35 @@ for "_i" from 1 to _count do {
     switch (_type) do {
         case "burner": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createBurner", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "clicker": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createClicker", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "electra": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createElectra", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "fruitpunch": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createFruitPunch", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "gravi": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createGravi", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "meatgrinder": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createMeatgrinder", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "springboard": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createSpringboard", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "whirligig": {
             private _fn = missionNamespace getVariable ["diwako_anomalies_main_fnc_createWhirligig", {}];
-            if !(_fn isEqualTo {}) then { _anom = [_surf] call _fn; };
+            if (_fn isNotEqualTo {}) then { _anom = [_surf] call _fn; };
         };
         case "launchpad": { _anom = createVehicle ["DSA_Launchpad", ASLToATL _surf, [], 0, "NONE"] }; 
         case "leech":     { _anom = createVehicle ["DSA_Leech", ASLToATL _surf, [], 0, "NONE"] }; 

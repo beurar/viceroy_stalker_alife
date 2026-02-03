@@ -19,6 +19,7 @@ params [["_step", 100], ["_maxDepth", 2], ["_minVeg", 5], ["_radius", 25]];
 private _swamps = [];
 
 for "_x" from 0 to worldSize step _step do {
+    if ((_x / _step) % 5 == 0) then { sleep 0.01; };
     for "_y" from 0 to worldSize step _step do {
         private _pos = [_x, _y, 0];
 

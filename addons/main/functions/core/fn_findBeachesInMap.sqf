@@ -28,6 +28,7 @@ private _spots = [];
 private _size  = worldSize;
 
 for "_x" from 0 to _size step _step do {
+    if ((_x / _step) % 5 == 0) then { sleep 0.01; };
     for "_y" from 0 to _size step _step do {
         private _pos    = [_x, _y, 0];
         private _isWater = [_pos] call VIC_fnc_isWaterPosition;

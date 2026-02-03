@@ -8,11 +8,7 @@
 if (!isServer) exitWith { false };
 
 // Load cached data when available to avoid expensive scans
-private _roads = ["STALKER_roads"] call VIC_fnc_loadCache;
-if (isNil {_roads} || {_roads isEqualTo []}) then {
-    _roads = [] call VIC_fnc_findRoads;
-    ["STALKER_roads", _roads] call VIC_fnc_saveCache;
-};
+// Note: Road caching (STALKER_roads) removed in favor of dynamic 'nearRoads' checks
 
 // Land zones are optional but load if present
 private _zones = ["STALKER_landZones"] call VIC_fnc_loadCache;

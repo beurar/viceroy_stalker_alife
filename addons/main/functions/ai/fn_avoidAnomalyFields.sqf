@@ -44,7 +44,7 @@ if (_fields isEqualTo []) exitWith {
         if (_unit distance _c < (_r + _buffer)) exitWith { _field = [_c, _r] };
     } forEach _fields;
 
-    if !(_field isEqualTo []) then {
+    if (_field isNotEqualTo []) then {
         _field params ["_center","_radius"];
         private _dir = _unit getDir _center;
         private _dest = [getPosATL _unit, (_radius + _buffer) * 1.2, _dir + 180] call BIS_fnc_relPos;

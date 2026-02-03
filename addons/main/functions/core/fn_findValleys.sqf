@@ -31,6 +31,7 @@ private _valleys = [];
 private _dirs = [0,45,90,135,180,225,270,315];
 
 for "_gx" from 0 to worldSize step _step do {
+    if ((_gx / _step) % 5 == 0) then { sleep 0.01; };
     for "_gy" from 0 to worldSize step _step do {
         private _center = [_gx, _gy, 0];
         private _surfCenter = [_center] call VIC_fnc_getLandSurfacePosition;

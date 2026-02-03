@@ -32,7 +32,7 @@ for "_i" from ((count STALKER_anomalyFields) - 1) to 0 step -1 do {
     if (_newActive) then {
         if (!_active || {_objs isEqualTo [] || {{isNull _x} count _objs == count _objs}}) then {
             private _spawned = [_center,_radius,_count,_site] call _fn;
-            if (!(_spawned isEqualTo [])) then {
+            if (_spawned isNotEqualTo []) then {
                 _marker = (_spawned select 0) getVariable ["zoneMarker", ""];
                 _site = getMarkerPos _marker;
                 _objs = _spawned;

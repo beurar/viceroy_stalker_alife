@@ -12,13 +12,11 @@
 params ["_centerPos", ["_radius", 300], ["_maxTries", 20]];
 _maxTries; // parameter kept for backward compatibility
 
-if (isNil "STALKER_roads" || { STALKER_roads isEqualTo [] }) then {
-    STALKER_roads = [] call VIC_fnc_findRoads;
-};
+// Optimized: Use native nearRoads command instead of legacy caching
+private _list = _centerPos nearRoads _radius;
+if (_list isNotEqualTo []) exitWith { getPosATL (selectRandom _list) };
 
-private _roads = STALKER_roads select { _x distance2D _centerPos <= _radius };
-if (!(_roads isEqualTo [])) exitWith { selectRandom _roads };
-
+// Fallback if no roads found in radius
 [] call VIC_fnc_getRandomRoad
 
 
