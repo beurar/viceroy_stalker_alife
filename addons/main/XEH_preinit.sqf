@@ -57,6 +57,3 @@ missionNamespace setVariable ["emission_active", false];
         default {};
     };
 }] call CBA_fnc_addEventHandler;
-// --- Custom marker colours -------------------------------------------------
-
-// --- Core/shared functions -------------------------------------------------
