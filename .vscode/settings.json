@@ -1,0 +1,8 @@
+{
+    "sqf.linter.ignoredVariables": [
+        "CBA_*"
+    ],
+    "sqf.linting.ignoredVariables": [
+        "CBA_*"
+    ]
+}
