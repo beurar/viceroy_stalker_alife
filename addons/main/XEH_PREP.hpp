@@ -190,12 +190,18 @@ SUBPREP(spooks,spawnSpookZone);
 
 // stalkers
 SUBPREP(stalkers,findCampBuilding);
+SUBPREP(stalkers,findDynamicSniperSpots);
+SUBPREP(stalkers,debugSpawnSnipers);
+SUBPREP(stalkers,getStalkerFactions);
 SUBPREP(stalkers,manageSnipers);
+SUBPREP(stalkers,sniperAssaultLogic);
 SUBPREP(stalkers,manageStalkerCamps);
 SUBPREP(stalkers,manageWanderers);
 SUBPREP(stalkers,spawnAmbientStalkers);
 SUBPREP(stalkers,spawnFlareTripwires);
+SUBPREP(stalkers,spawnSmartFlarePerimeter);
 SUBPREP(stalkers,spawnSniper);
+SUBPREP(stalkers,sniperScan);
 SUBPREP(stalkers,spawnStalkerCamp);
 SUBPREP(stalkers,spawnStalkerCamps);
 SUBPREP(stalkers,startCampManager);

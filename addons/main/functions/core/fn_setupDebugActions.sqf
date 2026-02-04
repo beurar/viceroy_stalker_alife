@@ -134,6 +134,13 @@ player addAction ["<t color='#ff0000'>Spawn Sniper</t>", {
         [getPos player] remoteExec ["VIC_fnc_spawnSniper", 2];
     };
 }];
+player addAction ["<t color='#ff0000'>DEBUG: Force Generate Snipers</t>", {
+    if (isServer) then {
+        [player] call VIC_fnc_debugSpawnSnipers;
+    } else {
+        [player] remoteExec ["VIC_fnc_debugSpawnSnipers", 2];
+    };
+}];
 player addAction ["<t color='#ff0000'>Spawn Predator Attack</t>", {
     if (isServer) then {
         [player] call VIC_fnc_spawnPredatorAttack;
