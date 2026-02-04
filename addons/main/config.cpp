@@ -35,13 +35,13 @@ class CfgMods {
 
 class Extended_PreInit_EventHandlers {
     class ADDON {
-        init = QUOTE(call COMPILE_FILE(XEH_preInit));
+        init = "call compileScript ['\z\viceroy_stalker_alife\addons\main\XEH_preInit.sqf']";
     };
 };
 
 class Extended_PostInit_EventHandlers {
     class ADDON {
-        init = QUOTE(call COMPILE_FILE(XEH_postInit));
+        init = "call compileScript ['\z\viceroy_stalker_alife\addons\main\XEH_postInit.sqf']";
     };
 };
 
