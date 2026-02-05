@@ -3,7 +3,6 @@
     Called when an emission ends or via debug action.
 */
 
-["cycleAnomalyFields"] call VIC_fnc_debugLog;
 
 if (isServer && !isNil "STALKER_anomalyFields") then {
     private _dur = missionNamespace getVariable ["STALKER_AnomalyFieldDuration", 30];

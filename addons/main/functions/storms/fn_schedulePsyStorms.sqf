@@ -18,7 +18,6 @@ params [
     ["_manualVar", ""]
 ];
 
-["schedulePsyStorms"] call VIC_fnc_debugLog;
 
 if (["VSA_enableStorms", true] call VIC_fnc_getSetting isEqualTo false) exitWith {};
 

@@ -4,7 +4,6 @@
     STALKER_activeHerds entries: [leader, group, max, count, near, marker]
 */
 
-// ["manageHerds"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_activeHerds") exitWith {};

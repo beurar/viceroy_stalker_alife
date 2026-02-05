@@ -1,7 +1,6 @@
 /*
     Starts the anomaly field management loop. Debug use only.
 */
-["startAnomalyManager"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

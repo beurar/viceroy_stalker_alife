@@ -8,7 +8,6 @@
     STALKER_wreckMarkers using the same index.
 */
 
-// ["manageWrecks"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_wrecks") exitWith {};

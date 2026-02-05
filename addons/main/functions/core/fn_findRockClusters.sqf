@@ -13,7 +13,6 @@
 params [["_minRocks", 4], ["_radius", 20], ["_step", 500]];
 _step = _step; // parameter kept for backwards compatibility
 
-["findRockClusters"] call VIC_fnc_debugLog;
 
 private _rockClassnames = [
     "Land_Rock_01", "Land_Rock_01_F", "Land_Rock_01_4m_F", "Land_Rock_01_1m_F",

@@ -9,7 +9,6 @@
       - VSA_enableMutants:      master toggle for mutant systems
 */
 
-["spawnAmbientHerds"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

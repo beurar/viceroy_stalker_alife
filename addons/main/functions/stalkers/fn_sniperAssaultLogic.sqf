@@ -20,57 +20,100 @@ if (isNull _snpGrp || isNull _assaultGrp) exitWith {};
     
     _assaultGrp allowFleeing 0;
     
+    // Determine LAMBS support (Safe Check)
+    private _hasLambs = !isNil "lambs_wp_fnc_taskDefend";
+    private _anchorPos = getPos (leader _snpGrp);
+    
+    // Initial State: DEFEND
+    if (_hasLambs) then {
+        // [group, pos, radius, type, reinforce?, active?]
+        [_assaultGrp, _anchorPos, 50] spawn lambs_wp_fnc_taskDefend;
+    } else {
+        private _wp = _assaultGrp addWaypoint [_anchorPos, 50];
+        _wp setWaypointType "GUARD";
+        _wp setWaypointSpeed "NORMAL";
+        _wp setWaypointBehaviour "AWARE";
+    };
+    
+    _assaultGrp setVariable ["VIC_assaultState", "DEFEND"];
+
     // Main Loop
     while { !isNull _snpGrp && { {alive _x} count units _snpGrp > 0 } && !isNull _assaultGrp } do {
         
-        sleep 5;
+        sleep 10;
+        
+        private _snpLeader = leader _snpGrp;
+        private _assaultLeader = leader _assaultGrp;
         
         // 1. CHECK SNIPER TARGETS
-        private _leader = leader _snpGrp;
-        private _enemy = _leader findNearestEnemy _leader;
+        private _enemy = _snpLeader findNearestEnemy _snpLeader;
+        private _assaultEnemy = _assaultLeader findNearestEnemy _assaultLeader; // Assault's own eyes
         
-        // Valid enemy within range?
-        if (!isNull _enemy && { _enemy distance _leader < _radius }) then {
+        // Is there a sniper target in range?
+        if (!isNull _enemy && { _enemy distance _snpLeader < _radius }) then {
             
             // 2. ALERT ASSAULT TEAM
-            // Reveal target to assault leader
-            private _assaultLeader = leader _assaultGrp;
-            _assaultGrp reveal [_enemy, 4];
+            private _knowsVal = _assaultGrp knowsAbout _enemy;
+            if (_knowsVal < 3) then { _assaultGrp reveal [_enemy, 4]; };
             
-            // Only issue new move orders if explicitly needed or target changed significantly
-            private _lastTarget = _assaultGrp getVariable ["VIC_lastAssaultTarget", objNull];
+            // Command Logic: If they are currently defending, switch to ATTACK
+            private _currentState = _assaultGrp getVariable ["VIC_assaultState", "DEFEND"];
+            private _distToEnemy = _assaultLeader distance _enemy;
             
-            if (_enemy != _lastTarget || (_assaultLeader distance _enemy > 50 && unitReady _assaultLeader)) then {
-                _assaultGrp setVariable ["VIC_lastAssaultTarget", _enemy];
+            // Switch to ATTACK if:
+            // a) Currently Defending
+            // b) Attacking, but new target is far from the "last known job"
+            if (_currentState == "DEFEND" || (_distToEnemy > 150 && _assaultLeader distance (_assaultGrp getVariable ["VIC_lastAssaultPos", [0,0,0]]) > 100)) then {
                 
-                // Clear existing waypoints (Safely)
-                for "_i" from count waypoints _assaultGrp - 1 to 0 step -1 do {
-                    deleteWaypoint [_assaultGrp, _i];
+                _assaultGrp setVariable ["VIC_assaultState", "ATTACK"];
+                _assaultGrp setVariable ["VIC_lastAssaultPos", getPos _enemy];
+                
+                // Clear existing waypoints first
+                for "_i" from count waypoints _assaultGrp - 1 to 0 step -1 do { deleteWaypoint [_assaultGrp, _i]; };
+                
+                if (_hasLambs) then {
+                    // Switch to HUNT
+                    // Using taskHunt for aggressive seeking
+                    [_assaultGrp, getPos _enemy, _radius] spawn lambs_wp_fnc_taskHunt;
+                } else {
+                    // Vanilla Fallback
+                    private _wp = _assaultGrp addWaypoint [getPos _enemy, 0];
+                    _wp setWaypointType "SAD";
+                    _wp setWaypointSpeed "FULL";
+                    _wp setWaypointBehaviour "COMBAT";
+                    _assaultGrp setCombatMode "RED";
                 };
                 
-                // Order: SAD (Search and Destroy)
-                private _wp = _assaultGrp addWaypoint [getPos _enemy, 0];
-                _wp setWaypointType "SAD";
-                _wp setWaypointSpeed "FULL";
-                _wp setWaypointBehaviour "COMBAT";
-                
-                _assaultGrp setCombatMode "RED";
-                
                 if (["VSA_debugMode", false] call VIC_fnc_getSetting) then {
-                    systemChat format ["Sniper Spotter (%2): Unleashing Assault Team on %1", name _enemy, groupId _snpGrp];
+                    systemChat format ["Sniper Spotter (%2): Ordering Assault Team to Hunt %1", name _enemy, groupId _snpGrp];
                 };
             };
             
         } else {
-             // No enemies? If assault team is far from snipers, pull them back
-             private _anchorPos = getPos (leader _snpGrp);
-             if ((leader _assaultGrp) distance _anchorPos > 150) then {
-                 // Return to base
-                 if (currentWaypoint _assaultGrp >= count waypoints _assaultGrp) then {
-                     private _wp = _assaultGrp addWaypoint [_anchorPos, 50];
-                     _wp setWaypointType "GUARD";
-                     _wp setWaypointSpeed "NORMAL";
-                     _wp setWaypointBehaviour "AWARE";
+             // No enemies spotted by Snipers.
+             // If Assault team also has no enemies, return to DEFEND logic.
+             if (isNull _assaultEnemy || { _assaultEnemy distance _assaultLeader > _radius }) then {
+                 
+                 private _currentState = _assaultGrp getVariable ["VIC_assaultState", "DEFEND"];
+                 
+                 // If we were Attacking, check if we drifted too far from base
+                 if (_currentState == "ATTACK") then {
+                     if (_assaultLeader distance _anchorPos > 100) then {
+                         // Pull back
+                         _assaultGrp setVariable ["VIC_assaultState", "DEFEND"];
+                         
+                         // Clear Waypoints
+                         for "_i" from count waypoints _assaultGrp - 1 to 0 step -1 do { deleteWaypoint [_assaultGrp, _i]; };
+                         
+                         if (_hasLambs) then {
+                             [_assaultGrp, _anchorPos, 50] spawn lambs_wp_fnc_taskDefend;
+                         } else {
+                             private _wp = _assaultGrp addWaypoint [_anchorPos, 50];
+                             _wp setWaypointType "GUARD";
+                             _wp setWaypointSpeed "NORMAL";
+                             _wp setWaypointBehaviour "AWARE";
+                         };
+                     };
                  };
              };
         };

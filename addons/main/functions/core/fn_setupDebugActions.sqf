@@ -312,7 +312,6 @@ player addAction ["<t color='#00ff00'>Load Cache and Init Managers</t>", {
     };
 }];
 
-["Debug actions added"] call VIC_fnc_debugLog;
 
 // --- Diagnostic overlays ---
 player addAction ["<t color='#00ff0f'>Toggle Site Overlay</t>", {

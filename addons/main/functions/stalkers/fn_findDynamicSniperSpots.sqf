@@ -14,7 +14,6 @@ params ["_center", "_minDist", "_maxDist"];
 
 private _debug = ["VSA_debugMode", false] call VIC_fnc_getSetting;
 if (_debug) then {
-    ["findDynamicSniperSpots", _this] call VIC_fnc_debugLog;
 };
 
 private _spots = [];
@@ -98,7 +97,6 @@ private _terrainSpots = selectBestPlaces [_refPos, _maxDist, "(2 * hills) + mead
 } forEach _terrainSpots;
 
 if (_debug) then {
-    ["findDynamicSniperSpots: Raw Candidates", count _spots] call VIC_fnc_debugLog;
 };
 
 // --- Optimization: Filter & Consolidate Spots ---
@@ -130,7 +128,6 @@ if (count _finalSpots > 10) then {
 };
 
 if (_debug) then {
-    ["findDynamicSniperSpots: Final Spots", count _finalSpots] call VIC_fnc_debugLog;
 };
 
 _finalSpots

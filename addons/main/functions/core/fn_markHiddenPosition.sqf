@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markHiddenPosition"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_hiddenMarkers") then { STALKER_hiddenMarkers = [] };

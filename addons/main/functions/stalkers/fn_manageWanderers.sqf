@@ -4,7 +4,6 @@
     STALKER_wanderers entries: [group, position, anchor, marker, active]
 */
 
-// ["manageWanderers"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_wanderers") exitWith {};

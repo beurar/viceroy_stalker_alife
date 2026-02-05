@@ -3,10 +3,8 @@
     STALKER_activePredators entries: [group, target, marker, near]
 */
 
-// ["managePredators"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {
-    // ["managePredators exit: not server"] call VIC_fnc_debugLog;
 };
 if (isNil "STALKER_activePredators") then { STALKER_activePredators = []; };
 
@@ -37,4 +35,3 @@ private _range = ["VSA_predatorRange", 1500] call VIC_fnc_getSetting;
     STALKER_activePredators set [_forEachIndex, [_grp, _target, _marker, _near]];
 } forEach STALKER_activePredators;
 
-// ["managePredators completed"] call VIC_fnc_debugLog;

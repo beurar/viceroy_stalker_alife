@@ -5,7 +5,6 @@
 */
 params [["_count", 10]];
 
-["spawnAbandonedVehicles"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (["VSA_enableWrecks", true] call VIC_fnc_getSetting isEqualTo false) exitWith {};

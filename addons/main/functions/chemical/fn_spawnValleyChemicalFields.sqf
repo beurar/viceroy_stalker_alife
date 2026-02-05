@@ -11,10 +11,8 @@
 */
 params [["_step",1000],["_chance",25],["_duration",-1],["_clusterSize",3]];
 
-["spawnValleyChemicalFields"] call VIC_fnc_debugLog;
 
 if (["VSA_enableChemicalZones", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnValleyChemicalFields: disabled"] call VIC_fnc_debugLog;
 };
 
 if (isNil "STALKER_chemicalZones") then { STALKER_chemicalZones = []; };
@@ -23,7 +21,6 @@ private _nightOnly  = ["VSA_chemicalNightOnly", false] call VIC_fnc_getSetting;
 private _zoneRadius = ["VSA_chemicalZoneRadius", 50] call VIC_fnc_getSetting;
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
-    ["spawnValleyChemicalFields: night only"] call VIC_fnc_debugLog;
 };
 
 private _half = _step / 2;

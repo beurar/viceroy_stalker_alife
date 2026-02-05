@@ -15,10 +15,8 @@ _center;
 _radius;
 
 
-["spawnAllAnomalyFields"] call VIC_fnc_debugLog;
 
 if (["VSA_enableAnomalies", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnAllAnomalyFields: anomalies disabled"] call VIC_fnc_debugLog;
 };
 
 // Prepare anomaly marker tracking
@@ -31,7 +29,6 @@ private _stableChance  = ["VSA_stableFieldChance", 50] call VIC_fnc_getSetting;
 private _nightOnly   = ["VSA_anomalyNightOnly", false] call VIC_fnc_getSetting;
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
-    ["spawnAllAnomalyFields: night only"] call VIC_fnc_debugLog;
 };
 
 if (isNil "STALKER_anomalyFields") then { STALKER_anomalyFields = [] };
@@ -55,7 +52,6 @@ private _weights = [
 
 for "_i" from 1 to _fieldCount do {
     if ((count STALKER_anomalyMarkers) >= _maxFields) exitWith {
-        ["spawnAllAnomalyFields: max fields reached"] call VIC_fnc_debugLog;
     };
 
     if (random 100 >= _spawnWeight) then { continue };
@@ -82,12 +78,10 @@ for "_i" from 1 to _fieldCount do {
         default {""};
     };
 
-    [format ["spawnAllAnomalyFields: attempting %1", _typeName]] call VIC_fnc_debugLog;
     private _stable = if (_type == -1) then { (random 100) < _stableChance } else { _type == 1 };
 
     private _spawned = [_pos, 75] call _fn;
     if (_spawned isEqualTo []) then {
-        [format ["spawnAllAnomalyFields: %1 failed", _typeName]] call VIC_fnc_debugLog;
         continue;
     };
 
@@ -106,7 +100,6 @@ for "_i" from 1 to _fieldCount do {
     private _dur = missionNamespace getVariable ["STALKER_AnomalyFieldDuration", 30];
     private _exp = diag_tickTime + (_dur * 60);
     STALKER_anomalyFields pushBack [_pos,_anchor,75,_fn,count _spawned,_spawned,_marker,_site,_exp,_stable,false];
-    [format ["spawnAllAnomalyFields: spawned %1 %2", count _spawned, _typeName]] call VIC_fnc_debugLog;
 }; 
 
 // Bridges are now spawned via separate helper

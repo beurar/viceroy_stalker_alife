@@ -2,7 +2,6 @@
     Deactivates the anomaly field at the given registry index.
 */
 
-["anomalies_deactivateSite"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 params ["_index"];

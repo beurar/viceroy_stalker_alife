@@ -3,7 +3,6 @@
     This runs on the server during postInit.
 */
 
-["setupMutantHabitats"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

@@ -1,10 +1,13 @@
 /*
-    STALKER ALife – postInit
+    STALKER ALife Ã¢â‚¬â€œ postInit
 */
 
 
 // --- PostInit event handlers migrated from fn_masterInit.sqf ---
 ["postInit", {
+    // ABORT if in Main Menu background ("Intro") or Editor Preview
+    if ((missionName select [0, 5]) == "Intro" || is3DEN) exitWith {};
+
     missionNamespace setVariable ["STALKER_activityRadius", ["VSA_playerNearbyRange", 1500] call VIC_fnc_getSetting];
     [] call VIC_fnc_registerEmissionHooks;
     if (call VIC_fnc_isAntistasiUltimate && { ["VSA_disableA3UWeather", false] call VIC_fnc_getSetting }) then {
@@ -26,7 +29,6 @@
     [] call antistasi_fnc_manageAntistasiEvents;
 }] call CBA_fnc_addEventHandler;
 
-["masterInit completed"] call VIC_fnc_debugLog;
 
 // Track units killed during emissions for later zombification
 ["EntityKilled", {

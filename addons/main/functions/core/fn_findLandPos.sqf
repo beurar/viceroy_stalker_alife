@@ -3,19 +3,19 @@
     The original search logic has been replaced entirely by the BIS helper.
 
     Params
-    ──────────────────────────────────────────────────────────────
-      0: ARRAY centrePos        – centre of search area (ASL or ATL)
-      1: NUMBER searchRadius    – metres (default 1000)
-      2: NUMBER minWaterDist    – unused, kept for API compatibility
-      3: NUMBER maxSlopeDeg     – unused, kept for API compatibility
-      4: ARRAY  blacklistPos    – unused, kept for API compatibility
-      5: NUMBER clearanceRad    – unused, kept for API compatibility
-      6: NUMBER maxAttempts     – unused, kept for API compatibility
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      0: ARRAY centrePos        â€“ centre of search area (ASL or ATL)
+      1: NUMBER searchRadius    â€“ metres (default 1000)
+      2: NUMBER minWaterDist    â€“ unused, kept for API compatibility
+      3: NUMBER maxSlopeDeg     â€“ unused, kept for API compatibility
+      4: ARRAY  blacklistPos    â€“ unused, kept for API compatibility
+      5: NUMBER clearanceRad    â€“ unused, kept for API compatibility
+      6: NUMBER maxAttempts     â€“ unused, kept for API compatibility
 
     Returns
-    ──────────────────────────────────────────────────────────────
-      ARRAY positionATL         – random land position
-      []                        – if none found
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      ARRAY positionATL         â€“ random land position
+      []                        â€“ if none found
 */
 params [
     ["_centrePos",   [0,0,0],   [[]]  ],

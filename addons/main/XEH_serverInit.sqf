@@ -1,11 +1,14 @@
 /*
-    STALKER ALife – serverInit
+    STALKER ALife Ã¢â‚¬â€œ serverInit
     Server-only bootstrap and world initialization
 */
 
 
 
 ["postInit", {
+    // ABORT if in Main Menu background ("Intro") or Editor Preview
+    if ((missionName select [0, 5]) == "Intro" || is3DEN) exitWith {};
+
     // Global arrays and managers
     drg_activeSpookZones = [];
     STALKER_activeSpooks = [];
@@ -23,25 +26,29 @@
     // Map bootstrap
     [] call VIC_fnc_initMap;
 
-    // --- Minefields, IEDs, Booby Traps ---
-    private _center = [0,0,0];
-    private _worldSize = worldSize;
-    [_center, _worldSize] call VIC_fnc_spawnMinefields;
-    [_center, _worldSize] call VIC_fnc_spawnIEDSites;
-    [_center, _worldSize] call VIC_fnc_spawnBoobyTraps;
+    // HEAVY INIT: Run in background to prevent load-screen freeze
+    [] spawn {
+        sleep 1; // Allow game to finish loading screen
 
-    [format ["serverInit: %1 traps placed", count STALKER_boobyTraps]] call VIC_fnc_debugLog;
+        // --- Minefields, IEDs, Booby Traps ---
+        private _center = [0,0,0];
+        private _worldSize = worldSize;
+        [_center, _worldSize] call VIC_fnc_spawnMinefields;
+        [_center, _worldSize] call VIC_fnc_spawnIEDSites;
+        [_center, _worldSize] call VIC_fnc_spawnBoobyTraps;
 
-    // --- Wrecks ---
-    private _wreckCount = ["VSA_wreckCount", 10] call VIC_fnc_getSetting;
-    [_wreckCount] call VIC_fnc_spawnAbandonedVehicles;
 
-    // --- Anomalies ---
-    [_center, _worldSize, 1] call VIC_fnc_spawnAllAnomalyFields;
-    [1] call VIC_fnc_spawnBridgeAnomalyFields;
+        // --- Wrecks ---
+        private _wreckCount = ["VSA_wreckCount", 10] call VIC_fnc_getSetting;
+        [_wreckCount] call VIC_fnc_spawnAbandonedVehicles;
 
-    // --- Managers ---
-    [] call VIC_fnc_initManagers;
+        // --- Anomalies ---
+        [_center, _worldSize, 1] call VIC_fnc_spawnAllAnomalyFields;
+        [1] call VIC_fnc_spawnBridgeAnomalyFields;
+
+        // --- Managers ---
+        [] call VIC_fnc_initManagers;
+    };
 
     // --- Activity / proximity thread ---
     missionNamespace setVariable [
@@ -66,7 +73,6 @@
         [] remoteExec ["VIC_fnc_markPlayerRanges", 0];
     };
 
-    ["serverInit complete"] call VIC_fnc_debugLog;
 }] call CBA_fnc_addEventHandler;
 
 // --- Global kill tracking --------------------------------------------------

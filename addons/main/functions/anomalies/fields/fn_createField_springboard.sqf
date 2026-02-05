@@ -8,20 +8,16 @@
     Returns: ARRAY - spawned anomalies
 */
 params ["_center","_radius", ["_count",-1], ["_site", []]];
-["fn_createField_springboard"] call VIC_fnc_debugLog;
 
 if (isNil {_site} || {count _site == 0}) then {
     _site = [_center,_radius] call VIC_fnc_findSite_springboard;
     if (count _site == 0) exitWith {
-        ["createField_springboard: no site"] call VIC_fnc_debugLog;
         []
     };
 } else {
-    [format ["createField_springboard: using site %1", _site]] call VIC_fnc_debugLog;
 };
 _site = [_site] call VIC_fnc_findLandPos;
 if (isNil {_site} || {count _site == 0}) exitWith {
-    ["createField_springboard: land position failed"] call VIC_fnc_debugLog;
     []
 };
 
@@ -49,12 +45,10 @@ for "_i" from 1 to _count do {
     if (_surf isEqualTo []) then { continue };
     private _create = missionNamespace getVariable ["diwako_anomalies_main_fnc_createSpringboard", {}];
     if (_create isEqualTo {}) then {
-        ["createField_springboard: Diwako Anomalies missing"] call VIC_fnc_debugLog;
         continue;
     };
     private _anom = [_surf] call _create;
     _anom setVariable ["zoneMarker", _marker];
     _spawned pushBack _anom;
 };
-[format ["createField_springboard spawned %1", count _spawned]] call VIC_fnc_debugLog;
 _spawned

@@ -4,7 +4,6 @@
     Returns: BOOL
 */
 
-["markBeaches"] call VIC_fnc_debugLog;
 
 if (!hasInterface) exitWith { false };
 

@@ -6,19 +6,14 @@
     Parameter(s): none
 */
 
-["fn_avoidAnomalies"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {
-    ["fn_avoidAnomalies exit: not server"] call VIC_fnc_debugLog;
 };
 if (["VSA_enableAIBehaviour", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["fn_avoidAnomalies exit: behaviour disabled"] call VIC_fnc_debugLog;
 };
 if (["VSA_aiNightOnly", false] call VIC_fnc_getSetting && { dayTime > 5 && dayTime < 20 }) exitWith {
-    ["fn_avoidAnomalies exit: day time"] call VIC_fnc_debugLog;
 };
 if (isNil "STALKER_anomalyFields") exitWith {
-    ["fn_avoidAnomalies exit: no fields"] call VIC_fnc_debugLog;
 };
 
 private _chance = ["VSA_aiAnomalyAvoidChance", 50] call VIC_fnc_getSetting;
@@ -48,6 +43,5 @@ if (_anoms isEqualTo []) exitWith {};
     };
 } forEach allUnits;
 
-["fn_avoidAnomalies completed"] call VIC_fnc_debugLog;
 
 true

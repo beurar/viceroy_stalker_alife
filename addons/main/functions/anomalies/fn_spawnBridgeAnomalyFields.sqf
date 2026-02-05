@@ -4,7 +4,6 @@
         0: NUMBER - forces stable (1) or unstable (0) fields (optional, -1 uses setting)
 */
 params [["_type", -1]];
-["spawnBridgeAnomalyFields"] call VIC_fnc_debugLog;
 
 // Gather known bridges
 private _bridges = missionNamespace getVariable ["VIC_cachedBridges", []];
@@ -41,7 +40,6 @@ private _stableChance = ["VSA_stableFieldChance", 50] call VIC_fnc_getSetting;
     private _dur = missionNamespace getVariable ["STALKER_AnomalyFieldDuration", 30];
     private _exp = diag_tickTime + (_dur * 60);
     STALKER_anomalyFields pushBack [_pos,_anchor,75,VIC_fnc_createField_bridgeAnomaly,count _spawned,_spawned,_marker,_site,_exp,_stable,false];
-    [format ["spawnBridgeAnomalyFields: spawned %1 bridge", count _spawned]] call VIC_fnc_debugLog;
 } forEach _bridges;
 
 true

@@ -14,7 +14,6 @@ if (_minPos < 0) then {
     _minPos = ["VSA_minCampPositions", 1] call VIC_fnc_getSetting;
 };
 
-["findCampBuilding"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_campCooldowns") then { STALKER_campCooldowns = [] };
 STALKER_campCooldowns = STALKER_campCooldowns select { diag_tickTime - (_x select 1) < 300 };

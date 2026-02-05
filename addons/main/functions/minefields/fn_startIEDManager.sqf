@@ -1,7 +1,6 @@
 /*
     Starts the IED management loop. Debug use only.
 */
-["startIEDManager"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

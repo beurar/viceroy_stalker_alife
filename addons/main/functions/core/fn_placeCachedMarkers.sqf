@@ -2,7 +2,6 @@
     Places debug markers for all cached map data.
 */
 
-["placeCachedMarkers"] call VIC_fnc_debugLog;
 
 [] call VIC_fnc_markRockClusters;
 [] call VIC_fnc_markSniperSpots;

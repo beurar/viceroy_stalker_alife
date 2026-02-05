@@ -4,7 +4,6 @@
     STALKER_chemicalZones as [position, radius, active, marker, expires].
 */
 
-// ["manageChemicalZones"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_chemicalZones") exitWith {};

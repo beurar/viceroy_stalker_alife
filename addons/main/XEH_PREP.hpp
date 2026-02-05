@@ -63,7 +63,6 @@ SUBPREP(core,callServerHelper);
 SUBPREP(core,createGlobalMarker);
 SUBPREP(core,createLocalMarker);
 SUBPREP(core,createProximityAnchor);
-SUBPREP(core,debugLog);
 SUBPREP(core,evalSiteProximity);
 SUBPREP(core,findBeachesInMap);
 SUBPREP(core,findBridges);

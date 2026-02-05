@@ -10,7 +10,6 @@
 
 params [["_force", false]];
 
-["cleanupChemicalZones"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_chemicalZones") exitWith {};
 

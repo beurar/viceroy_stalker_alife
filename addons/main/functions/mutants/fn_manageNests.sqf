@@ -2,7 +2,6 @@
     Manages mutant nests, despawning or respawning the defenders based on player proximity.
 */
 
-// ["manageNests"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_mutantNests") exitWith {};

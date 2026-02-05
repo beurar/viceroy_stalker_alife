@@ -8,7 +8,6 @@
 
 params [["_global", false]];
 
-["markRockClusters"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_rockClusterMarkers") then { STALKER_rockClusterMarkers = [] };

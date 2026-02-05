@@ -1,5 +1,5 @@
 /*
-    STALKER ALife – clientInit
+    STALKER ALife â€“ clientInit
 */
 
 

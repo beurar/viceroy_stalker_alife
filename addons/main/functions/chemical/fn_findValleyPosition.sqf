@@ -10,7 +10,6 @@
 */
 params ["_center", ["_radius",50], ["_step",10]];
 
-["findValleyPosition"] call VIC_fnc_debugLog;
 
 private _debug = ["VSA_debugMode", false] call VIC_fnc_getSetting;
 if (_debug && {isServer}) then {

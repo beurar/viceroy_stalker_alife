@@ -7,7 +7,6 @@
       - VSA_ambientStalkerNightOnly: spawn only at night
 */
 
-["spawnAmbientStalkers"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

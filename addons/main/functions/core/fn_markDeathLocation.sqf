@@ -6,7 +6,6 @@
 
 params ["_unit", ["_global", false]];
 
-["markDeathLocation"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNull _unit || {!isPlayer _unit}) exitWith {};

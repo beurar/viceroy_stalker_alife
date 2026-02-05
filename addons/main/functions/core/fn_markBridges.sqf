@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markBridges"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_bridgeMarkers") then { STALKER_bridgeMarkers = [] };
 

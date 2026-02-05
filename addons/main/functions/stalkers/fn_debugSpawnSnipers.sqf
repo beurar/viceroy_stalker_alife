@@ -88,7 +88,7 @@ if (hasInterface) then {
     };
 
      // 4. PERIMETER
-     [_sPos, 200, 30] call VIC_fnc_spawnSmartFlarePerimeter;
+     [_sPos, 200, 30] spawn VIC_fnc_spawnSmartFlarePerimeter;
      
      // Register in system so they get managed/deleted later
      private _anchor = [_sPos] call VIC_fnc_createProximityAnchor;

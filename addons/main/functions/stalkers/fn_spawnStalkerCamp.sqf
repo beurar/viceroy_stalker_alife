@@ -7,7 +7,6 @@
 */
 params ["_pos"];
 
-["spawnStalkerCamp"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_campCooldowns") then { STALKER_campCooldowns = [] };
 // Remove expired cooldown entries (5 minute window)

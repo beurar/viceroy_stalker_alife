@@ -4,7 +4,6 @@
     The stored position is used for proximity checks so the anchor object is
     optional and only kept for debugging purposes.
 */
-// ["manageMinefields"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_minefields") exitWith {};

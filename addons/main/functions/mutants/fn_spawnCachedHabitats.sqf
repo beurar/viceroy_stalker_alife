@@ -6,7 +6,6 @@
 */
 params [["_data", []]];
 
-["spawnCachedHabitats"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { false };
 

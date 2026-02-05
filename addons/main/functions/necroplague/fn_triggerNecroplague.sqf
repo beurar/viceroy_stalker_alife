@@ -8,7 +8,6 @@
 */
 params [["_zombies",5],["_hordes",2],["_mark",false]];
 
-["triggerNecroplague"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (["VSA_enableNecroplague", true] call VIC_fnc_getSetting isEqualTo false) exitWith {};

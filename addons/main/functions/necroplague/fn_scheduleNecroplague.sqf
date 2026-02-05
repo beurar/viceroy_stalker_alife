@@ -7,7 +7,6 @@
 */
 params [["_minDelay",1800],["_maxDelay",3600]];
 
-["scheduleNecroplague"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (["VSA_enableNecroplague", true] call VIC_fnc_getSetting isEqualTo false) exitWith {};

@@ -3,6 +3,5 @@
     mutants can be added here.
 */
 
-["mutants_onEmissionEnd"] call VIC_fnc_debugLog;
 
 true

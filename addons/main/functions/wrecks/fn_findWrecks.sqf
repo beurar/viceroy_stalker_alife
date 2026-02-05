@@ -5,7 +5,6 @@
     Returns: ARRAY of POSITIONs
 */
 
-["findWrecks"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { [] };
 
@@ -29,6 +28,5 @@ private _positions = [];
     STALKER_wreckPositions pushBackUnique _pos;
 } forEach _found;
 
-[format ["findWrecks: %1 wrecks cached", count _positions]] call VIC_fnc_debugLog;
 
 _positions

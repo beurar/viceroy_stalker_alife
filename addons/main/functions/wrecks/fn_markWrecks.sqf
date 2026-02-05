@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markWrecks"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_wreckMarkers") then { STALKER_wreckMarkers = [] };
 

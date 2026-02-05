@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markLandZones"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_landZoneMarkers") then { STALKER_landZoneMarkers = [] };
 
@@ -30,6 +29,5 @@ private _zones = STALKER_landZones;
     STALKER_landZoneMarkers pushBack _mkr;
 } forEach _zones;
 
-[format ["markLandZones: placed %1 markers", count _zones]] call VIC_fnc_debugLog;
 
 true

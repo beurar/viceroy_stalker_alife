@@ -19,10 +19,8 @@ if (_debug && {isServer}) then {
     STALKER_valleyBaseMarkers = [];
 };
 
-["spawnValleyChemicalZones"] call VIC_fnc_debugLog;
 
 if (["VSA_enableChemicalZones", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnValleyChemicalZones: disabled"] call VIC_fnc_debugLog;
 };
 
 if (isNil "STALKER_chemicalZones") then { STALKER_chemicalZones = []; };
@@ -37,7 +35,6 @@ private _nightOnly  = ["VSA_chemicalNightOnly", false] call VIC_fnc_getSetting;
 private _zoneRadius = ["VSA_chemicalZoneRadius", 50] call VIC_fnc_getSetting;
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
-    ["spawnValleyChemicalZones: night only"] call VIC_fnc_debugLog;
 };
 
 private _centerPos = if (_center isEqualType objNull) then { getPos _center } else { _center };

@@ -8,7 +8,6 @@
 */
 params ["_center", ["_radius",30]];
 
-["spawnAPERSField"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { [] };
 

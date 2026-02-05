@@ -17,6 +17,5 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then {
 };
 
 // Log the spawn for troubleshooting
-[format ["initMutantUnit: spawned %1 at %2", typeOf _unit, getPosWorld _unit]] call VIC_fnc_debugLog;
 
 true

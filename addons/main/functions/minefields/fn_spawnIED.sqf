@@ -7,7 +7,6 @@
 */
 params ["_center"];
 
-["spawnIED"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { [] };
 

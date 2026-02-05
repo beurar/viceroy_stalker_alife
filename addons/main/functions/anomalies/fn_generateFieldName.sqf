@@ -8,7 +8,6 @@
 */
 params ["_type", ["_pos", [0,0,0]]];
 
-["generateFieldName"] call VIC_fnc_debugLog;
 
 private _stalkers = [
     "Flynn","Artyom","Kolya","Strelok","Vasya","Boris","Petya","Fang","Ghost","Viktor",
@@ -162,5 +161,4 @@ private _patterns = [
 ];
 
 private _name = selectRandom _patterns;
-["generateFieldName result"] call VIC_fnc_debugLog;
 _name

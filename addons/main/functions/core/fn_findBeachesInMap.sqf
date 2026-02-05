@@ -17,7 +17,6 @@ params [
     ["_vegThreshold", 2]
 ];
 
-["fn_findBeachesInMap"] call VIC_fnc_debugLog;
 
 // Variables kept for backwards compatibility
 _maxDepth;
@@ -55,7 +54,6 @@ for "_x" from 0 to _size step _step do {
     };
 };
 
-["fn_findBeachesInMap completed"] call VIC_fnc_debugLog;
 
 // Cache results for later use
 if (isNil "STALKER_beachSpots") then { STALKER_beachSpots = [] };

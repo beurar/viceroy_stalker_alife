@@ -10,7 +10,6 @@
 */
 params [["_step", 1000]]; // Default grid step is 1km
 
-["findLandZones"] call VIC_fnc_debugLog;
 
 private _zones = []; // Initialize array to store found land positions
 private _half = _step / 2; // offset to center of grid cell

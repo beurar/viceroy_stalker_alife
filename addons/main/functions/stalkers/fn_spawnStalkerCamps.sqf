@@ -8,7 +8,6 @@
 params [["_center", [worldSize/2, worldSize/2, 0]], ["_radius",500], ["_count",-1]];
 
 
-["spawnStalkerCamps"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

@@ -14,7 +14,6 @@
 
 params [["_step", 100], ["_maxDepth", 2], ["_minVeg", 5], ["_radius", 25]];
 
-["findSwamps"] call VIC_fnc_debugLog;
 
 private _swamps = [];
 

@@ -3,6 +3,5 @@
     can be placed here.
 */
 
-["mutants_onEmissionStart"] call VIC_fnc_debugLog;
 
 true

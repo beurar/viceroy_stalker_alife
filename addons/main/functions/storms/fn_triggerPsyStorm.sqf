@@ -29,7 +29,6 @@ params [
 ];
 
 
-["triggerPsyStorm"] call VIC_fnc_debugLog;
 private _startFog = fog;
 private _startRain = rain;
 private _startOvercast = overcast;
@@ -77,7 +76,6 @@ for "_i" from 1 to _ticks do {
         private _surf = [_pos] call VIC_fnc_getSurfacePosition;
         private _fncDischarge = missionNamespace getVariable ["diwako_anomalies_main_fnc_createPsyDischarge", {}];
         if (_fncDischarge isEqualTo {}) then {
-            ["triggerPsyStorm: Diwako Anomalies missing"] call VIC_fnc_debugLog;
         } else {
             [_surf] remoteExec ["diwako_anomalies_main_fnc_createPsyDischarge", 0];
         };
@@ -90,7 +88,6 @@ for "_i" from 1 to _ticks do {
             // Convert the surface position from ASL to AGL so the gas spawns on the ground
             private _agl = ASLToAGL _surf;
             if (isNil "CBRN_fnc_spawnMist") then {
-                ["triggerPsyStorm: CBRN mod missing"] call VIC_fnc_debugLog;
             } else {
                 [_agl, _radius, 20, 4, _vertical, _density] spawn {
                     params ["_pos", "_r", "_dur", "_chem", "_vert", "_dens"];

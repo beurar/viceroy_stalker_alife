@@ -6,7 +6,6 @@
     Returns: ARRAY - position or [] if none found
 */
 params ["_center","_radius"];
-["fn_findSite_bridge"] call VIC_fnc_debugLog;
 
 private _posCenter = if (_center isEqualType objNull) then { getPos _center } else { _center };
 

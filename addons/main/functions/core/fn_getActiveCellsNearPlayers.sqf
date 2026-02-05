@@ -3,7 +3,7 @@
 */
 
 private _cellSize = 1000;
-private _radiusCells = 2; // 2 cells ≈ 2km radius
+private _radiusCells = 2; // 2 cells â‰ˆ 2km radius
 
 private _cells = [];
 

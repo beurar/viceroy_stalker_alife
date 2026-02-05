@@ -2,7 +2,6 @@
     Deactivates the chemical zone at the given registry index.
 */
 
-["chemical_deactivateSite"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 params ["_index"];

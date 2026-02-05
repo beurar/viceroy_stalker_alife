@@ -4,7 +4,6 @@
 */
 params [["_step", 25]];
 
-["findRoads: DEPRECATED function called - Doing nothing"] call VIC_fnc_debugLog;
 
 []
 

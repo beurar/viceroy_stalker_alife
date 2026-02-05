@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markSniperSpots"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_sniperSpotMarkers") then { STALKER_sniperSpotMarkers = [] };

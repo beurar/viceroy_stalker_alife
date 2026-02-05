@@ -8,14 +8,11 @@
 */
 params ["_center", ["_radius",500], ["_fieldCount",-1], ["_iedCount",-1]];
 
-["spawnMinefields"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {
-    ["spawnMinefields: server only"] call VIC_fnc_debugLog;
 };
 
 if (["VSA_enableMinefields", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnMinefields: disabled"] call VIC_fnc_debugLog;
 };
 
 if (isNil "STALKER_minefields") then { STALKER_minefields = []; };
@@ -31,7 +28,6 @@ private _towns = nearestLocations [_center, ["NameVillage","NameCity","NameCityC
 
 private _useFallback = _towns isEqualTo [];
 if (_useFallback) then {
-    [format ["spawnMinefields: no towns found near %1 - using road fallback", _center]] call VIC_fnc_debugLog;
 };
 
 for "_i" from 1 to _fieldCount do {
@@ -84,5 +80,4 @@ if !(missionNamespace getVariable ["VIC_minefieldManagerRunning", false]) then {
     [] call VIC_fnc_startMinefieldManager;
 };
 
-[format ["spawnMinefields: placed %1 fields and %2 IEDs", _fieldsSpawned, _iedsSpawned]] call VIC_fnc_debugLog;
 

@@ -13,7 +13,6 @@
 
 params [["_raysPerBuilding", 8], ["_spread", 5]];
 
-["findSniperSpots"] call VIC_fnc_debugLog;
 
 private _sniperSpots = [];
 

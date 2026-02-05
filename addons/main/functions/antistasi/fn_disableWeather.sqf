@@ -8,7 +8,6 @@
 if !(call VIC_fnc_isAntistasiUltimate) exitWith {false};
 if (!isServer) exitWith {false};
 
-["Disabling Antistasi persistent weather"] call VIC_fnc_debugLog;
 
 private _changed = false;
 

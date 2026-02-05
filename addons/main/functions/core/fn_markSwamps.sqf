@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markSwamps"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_swampMarkers") then { STALKER_swampMarkers = [] };

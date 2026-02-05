@@ -5,13 +5,10 @@
 */
 params [];
 
-["triggerBlowout"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {
-    ["triggerBlowout exit: not server"] call VIC_fnc_debugLog;
 };
 
 // Start blowout using Diwako's server event with default parameters
 ["diwako_anomalies_main_startBlowout", []] call CBA_fnc_serverEvent;
 
-["triggerBlowout completed"] call VIC_fnc_debugLog;

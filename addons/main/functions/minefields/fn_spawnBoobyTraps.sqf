@@ -9,7 +9,6 @@
 */
 params ["_center", ["_radius",500], ["_count",-1]];
 
-["spawnBoobyTraps"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { false };
 
@@ -49,6 +48,5 @@ for "_i" from 1 to _count do {
     _spawned = _spawned + 1;
 };
 
-[format ["spawnBoobyTraps: placed %1 traps", _spawned]] call VIC_fnc_debugLog;
 
 true

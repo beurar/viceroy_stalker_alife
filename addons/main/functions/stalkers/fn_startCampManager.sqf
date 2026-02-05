@@ -3,7 +3,6 @@
     Periodically manages STALKER_camps, removing excess camps
     and spawning new ones if below the configured minimum.
 */
-["startCampManager"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

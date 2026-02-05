@@ -3,7 +3,6 @@
     This runs on the server during initialization.
 */
 
-["setupAnomalyFields"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

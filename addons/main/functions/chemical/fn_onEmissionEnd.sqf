@@ -3,6 +3,5 @@
     adjustments can be placed here.
 */
 
-["chemical_onEmissionEnd"] call VIC_fnc_debugLog;
 
 true

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /*
-    STALKER ALife – preInit
+    STALKER ALife â€“ preInit
     - Register CBA settings
     - Compile functions
     - Define constants
@@ -20,12 +20,9 @@ if (isNil "CBA_fnc_addSetting") exitWith {
 };
 call compile preprocessFileLineNumbers _settings;
 
-VIC_fnc_debugLog                 = compile preprocessFileLineNumbers QPATHTOF(functions\core\fn_debugLog.sqf);
-["preInit"] call VIC_fnc_debugLog;
 
 // Register emission event hooks early
 missionNamespace setVariable ["emission_active", false];
-["registerEmissionHooks"] call VIC_fnc_debugLog;
 ["diwako_anomalies_main_blowOutStage", {
     params ["_stage"];
     switch (_stage) do {

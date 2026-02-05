@@ -8,10 +8,8 @@
 */
 params ["_center","_radius", ["_count", -1], ["_duration", -1]];
 
-["spawnRandomChemicalZones"] call VIC_fnc_debugLog;
 
 if (["VSA_enableChemicalZones", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnRandomChemicalZones: disabled"] call VIC_fnc_debugLog;
 };
 
 if (_count < 0) then {
@@ -22,7 +20,6 @@ private _nightOnly = ["VSA_chemicalNightOnly", false] call VIC_fnc_getSetting;
 private _zoneRadius = ["VSA_chemicalZoneRadius", 50] call VIC_fnc_getSetting;
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
-    ["spawnRandomChemicalZones: night only"] call VIC_fnc_debugLog;
 };
 
 for "_i" from 1 to _count do {

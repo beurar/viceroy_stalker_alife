@@ -4,7 +4,6 @@
     Proximity checks use the stored position so anchors are not required
     after initial placement.
 */
-// ["manageBoobyTraps"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_boobyTraps") exitWith {};

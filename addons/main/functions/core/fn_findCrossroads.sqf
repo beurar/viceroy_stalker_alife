@@ -13,7 +13,6 @@ if (_roads isEqualTo []) then {
     _roads = [] call VIC_fnc_findRoads;
 };
 
-[format ["findCrossroads scanning %1 points", count _roads]] call VIC_fnc_debugLog;
 
 private _crossroads = [];
 
@@ -34,13 +33,11 @@ private _crossroads = [];
     };
 } forEach _roads;
 
-[format ["findCrossroads found %1 crossroads", count _crossroads]] call VIC_fnc_debugLog;
 
 // Cache results for later use
 if (isNil "STALKER_crossroads") then { STALKER_crossroads = [] };
 { STALKER_crossroads pushBackUnique _x } forEach _crossroads;
 
-[format ["findCrossroads: %1 cached", count STALKER_crossroads]] call VIC_fnc_debugLog;
 
 _crossroads
 

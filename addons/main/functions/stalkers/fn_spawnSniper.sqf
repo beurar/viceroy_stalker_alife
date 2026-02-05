@@ -8,14 +8,12 @@
 
 params [["_center", [0,0,0]]];
 
-["spawnSniper"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 
 if (isNil "STALKER_snipers") then { STALKER_snipers = [] };
 
 if (isNil "STALKER_sniperSpots" || {STALKER_sniperSpots isEqualTo []}) exitWith {
-    ["spawnSniper: no cached sniper spots"] call VIC_fnc_debugLog;
 };
 
 private _sorted = STALKER_sniperSpots apply { [_center distance2D _x, _x] };
@@ -28,7 +26,6 @@ private _candidates = [];
 
 private _spot = selectRandom _candidates;
 if (isNil {_spot}) exitWith {
-    ["spawnSniper: unable to select position"] call VIC_fnc_debugLog;
 };
 
 private _spotAGL = ASLToAGL _spot;

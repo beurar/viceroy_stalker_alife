@@ -2,7 +2,6 @@
     Activates the anomaly field at the given registry index.
 */
 
-["anomalies_activateSite"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 params ["_index"];

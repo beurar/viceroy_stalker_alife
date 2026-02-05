@@ -4,13 +4,11 @@
 
 
 // Starts background manager systems when auto init is enabled.
-["initManagers"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { false };
 
 // Only start managers automatically when configured to do so
 if !( ["VSA_autoInit", false] call VIC_fnc_getSetting ) exitWith {
-    ["initManagers: auto init disabled"] call VIC_fnc_debugLog;
     false
 };
 

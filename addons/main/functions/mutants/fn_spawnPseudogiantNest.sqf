@@ -5,10 +5,8 @@
 */
 params ["_pos"];
 
-["spawnPseudogiantNest"] call VIC_fnc_debugLog;
 
 if !( ["Pseudogiant"] call VIC_fnc_isMutantEnabled ) exitWith {
-    ["spawnPseudogiantNest exit: Pseudogiants disabled"] call VIC_fnc_debugLog;
 };
 
 private _classes = ["armst_giant", "armst_giant2"];

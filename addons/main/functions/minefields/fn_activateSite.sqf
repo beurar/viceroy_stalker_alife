@@ -2,7 +2,6 @@
     Activates the minefield at the given registry index.
 */
 
-["minefields_activateSite"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 params ["_index"];

@@ -1,7 +1,6 @@
 /*
     Starts the ambush management loop. Debug use only.
 */
-["startAmbushManager"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

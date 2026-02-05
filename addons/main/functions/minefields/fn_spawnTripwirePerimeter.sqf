@@ -15,7 +15,6 @@ if (_spacing > 0) then {
     if (_count < 1) then { _count = 1 }; 
 };
 
-["spawnTripwirePerimeter"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { [] };
 

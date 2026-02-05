@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markBuildingClusters"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_buildingClusterMarkers") then { STALKER_buildingClusterMarkers = [] };

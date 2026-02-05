@@ -3,7 +3,6 @@
 */
 
 // Mute debug log to reduce spam
-// ["updateProximity"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

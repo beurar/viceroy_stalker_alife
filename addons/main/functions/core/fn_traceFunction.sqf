@@ -22,13 +22,11 @@ compileFinal format ["
     private _fnName = _data select 1;
 
     if (['VSA_debugMode', false] call VIC_fnc_getSetting) then {
-        [(_fnName + ' called with ' + str _args)] call VIC_fnc_debugLog;
     };
 
     private _result = _args call _fn;
 
     if (['VSA_debugMode', false] call VIC_fnc_getSetting) then {
-        [(_fnName + ' returned ' + str _result)] call VIC_fnc_debugLog;
     };
 
     _result

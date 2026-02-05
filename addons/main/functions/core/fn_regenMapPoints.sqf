@@ -2,7 +2,6 @@
     Rebuilds all map points from scratch and caches the results.
 */
 
-["regenMapPoints"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { false };
 

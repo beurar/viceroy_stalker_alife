@@ -19,6 +19,5 @@ saveProfileNamespace;
 
 private _count = "";
 if (_data isEqualType []) then { _count = format [" (%1 items)", count _data]; };
-[format ["saveCache %1%2", _key, _count]] call VIC_fnc_debugLog;
 
 true

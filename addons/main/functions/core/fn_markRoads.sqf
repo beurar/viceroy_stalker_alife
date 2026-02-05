@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markRoads"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_roadMarkers") then { STALKER_roadMarkers = [] };
 if (isNil "STALKER_crossroadMarkers") then { STALKER_crossroadMarkers = [] };

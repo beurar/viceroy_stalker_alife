@@ -5,7 +5,6 @@
     Returns: BOOL
 */
 
-["markPlayerRanges"] call VIC_fnc_debugLog;
 
 if (!hasInterface) exitWith { false };
 if (missionNamespace getVariable ["VSA_rangeMarkersActive", false]) exitWith { true };

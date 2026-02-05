@@ -9,7 +9,6 @@
 */
 params ["_center", ["_radius",25], ["_count",6]];
 
-["spawnFlareTripwires"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith { [] };
 

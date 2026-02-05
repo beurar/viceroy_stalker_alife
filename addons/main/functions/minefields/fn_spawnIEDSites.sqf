@@ -49,7 +49,6 @@ for "_i" from 1 to _count do {
 };
 
 if (_spawned > 0) then {
-    [format ["spawnIEDSites: placed %1 sites", _spawned]] call VIC_fnc_debugLog;
 };
 
 true

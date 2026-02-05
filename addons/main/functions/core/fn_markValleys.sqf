@@ -7,7 +7,6 @@
 
 params [["_global", false]];
 
-["markValleys"] call VIC_fnc_debugLog;
 
 
 if (isNil "STALKER_valleyMarkers") then { STALKER_valleyMarkers = [] };
@@ -26,7 +25,6 @@ if (isNil "STALKER_valleys") then {
 
 if (isNil "STALKER_valleys") exitWith { false };
 private _valleys = STALKER_valleys;
-[format ["markValleys: %1 valleys", count _valleys]] call VIC_fnc_debugLog;
 
 {
     private _area = _x;

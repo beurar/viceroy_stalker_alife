@@ -1,6 +1,5 @@
 // Spawn zombies from the tracked corpse queue once the emission ends
 
-["spawnZombiesFromQueue"] call VIC_fnc_debugLog;
 
 if (["VSA_enableZombification", true] call VIC_fnc_getSetting isEqualTo false) exitWith {};
 

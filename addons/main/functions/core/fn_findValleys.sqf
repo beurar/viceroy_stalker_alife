@@ -25,7 +25,6 @@ if (_debug && {isServer}) then {
     STALKER_valleySeedMarkers = [];
 };
 
-["findValleys"] call VIC_fnc_debugLog;
 
 private _valleys = [];
 private _dirs = [0,45,90,135,180,225,270,315];
@@ -94,13 +93,11 @@ for "_gx" from 0 to worldSize step _step do {
     };
 };
 
-[format ["findValleys: found %1 valleys", count _valleys]] call VIC_fnc_debugLog;
 
 // Cache results for later use
 if (isNil "STALKER_valleys") then { STALKER_valleys = [] };
 { STALKER_valleys pushBackUnique _x } forEach _valleys;
 
-[format ["findValleys: %1 cached", count STALKER_valleys]] call VIC_fnc_debugLog;
 
 // Persist the cached valleys for later sessions
 ["STALKER_valleys", STALKER_valleys] call VIC_fnc_saveCache;

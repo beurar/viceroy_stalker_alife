@@ -4,7 +4,6 @@
     STALKER_snipers entries: [group, position, anchor, marker, active]
 */
 
-// ["manageSnipers"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_snipers") exitWith {};
@@ -124,53 +123,66 @@ private _toDeleteIndices = [];
                 private _assaults = _unitClasses - _snipers;
                 if (_assaults isEqualTo []) then { _assaults = ["O_Soldier_F"]; };
                 
-                // 2. SPAWN SNIPER (1-2)
+
+                // 2. SPAWN SNIPERS
                 _snpGrp = createGroup [_chosenSide, true];
                 
-                private _sniperCount = (floor random 2) + 1; // 1 or 2
+                // Determine capacity based on building positions
+                private _bld = nearestBuilding _pos;
+                private _maxSnipers = 0;
+                private _bldPos = [];
+                
+                if (!isNull _bld && { _pos distance _bld < 30 }) then {
+                    _bldPos = _bld buildingPos -1;
+                    // Filter: Upper floors only (Z > 2.5m) to avoid ground floor camping
+                    private _upperPos = _bldPos select { (_x select 2) > 2.5 };
+                    if (_upperPos isNotEqualTo []) then {
+                        _bldPos = _upperPos;
+                    };
+                    
+                    if (count _bldPos > 0) then {
+                        _maxSnipers = (count _bldPos) min 4; 
+                    };
+                };
+                
+                // ABORT IF NO VALID BUILDING (Safety Check)
+                if (isNull _bld || _maxSnipers == 0) exitWith {
+                    // Cleanup this site immediately so it can regenerate elsewhere
+                    deleteVehicle _anchor;
+                    if (_marker != "") then { deleteMarker _marker; };
+                    STALKER_snipers set [_forEachIndex, "DELETE_ME"]; 
+                    if (!isNull _snpGrp) then { deleteGroup _snpGrp; };
+                    if (!isNull _grdGrp) then { deleteGroup _grdGrp; };
+                };
+
+                // Randomize count (1 to Max)
+                private _sniperCount = (floor random _maxSnipers) + 1;
                 
                 for "_i" from 1 to _sniperCount do {
                     private _type = selectRandom _snipers;
+                    private _spawnPos = [0,0,0];
                     
-                    // Improved Spawning: Avoid stacking on the same pixel
-                    private _spawnPos = _pos;
-                    if (_i > 1) then {
-                         // Try to find another building position if possible
-                         private _bld = nearestBuilding _pos;
-                         if (!isNull _bld && { _pos distance _bld < 5 }) then {
-                            private _bldPos = _bld buildingPos -1;
-                             // Find one that is high up but different from first
-                             // Assuming _pos is already a high one.
-                             private _avail = _bldPos select { _x distance _pos > 2 && (_x select 2) > 3 };
-                             if (_avail isNotEqualTo []) then {
-                                 _spawnPos = selectRandom _avail;
-                             } else {
-                                 // Just minimal offset
-                                 _spawnPos = _pos getPos [1.5, random 360];
-                             };
-                         } else {
-                             // Terrain offset
-                             _spawnPos = _pos getPos [2 + (random 1), random 360];
-                         };
+                    if (_bldPos isNotEqualTo []) then {
+                        _spawnPos = selectRandom _bldPos; 
+                        _bldPos = _bldPos - [_spawnPos]; // Remove used spot
                     };
+                    
+                    if (_spawnPos isEqualTo [0,0,0]) exitWith {}; // Safety
                     
                     private _unit = _snpGrp createUnit [_type, _spawnPos, [], 0, "CAN_COLLIDE"];
                     _unit setPosATL _spawnPos;
-                    [_unit] joinSilent _snpGrp; // Force side adherence
+                    [_unit] joinSilent _snpGrp; 
                     
                     // Sniper Setup
                     _unit disableAI "PATH";
                     _unit forceSpeed 0;
                     _unit setSkill 1;
-                    
-                    // Allow stance changes, but start standing for better visibility
                     _unit setUnitPos "UP"; 
                     _unit spawn { sleep 10; _this setUnitPos "AUTO"; }; 
                     
                     _unit setVariable ["VIC_isSniper", true];
-                    _unit allowFleeing 0; // Don't run away
+                    _unit allowFleeing 0; 
                     
-                    // Ensure they can turn
                     _unit enableAI "TARGET";
                     _unit enableAI "AUTOTARGET"; 
                     _unit enableAI "ANIM";
@@ -182,20 +194,19 @@ private _toDeleteIndices = [];
                 _grdGrp = createGroup [_chosenSide, true];
                 
                 private _groundCount = (floor random 3) + 2; 
-                
-                // Find safe ground position near base
                 private _groundCenter = [_pos select 0, _pos select 1, 0];
                 private _safePos = [_groundCenter, 0, 80, 2, 0, 20, 0] call BIS_fnc_findSafePos;
                 
                 for "_i" from 1 to _groundCount do {
                      private _type = selectRandom _assaults;
                      private _unit = _grdGrp createUnit [_type, _safePos, [], 5, "NONE"];
-                     [_unit] joinSilent _grdGrp; // Force side adherence
+                     [_unit] joinSilent _grdGrp; 
                      _unit setSkill (0.5 + (random 0.3));
                      _unit setUnitPos "AUTO";
                 };
 
-                [_pos, 200, 30] call VIC_fnc_spawnSmartFlarePerimeter;
+                // Spawn Perimeter (passing owner side now)
+                [_pos, 200, 15, [_snpGrp, _grdGrp], _chosenSide] spawn VIC_fnc_spawnSmartFlarePerimeter;
                 
                 // 4. GROUP BEHAVIOR
                 _snpGrp setBehaviour "COMBAT"; _snpGrp setCombatMode "RED";
@@ -214,7 +225,9 @@ private _toDeleteIndices = [];
         };
         
         // Update entry
-        STALKER_snipers set [_forEachIndex, [_snpGrp, _grdGrp, _pos, _anchor, _marker, _newActive, _siteFaction]];
+        if ((STALKER_snipers select _forEachIndex) isEqualType []) then {
+            STALKER_snipers set [_forEachIndex, [_snpGrp, _grdGrp, _pos, _anchor, _marker, _newActive, _siteFaction]];
+        };
     };
 } forEach STALKER_snipers;
 
@@ -229,6 +242,13 @@ if (_toDeleteIndices isNotEqualTo []) then {
     {
         STALKER_snipers deleteAt _x;
     } forEach _reverseIndices;
+};
+
+// Also cleanup "DELETE_ME" markers (created during failed spawn)
+for "_i" from (count STALKER_snipers - 1) to 0 step -1 do {
+    if ((STALKER_snipers select _i) isEqualTo "DELETE_ME") then {
+        STALKER_snipers deleteAt _i;
+    };
 };
 
 true

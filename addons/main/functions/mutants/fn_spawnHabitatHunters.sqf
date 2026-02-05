@@ -5,7 +5,6 @@
 */
 params ["_player"];
 
-["spawnHabitatHunters"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_mutantHabitats") exitWith {};

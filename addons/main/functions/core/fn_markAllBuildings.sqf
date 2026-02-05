@@ -8,7 +8,6 @@
 
 params [["_global", false]];
 
-["markAllBuildings"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_buildingMarkers") then { STALKER_buildingMarkers = [] };
 

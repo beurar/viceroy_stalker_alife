@@ -7,7 +7,6 @@
         True when the cleanup completes.
 */
 
-["cleanupAnomalyMarkers"] call VIC_fnc_debugLog;
 
 if (isNil "STALKER_anomalyMarkers") exitWith { false };
 

@@ -1,7 +1,6 @@
 /*
     Updates habitat or herd populations when a mutant dies.
 */
-["onMutantKilled"] call VIC_fnc_debugLog;
 
 params ["_unit"];
 

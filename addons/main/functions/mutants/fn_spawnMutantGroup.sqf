@@ -11,7 +11,6 @@
 */
 params ["_centerPos"];
 
-["spawnMutantGroup"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 

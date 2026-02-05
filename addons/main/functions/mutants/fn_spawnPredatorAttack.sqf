@@ -8,14 +8,11 @@
 */
 params ["_player"];
 
-["spawnPredatorAttack"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {
-    ["spawnPredatorAttack exit: not server"] call VIC_fnc_debugLog;
 };
 
 if (["VSA_enableMutants", true] call VIC_fnc_getSetting isEqualTo false) exitWith {
-    ["spawnPredatorAttack exit: mutants disabled"] call VIC_fnc_debugLog;
 };
 
 if (isNil "STALKER_activePredators") then { STALKER_activePredators = []; };
@@ -24,7 +21,6 @@ private _range = ["VSA_predatorRange", 1500] call VIC_fnc_getSetting;
 private _spawnPos = _player getPos [_range, random 360];
 _spawnPos = [_spawnPos] call VIC_fnc_findLandPosition;
 if (isNil {_spawnPos} || {_spawnPos isEqualTo []}) exitWith {
-    ["spawnPredatorAttack exit: invalid position"] call VIC_fnc_debugLog;
 };
 
 if (["VSA_debugMode", false] call VIC_fnc_getSetting) then {
@@ -65,7 +61,6 @@ private _mapType = switch (_type) do {
     default {""};
 };
 if (_mapType != "" && { !( [_mapType] call VIC_fnc_isMutantEnabled ) }) exitWith {
-    [format ["spawnPredatorAttack exit: %1 disabled", _mapType]] call VIC_fnc_debugLog;
 };
 private _grp = createGroup east;
 
@@ -128,4 +123,3 @@ private _marker = _markerName;
 
 STALKER_activePredators pushBack [_grp, _player, _marker, true];
 
-["spawnPredatorAttack completed"] call VIC_fnc_debugLog;

@@ -18,7 +18,6 @@ _units = _units select {
 
 if (isNil "STALKER_panicGroups") then { STALKER_panicGroups = []; };
 
-[format ["fn_triggerAIPanic units: %1", count _units]] call VIC_fnc_debugLog;
 
 // Exit if panic or AI behaviour tweaks are disabled
 if !(missionNamespace getVariable ["VSA_AIPanicEnabled", true]) exitWith {};

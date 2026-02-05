@@ -2,7 +2,6 @@
     Activates the chemical zone at the given registry index.
 */
 
-["chemical_activateSite"] call VIC_fnc_debugLog;
 
 if (!isServer) exitWith {};
 params ["_index"];
