@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Samples a grid around the given center and returns the lowest
     land surface position found. This biases placement toward valleys.

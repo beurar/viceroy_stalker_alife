@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Completes the active artefact hunt and pays the reward.
 */

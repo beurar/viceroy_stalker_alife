@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Handles despawn and respawn of hostile mutant groups.
 */

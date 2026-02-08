@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Identifies valleys by scanning the terrain on a grid and expanding
     outwards from local depressions. The lowest point among the first

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Starts the minefield management loop. Debug use only.
 */

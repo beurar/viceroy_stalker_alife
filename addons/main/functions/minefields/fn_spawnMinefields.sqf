@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns APERS minefields and IEDs around a center position using CBA settings.
     Params:

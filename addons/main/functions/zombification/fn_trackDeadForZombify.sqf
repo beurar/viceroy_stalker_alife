@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 // Collect units that die during an emission so they can be turned into zombies
 
 

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Manages abandoned vehicles. Vehicles are deleted when their grid cell
     becomes inactive and their markers cleaned up. If a vehicle has moved more

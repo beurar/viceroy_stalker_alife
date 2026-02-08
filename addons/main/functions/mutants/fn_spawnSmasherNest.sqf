@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a WebKnight smasher nest at the given position.
     Params:

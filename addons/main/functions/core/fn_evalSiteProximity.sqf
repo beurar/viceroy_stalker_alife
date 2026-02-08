@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Determines whether a site should be active based on player proximity.
     Applies a 200m hysteresis so active sites only deactivate when all players

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds a dense forest location for meatgrinder anomaly fields.
     Params:

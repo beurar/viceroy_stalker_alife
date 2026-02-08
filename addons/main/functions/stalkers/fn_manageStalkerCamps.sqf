@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates stalker camps based on player proximity.
     STALKER_camps entries: [campfire, group, position, anchor, marker, side, faction, active]

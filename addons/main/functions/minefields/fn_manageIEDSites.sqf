@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates IED sites and handles cleanup.
     STALKER_iedSites entries: [position, object, marker, active]

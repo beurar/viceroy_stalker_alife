@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns bridge anomaly fields on every detected bridge.
     Params:

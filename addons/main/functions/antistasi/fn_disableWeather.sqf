@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Disables the Antistasi persistent weather script when the mod is loaded.
 

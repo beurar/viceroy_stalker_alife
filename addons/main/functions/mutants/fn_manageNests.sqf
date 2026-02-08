@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Manages mutant nests, despawning or respawning the defenders based on player proximity.
 */

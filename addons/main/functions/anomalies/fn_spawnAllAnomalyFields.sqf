@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a number of anomaly fields at random locations across the map.
     Fields persist for `STALKER_AnomalyFieldDuration` minutes before being

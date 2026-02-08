@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Removes expired chemical zone markers. The mist itself
     despawns automatically after its lifetime.

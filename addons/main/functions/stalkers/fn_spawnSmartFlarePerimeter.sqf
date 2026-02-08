@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a smart perimeter of mines (AT, AP, Tripwires) around a position.
     Creates defensive corridors based on local structures using a Polygon hull.

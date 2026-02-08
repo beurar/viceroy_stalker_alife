@@ -1,4 +1,4 @@
-name = "Viceroy STALKER A-life (Humans)"
+name = "Viceroy STALKER A-life"
 author = "Viceroy and PG"
 prefix = "viceroy_stalker_alife"
 mainprefix = "z"
@@ -31,7 +31,8 @@ workshop = [
     "2572487482",  # WebKnight Flashlights and Headlamps
     "3032643455",  # Webknight Units - LAMBS + ACE Compatibility Patch
     "2789152015",  # WebKnight's Zombies and Creatures
-    "1779063631"   # Zeus Enhanced
+    "1779063631",  # Zeus Enhanced
+    "2293680460"   # Gravity Anomalies
 ]
 parameters = ["-world=empty", "-noPause", "-noPauseAudio", "-limitFPS=60"]
 

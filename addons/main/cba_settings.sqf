@@ -1,895 +1,2212 @@
-// CBA settings configuration for Viceroy's STALKER ALife
-// Slider value arrays follow [min, max, default, step]
-
-// -----------------------------------------------------------------------------
-// Emission
-// -----------------------------------------------------------------------------
-[
-    "VSA_AIPanicEnabled",
-    "CHECKBOX",
-    ["Enable AI Emission Panic", "AI units will attempt to find cover indoors or in trenches when an emission is building up."],
-    "Viceroy's STALKER ALife - Emission",
-    true
-] call CBA_fnc_addSetting;
-
-
-// -----------------------------------------------------------------------------
 // Core
-// -----------------------------------------------------------------------------
-[
-    "VSA_playerNearbyRange",
-    "SLIDER",
-    ["Player Nearby Range", "Distance used to check if players are near"],
-    "Viceroy's STALKER ALife - Core",
-    [0, 7500, 1500, 0]
-] call CBA_fnc_addSetting;
-
-
 [
     "VSA_autoInit",
     "CHECKBOX",
-    ["Automatically Initialize", "Populate the world and start managers on mission start"],
-    "Viceroy's STALKER ALife - Core",
+    [localize "STR_VSA_autoInit", localize "STR_VSA_autoInit_Tooltip"],
+    [localize "STR_VSA_Category_Core"],
+    true,
+    true,
+    {},
     true
 ] call CBA_fnc_addSetting;
+
+[
+    "VSA_playerNearbyRange",
+    "SLIDER",
+    [localize "STR_VSA_playerNearbyRange", localize "STR_VSA_playerNearbyRange_Tooltip"],
+    [localize "STR_VSA_Category_Core"],
+    [100, 2000, 800, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_playerNearbyRange = _value;
+    }
+] call CBA_fnc_addSetting;
+
 
 [
     "VSA_townRadius",
     "SLIDER",
-    ["Town Radius", "Distance considered inside a town"],
-    "Viceroy's STALKER ALife - Core",
-    [0, 1500, 500, 0]
+    [localize "STR_VSA_townRadius", localize "STR_VSA_townRadius_Tooltip"],
+    [localize "STR_VSA_Category_Core"],
+    [50, 1000, 200, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_townRadius = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_townHysteresis",
     "SLIDER",
-    ["Town Hysteresis", "Extra distance beyond town radius for debug markers"],
-    "Viceroy's STALKER ALife - Core",
-    [0, 1000, 200, 0]
+    [localize "STR_VSA_townHysteresis", localize "STR_VSA_townHysteresis_Tooltip"],
+    [localize "STR_VSA_Category_Core"],
+    [0, 500, 50, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_townHysteresis = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 
-
-
-
-
-/*
-    cba_settings.sqf
-    Registers addon options for Viceroys STALKER ALife.
-    Each subsystem exposes basic options such as toggles,
-    counts, spawn weights and night-only behaviour.
-*/
-
-// -----------------------------------------------------------------------------
 // Anomalies
-// -----------------------------------------------------------------------------
 [
     "VSA_enableAnomalies",
     "CHECKBOX",
-    ["Enable Anomaly Fields", "Toggle anomaly field spawning"],
-    "Viceroy's STALKER ALife - Anomalies",
-    true
+    [localize "STR_VSA_enableAnomalies", localize "STR_VSA_enableAnomalies_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableAnomalies = _value;
+        if (isServer && {VSA_enableAnomalies}) then {
+            [] spawn VSA_fnc_spawnAllAnomalyFields;
+        };
+        if (isServer && {!VSA_enableAnomalies}) then {
+            // Logic to cleanup anomalies if disabled?
+            // Currently spawnAllAnomalyFields handles initial spawn, but maybe we need a cleanup function if toggled off mid-game
+            // For now, just setting the var is enough for future spawns/checks.
+        };
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_anomalyFieldCount",
     "SLIDER",
-    ["Anomaly Fields per Area", "Number of fields spawned per area"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [0, 50, 3, 0]
+    [localize "STR_VSA_anomalyFieldCount", localize "STR_VSA_anomalyFieldCount_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [0, 100, 25, 0], // Min, Max, Default, Decimals
+    true,
+    {
+        params ["_value"];
+        VSA_anomalyFieldCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_maxAnomalyFields",
     "SLIDER",
-    ["Max Active Fields", "Maximum number of anomaly fields present at once"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [0, 200, 20, 0]
+    [localize "STR_VSA_maxAnomalyFields", localize "STR_VSA_maxAnomalyFields_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [0, 500, 100, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_maxAnomalyFields = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_anomalySpawnWeight",
     "SLIDER",
-    ["Anomaly Spawn Weight", "Relative spawn chance of anomaly types"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_anomalySpawnWeight", localize "STR_VSA_anomalySpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [0, 1, 0.6, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_anomalySpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// Individual anomaly spawn weights
-["VSA_anomalyWeight_Burner","SLIDER",["Burner Weight","Relative spawn chance for Burner fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Clicker","SLIDER",["Clicker Weight","Relative spawn chance for Clicker fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Electra","SLIDER",["Electra Weight","Relative spawn chance for Electra fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Fruitpunch","SLIDER",["Fruit Punch Weight","Relative spawn chance for Fruit Punch fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Gravi","SLIDER",["Gravi Weight","Relative spawn chance for Gravi fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Meatgrinder","SLIDER",["Meatgrinder Weight","Relative spawn chance for Meatgrinder fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Springboard","SLIDER",["Springboard Weight","Relative spawn chance for Springboard fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Whirligig","SLIDER",["Whirligig Weight","Relative spawn chance for Whirligig fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Launchpad","SLIDER",["Launchpad Weight","Relative spawn chance for Launchpad fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Leech","SLIDER",["Leech Weight","Relative spawn chance for Leech fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Trapdoor","SLIDER",["Trapdoor Weight","Relative spawn chance for Trapdoor fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Zapper","SLIDER",["Zapper Weight","Relative spawn chance for Zapper fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyWeight_Bridge","SLIDER",["Bridge Anomaly Weight","Relative spawn chance for Bridge anomaly fields"],"Viceroy's STALKER ALife - Anomaly Weights",[0,100,100,0]] call CBA_fnc_addSetting;
 
-// Individual anomaly density multipliers
-["VSA_anomalyDensity_Burner","SLIDER",["Burner Density","Multiplier for Burner anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Clicker","SLIDER",["Clicker Density","Multiplier for Clicker anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Electra","SLIDER",["Electra Density","Multiplier for Electra anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Fruitpunch","SLIDER",["Fruit Punch Density","Multiplier for Fruit Punch anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Gravi","SLIDER",["Gravi Density","Multiplier for Gravi anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Meatgrinder","SLIDER",["Meatgrinder Density","Multiplier for Meatgrinder anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Springboard","SLIDER",["Springboard Density","Multiplier for Springboard anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Whirligig","SLIDER",["Whirligig Density","Multiplier for Whirligig anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Launchpad","SLIDER",["Launchpad Density","Multiplier for Launchpad anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Leech","SLIDER",["Leech Density","Multiplier for Leech anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Trapdoor","SLIDER",["Trapdoor Density","Multiplier for Trapdoor anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Zapper","SLIDER",["Zapper Density","Multiplier for Zapper anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
-["VSA_anomalyDensity_Bridge","SLIDER",["Bridge Anomaly Density","Multiplier for Bridge anomaly count"],"Viceroy's STALKER ALife - Anomaly Density",[0,300,100,0]] call CBA_fnc_addSetting;
+[
+    "VSA_anomalyWeight_Burner",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Burner", localize "STR_VSA_anomalyWeight_Burner_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Clicker",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Clicker", localize "STR_VSA_anomalyWeight_Clicker_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Electra",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Electra", localize "STR_VSA_anomalyWeight_Electra_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Fruitpunch",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Fruitpunch", localize "STR_VSA_anomalyWeight_Fruitpunch_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Gravi",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Gravi", localize "STR_VSA_anomalyWeight_Gravi_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Meatgrinder",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Meatgrinder", localize "STR_VSA_anomalyWeight_Meatgrinder_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Springboard",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Springboard", localize "STR_VSA_anomalyWeight_Springboard_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Whirligig",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Whirligig", localize "STR_VSA_anomalyWeight_Whirligig_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Launchpad",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Launchpad", localize "STR_VSA_anomalyWeight_Launchpad_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Leech",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Leech", localize "STR_VSA_anomalyWeight_Leech_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Trapdoor",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Trapdoor", localize "STR_VSA_anomalyWeight_Trapdoor_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Zapper",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Zapper", localize "STR_VSA_anomalyWeight_Zapper_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyWeight_Bridge",
+    "SLIDER",
+    [localize "STR_VSA_anomalyWeight_Bridge", localize "STR_VSA_anomalyWeight_Bridge_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyWeights"],
+    [0, 100, 10, 0],
+    true
+] call CBA_fnc_addSetting;
+
+// Anomaly Density
+[
+    "VSA_anomalyDensity_Burner",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Burner", localize "STR_VSA_anomalyDensity_Burner_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Clicker",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Clicker", localize "STR_VSA_anomalyDensity_Clicker_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Electra",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Electra", localize "STR_VSA_anomalyDensity_Electra_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Fruitpunch",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Fruitpunch", localize "STR_VSA_anomalyDensity_Fruitpunch_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Gravi",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Gravi", localize "STR_VSA_anomalyDensity_Gravi_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Meatgrinder",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Meatgrinder", localize "STR_VSA_anomalyDensity_Meatgrinder_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Springboard",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Springboard", localize "STR_VSA_anomalyDensity_Springboard_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Whirligig",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Whirligig", localize "STR_VSA_anomalyDensity_Whirligig_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Launchpad",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Launchpad", localize "STR_VSA_anomalyDensity_Launchpad_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Leech",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Leech", localize "STR_VSA_anomalyDensity_Leech_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Trapdoor",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Trapdoor", localize "STR_VSA_anomalyDensity_Trapdoor_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Zapper",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Zapper", localize "STR_VSA_anomalyDensity_Zapper_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_anomalyDensity_Bridge",
+    "SLIDER",
+    [localize "STR_VSA_anomalyDensity_Bridge", localize "STR_VSA_anomalyDensity_Bridge_Tooltip"],
+    [localize "STR_VSA_Category_AnomalyDensity"],
+    [1, 10, 1, 0],
+    true
+] call CBA_fnc_addSetting;
 
 [
     "VSA_stableFieldChance",
     "SLIDER",
-    ["Stable Field Chance", "Percentage of fields that are stable"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_stableFieldChance", localize "STR_VSA_stableFieldChance_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [0, 1, 0.4, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stableFieldChance = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 
 [
     "VSA_anomalyFieldRadius",
     "SLIDER",
-    ["Anomaly Field Radius", "Radius of each anomaly field"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [0, 2000, 200, 0]
+    [localize "STR_VSA_anomalyFieldRadius", localize "STR_VSA_anomalyFieldRadius_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [5, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_anomalyFieldRadius = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_bridgeFieldRadius",
- "SLIDER",
- ["Bridge Field Radius", "Radius of bridge anomaly fields"],
- "Viceroy's STALKER ALife - Anomalies",
- [0, 2000, 200, 0]
+[
+    "VSA_bridgeFieldRadius",
+    "SLIDER",
+    [localize "STR_VSA_bridgeFieldRadius", localize "STR_VSA_bridgeFieldRadius_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [5, 500, 50, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_bridgeFieldRadius = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_anomaliesPerField",
     "SLIDER",
-    ["Max Anomalies per Field", "Upper limit for anomalies spawned"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [5, 200, 40, 0]
+    [localize "STR_VSA_anomaliesPerField", localize "STR_VSA_anomaliesPerField_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [1, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_anomaliesPerField = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_anomalyNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Anomalies only spawn at night"],
-    "Viceroy's STALKER ALife - Anomalies",
-    false
+    [localize "STR_VSA_anomalyNightOnly", localize "STR_VSA_anomalyNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_anomalyNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_anomalyEmissionMode",
     "LIST",
-    ["Field Change On Emission", "How anomaly fields react to emissions"],
-    "Viceroy's STALKER ALife - Anomalies",
-    [[0,1,2],["None","Shuffle","Replace"],1]
+    [localize "STR_VSA_anomalyEmissionMode", localize "STR_VSA_anomalyEmissionMode_Tooltip"],
+    [localize "STR_VSA_Category_Anomalies"],
+    [[0, 1, 2], [localize "STR_VSA_Option_None", localize "STR_VSA_Option_Move", localize "STR_VSA_Option_Respawn"], 1],
+    true,
+    {
+        params ["_value"];
+        VSA_anomalyEmissionMode = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
-// Chemical Zones
-// -----------------------------------------------------------------------------
+// Chemical
 [
     "VSA_enableChemicalZones",
     "CHECKBOX",
-    ["Enable Chemical Zones", "Toggle chemical gas zone spawning"],
-    "Viceroy's STALKER ALife - Chemical",
-    true
+    [localize "STR_VSA_enableChemicalZones", localize "STR_VSA_enableChemicalZones_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableChemicalZones = _value;
+        if (isServer && {VSA_enableChemicalZones}) then {
+            [] spawn VSA_fnc_spawnRandomChemicalZones;
+        };
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_chemicalZoneCount",
     "SLIDER",
-    ["Chemical Zones per Area", "Number of chemical zones created"],
-    "Viceroy's STALKER ALife - Chemical",
-    [0, 20, 2, 0]
+    [localize "STR_VSA_chemicalZoneCount", localize "STR_VSA_chemicalZoneCount_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [0, 50, 15, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_chemicalZoneCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_IEDSiteCount",
     "SLIDER",
-    ["Total IED Sites", "Number of road IED locations maintained"],
-    "Viceroy's STALKER ALife - Minefields",
-    [0, 400, 10, 0]
+    [localize "STR_VSA_IEDSiteCount", localize "STR_VSA_IEDSiteCount_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [0, 50, 25, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_IEDSiteCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_chemicalSpawnWeight",
     "SLIDER",
-    ["Chemical Spawn Weight", "Relative chance for chemical zone creation"],
-    "Viceroy's STALKER ALife - Chemical",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_chemicalSpawnWeight", localize "STR_VSA_chemicalSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [0, 1, 0.4, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_chemicalSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_chemicalNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Chemical zones only appear at night"],
-    "Viceroy's STALKER ALife - Chemical",
-    false
+    [localize "STR_VSA_chemicalNightOnly", localize "STR_VSA_chemicalNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_chemicalNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_chemicalZoneRadius",
     "SLIDER",
-    ["Chemical Zone Radius", "Radius of each chemical zone"],
-    "Viceroy's STALKER ALife - Chemical",
-    [0, 250, 50, 0]
+    [localize "STR_VSA_chemicalZoneRadius", localize "STR_VSA_chemicalZoneRadius_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [10, 200, 50, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_chemicalZoneRadius = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_chemicalGasType",
- "LIST",
- ["Chemical Gas Type", "Gas used for chemical zones"],
- "Viceroy's STALKER ALife - Chemical",
- [[0,1,2,3,4],["CS","Asphyxiant","Nerve","Blister","Nova"],1]
+[
+    "VSA_chemicalGasType",
+    "LIST",
+    [localize "STR_VSA_chemicalGasType", localize "STR_VSA_chemicalGasType_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [[0, 1, 2], [localize "STR_VSA_Option_None", localize "STR_VSA_Option_TearGas", localize "STR_VSA_Option_Sarid"], 1],
+    true,
+    {
+        params ["_value"];
+        VSA_chemicalGasType = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_emissionChemicalCount",
     "SLIDER",
-    ["Zones After Emission", "Chemical zones spawned after an emission"],
-    "VSA - Chemical",
-    [0, 50, 2, 0]
+    [localize "STR_VSA_emissionChemicalCount", localize "STR_VSA_emissionChemicalCount_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [0, 10, 3, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_emissionChemicalCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_emissionChemicalRadius",
     "SLIDER",
-    ["Emission Chemical Radius", "Search radius around players for emission zones"],
-    "VSA - Chemical",
-    [50, 2000, 300, 0]
+    [localize "STR_VSA_emissionChemicalRadius", localize "STR_VSA_emissionChemicalRadius_Tooltip"],
+    [localize "STR_VSA_Category_Chemical"],
+    [50, 1000, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_emissionChemicalRadius = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
 // Mutants
-// -----------------------------------------------------------------------------
 [
     "VSA_enableMutants",
     "CHECKBOX",
-    ["Enable Mutants", "Toggle mutant spawning"],
-    "Viceroy's STALKER ALife - Mutants",
+    [localize "STR_VSA_enableMutants", localize "STR_VSA_enableMutants_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
     true
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_mutantGroupCount",
     "SLIDER",
-    ["Mutant Groups per Area", "Number of mutant groups"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 50, 3, 0]
+    [localize "STR_VSA_mutantGroupCount", localize "STR_VSA_mutantGroupCount_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_mutantGroupCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_mutantSpawnWeight",
     "SLIDER",
-    ["Mutant Spawn Weight", "Relative chance for mutant spawns"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_mutantSpawnWeight", localize "STR_VSA_mutantSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 1, 0.5, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_mutantSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_mutantsNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Mutants only spawn at night"],
-    "Viceroy's STALKER ALife - Mutants",
-    false
+    [localize "STR_VSA_mutantsNightOnly", localize "STR_VSA_mutantsNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_mutantsNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// Individual mutant enable toggles
-["VSA_enableBloodsucker","CHECKBOX",["Enable Bloodsuckers","Allow bloodsucker spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableBoar","CHECKBOX",["Enable Boars","Allow boar spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableCat","CHECKBOX",["Enable Cats","Allow cat spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableFlesh","CHECKBOX",["Enable Flesh","Allow flesh spawns"],"Viceroy's STALKER ALife - Mutants",false] call CBA_fnc_addSetting;
-["VSA_enableBlindDog","CHECKBOX",["Enable Blind Dogs","Allow blind dog spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enablePseudodog","CHECKBOX",["Enable Pseudodogs","Allow pseudodog spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableSnork","CHECKBOX",["Enable Snorks","Allow snork spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableController","CHECKBOX",["Enable Controllers","Allow controller spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enablePseudogiant","CHECKBOX",["Enable Pseudogiants","Allow pseudogiant spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableIzlom","CHECKBOX",["Enable Izlom","Allow izlom spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableCorruptor","CHECKBOX",["Enable Corruptors","Allow corruptor spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableSmasher","CHECKBOX",["Enable Smashers","Allow smasher spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableAcidSmasher","CHECKBOX",["Enable Acid Smashers","Allow acid smasher spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableBehemoth","CHECKBOX",["Enable Behemoths","Allow behemoth spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableParasite","CHECKBOX",["Enable Parasites","Allow parasite spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableJumper","CHECKBOX",["Enable Jumpers","Allow jumper spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableSpitter","CHECKBOX",["Enable Spitters","Allow spitter spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableStalker","CHECKBOX",["Enable Stalkers","Allow stalker mutant spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableBully","CHECKBOX",["Enable Bullies","Allow bully spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableHivemind","CHECKBOX",["Enable Hiveminds","Allow hivemind spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableZombie","CHECKBOX",["Enable Zombies","Allow zombie spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
-["VSA_enableChimera","CHECKBOX",["Enable Chimeras","Allow chimera spawns"],"Viceroy's STALKER ALife - Mutants",true] call CBA_fnc_addSetting;
+// Mutant toggles
+[
+    "VSA_enableBloodsucker",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBloodsucker", localize "STR_VSA_enableBloodsucker_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
-// Stalkers
-// -----------------------------------------------------------------------------
+ [
+    "VSA_enableBoar",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBoar", localize "STR_VSA_enableBoar_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableCat",
+    "CHECKBOX",
+    [localize "STR_VSA_enableCat", localize "STR_VSA_enableCat_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableFlesh",
+    "CHECKBOX",
+    [localize "STR_VSA_enableFlesh", localize "STR_VSA_enableFlesh_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableBlindDog",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBlindDog", localize "STR_VSA_enableBlindDog_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enablePseudodog",
+    "CHECKBOX",
+    [localize "STR_VSA_enablePseudodog", localize "STR_VSA_enablePseudodog_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableSnork",
+    "CHECKBOX",
+    [localize "STR_VSA_enableSnork", localize "STR_VSA_enableSnork_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableController",
+    "CHECKBOX",
+    [localize "STR_VSA_enableController", localize "STR_VSA_enableController_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enablePseudogiant",
+    "CHECKBOX",
+    [localize "STR_VSA_enablePseudogiant", localize "STR_VSA_enablePseudogiant_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting; 
+
+ [
+    "VSA_enableIzlom",
+    "CHECKBOX",
+    [localize "STR_VSA_enableIzlom", localize "STR_VSA_enableIzlom_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableCorruptor",
+    "CHECKBOX",
+    [localize "STR_VSA_enableCorruptor", localize "STR_VSA_enableCorruptor_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableSmasher",
+    "CHECKBOX",
+    [localize "STR_VSA_enableSmasher", localize "STR_VSA_enableSmasher_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableAcidSmasher",
+    "CHECKBOX",
+    [localize "STR_VSA_enableAcidSmasher", localize "STR_VSA_enableAcidSmasher_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableBehemoth",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBehemoth", localize "STR_VSA_enableBehemoth_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableParasite",
+    "CHECKBOX",
+    [localize "STR_VSA_enableParasite", localize "STR_VSA_enableParasite_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableJumper",
+    "CHECKBOX",
+    [localize "STR_VSA_enableJumper", localize "STR_VSA_enableJumper_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableSpitter",
+    "CHECKBOX",
+    [localize "STR_VSA_enableSpitter", localize "STR_VSA_enableSpitter_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableStalker",
+    "CHECKBOX",
+    [localize "STR_VSA_enableStalker", localize "STR_VSA_enableStalker_Tooltip"],
+     [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableBully",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBully", localize "STR_VSA_enableBully_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+ [
+    "VSA_enableHivemind",
+    "CHECKBOX",
+    [localize "STR_VSA_enableHivemind", localize "STR_VSA_enableHivemind_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_enableZombie",
+    "CHECKBOX",
+    [localize "STR_VSA_enableZombie", localize "STR_VSA_enableZombie_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_enableChimera",
+    "CHECKBOX",
+    [localize "STR_VSA_enableChimera", localize "STR_VSA_enableChimera_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    true,
+    true
+] call CBA_fnc_addSetting;
+
+
+// Wandering Stalkers
 [
     "VSA_enableAmbientStalkers",
     "CHECKBOX",
-    ["Enable Ambient Stalkers", "Toggle roaming stalker groups"],
-    "Viceroy's STALKER ALife - Wandering Stalkers",
-    true
+    [localize "STR_VSA_enableAmbientStalkers", localize "STR_VSA_enableAmbientStalkers_Tooltip"],
+    [localize "STR_VSA_Category_WanderingStalkers"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableAmbientStalkers = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_ambientStalkerGroups",
     "SLIDER",
-    ["Stalker Groups per Area", "Number of roaming stalker groups"],
-    "Viceroy's STALKER ALife - Wandering Stalkers",
-    [0, 20, 2, 0]
+    [localize "STR_VSA_ambientStalkerGroups", localize "STR_VSA_ambientStalkerGroups_Tooltip"],
+    [localize "STR_VSA_Category_WanderingStalkers"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambientStalkerGroups = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_ambientStalkerSize",
     "SLIDER",
-    ["Stalker Group Size", "Units per ambient group"],
-    "Viceroy's STALKER ALife - Wandering Stalkers",
-    [1, 12, 4, 0]
+    [localize "STR_VSA_ambientStalkerSize", localize "STR_VSA_ambientStalkerSize_Tooltip"],
+    [localize "STR_VSA_Category_WanderingStalkers"],
+    [1, 10, 3, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambientStalkerSize = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_ambientStalkerNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Ambient stalkers spawn only at night"],
-    "Viceroy's STALKER ALife - Wandering Stalkers",
-    false
+    [localize "STR_VSA_ambientStalkerNightOnly", localize "STR_VSA_ambientStalkerNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_WanderingStalkers"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_ambientStalkerNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
+// Stalker Camps
 [
     "VSA_enableStalkerCamps",
     "CHECKBOX",
-    ["Enable Stalker Camps", "Toggle stalker camp spawning"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    true
+    [localize "STR_VSA_enableStalkerCamps", localize "STR_VSA_enableStalkerCamps_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableStalkerCamps = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampCount",
     "SLIDER",
-    ["Stalker Camps per Area", "Number of stalker camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 20, 1, 0]
+    [localize "STR_VSA_stalkerCampCount", localize "STR_VSA_stalkerCampCount_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampSize",
     "SLIDER",
-    ["Stalker Camp Size", "Units defending each camp"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [1, 12, 4, 0]
+    [localize "STR_VSA_stalkerCampSize", localize "STR_VSA_stalkerCampSize_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [1, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampSize = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_minCampPositions",
     "SLIDER",
-    ["Min Building Positions", "Minimum number of positions inside camp buildings"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 20, 1, 0]
+    [localize "STR_VSA_minCampPositions", localize "STR_VSA_minCampPositions_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [1, 20, 4, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_minCampPositions = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampSpacing",
     "SLIDER",
-    ["Camp Spacing", "Minimum distance between camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 1000, 300, 0]
+    [localize "STR_VSA_stalkerCampSpacing", localize "STR_VSA_stalkerCampSpacing_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [50, 2000, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampSpacing = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampBLUChance",
     "SLIDER",
-    ["BLUFOR Camp Chance", "Relative chance for BLUFOR camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 100, 34, 0]
+    [localize "STR_VSA_stalkerCampBLUChance", localize "STR_VSA_stalkerCampBLUChance_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 1, 0.33, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampBLUChance = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampOPFChance",
     "SLIDER",
-    ["OPFOR Camp Chance", "Relative chance for OPFOR camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 100, 33, 0]
+    [localize "STR_VSA_stalkerCampOPFChance", localize "STR_VSA_stalkerCampOPFChance_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 1, 0.33, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampOPFChance = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stalkerCampINDChance",
     "SLIDER",
-    ["Independent Camp Chance", "Relative chance for independent camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 100, 33, 0]
+    [localize "STR_VSA_stalkerCampINDChance", localize "STR_VSA_stalkerCampINDChance_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 1, 0.34, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stalkerCampINDChance = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_minStalkerCamps",
     "SLIDER",
-    ["Min Active Camps", "Minimum number of stalker camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 50, 1, 0]
+    [localize "STR_VSA_minStalkerCamps", localize "STR_VSA_minStalkerCamps_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 20, 2, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_minStalkerCamps = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_maxStalkerCamps",
     "SLIDER",
-    ["Max Active Camps", "Maximum number of stalker camps"],
-    "Viceroy's STALKER ALife - Stalker Camps",
-    [0, 50, 5, 0]
+    [localize "STR_VSA_maxStalkerCamps", localize "STR_VSA_maxStalkerCamps_Tooltip"],
+    [localize "STR_VSA_Category_StalkerCamps"],
+    [0, 20, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_maxStalkerCamps = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
 // Spooks
-// -----------------------------------------------------------------------------
 [
     "VSA_enableSpooks",
     "CHECKBOX",
-    ["Enable Spook Zones", "Toggle paranormal event spawning"],
-    "Viceroy's STALKER ALife - Spooks",
-    true
+    [localize "STR_VSA_enableSpooks", localize "STR_VSA_enableSpooks_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableSpooks = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_spookZoneCount",
     "SLIDER",
-    ["Spook Zones per Area", "Number of paranormal zones"],
-    "Viceroy's STALKER ALife - Spooks",
-    [0, 10, 1, 0]
+    [localize "STR_VSA_spookZoneCount", localize "STR_VSA_spookZoneCount_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_spookZoneCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_spookSpawnWeight",
     "SLIDER",
-    ["Spook Spawn Weight", "Relative chance for spook events"],
-    "Viceroy's STALKER ALife - Spooks",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_spookSpawnWeight", localize "STR_VSA_spookSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    [0, 1, 0.3, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_spookSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
-"VSA_spooksNightOnly",
-"CHECKBOX",
-["Night Time Only", "Spooks are active only at night"],
-"Viceroy's STALKER ALife - Spooks",
-true
+    "VSA_spooksNightOnly",
+    "CHECKBOX",
+    [localize "STR_VSA_spooksNightOnly", localize "STR_VSA_spooksNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_spooksNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// Individual spook configuration
 [
     "VSA_abominationCount",
     "SLIDER",
-    ["Abomination Count", "Units spawned when an Abomination zone appears"],
-    "Viceroy's STALKER ALife - Spooks",
-    [0, 10, 1, 0]
+    [localize "STR_VSA_abominationCount", localize "STR_VSA_abominationCount_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    [1, 10, 3, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_abominationCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_abominationSpawnWeight",
     "SLIDER",
-    ["Abomination Spawn Weight", "Relative chance to choose an Abomination"],
-    "Viceroy's STALKER ALife - Spooks",
-    [0, 100, 100, 0]
+    [localize "STR_VSA_abominationSpawnWeight", localize "STR_VSA_abominationSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    [0, 1, 0.1, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_abominationSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_abominationTime",
-    "LIST",
-    ["Abomination Active Time", "When Abominations may spawn"],
-    "Viceroy's STALKER ALife - Spooks",
-    [[0,1,2],["Both","Night Only","Day Only"],1]
+    "SLIDER",
+    [localize "STR_VSA_abominationTime", localize "STR_VSA_abominationTime_Tooltip"],
+    [localize "STR_VSA_Category_Spooks"],
+    [0, 24, 0, 0], // Start hour
+    true,
+    {
+        params ["_value"];
+        VSA_abominationTime = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
+
 // Storms
-// -----------------------------------------------------------------------------
 [
     "VSA_enableStorms",
     "CHECKBOX",
-    ["Enable Psy-Storms", "Toggle psy-storm events"],
-    "Viceroy's STALKER ALife - Storms",
-    true
+    [localize "STR_VSA_enableStorms", localize "STR_VSA_enableStorms_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableStorms = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stormInterval",
     "SLIDER",
-    ["Storm Interval (min)", "Minutes between possible storms"],
-    "Viceroy's STALKER ALife - Storms",
-    [0, 150, 30, 0]
+    [localize "STR_VSA_stormInterval", localize "STR_VSA_stormInterval_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [10, 240, 60, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormInterval = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stormSpawnWeight",
     "SLIDER",
-    ["Storm Spawn Weight", "Relative chance for a storm to occur"],
-    "Viceroy's STALKER ALife - Storms",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_stormSpawnWeight", localize "STR_VSA_stormSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 1, 0.5, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_stormsNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Storms only trigger at night"],
-    "Viceroy's STALKER ALife - Storms",
-    false
+    [localize "STR_VSA_stormsNightOnly", localize "STR_VSA_stormsNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_stormsNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_stormMinDelay","SLIDER",["Min Delay (s)","Minimum seconds between storms"],"Viceroy's STALKER ALife - Storms",[0,7200,1800,0]] call CBA_fnc_addSetting;
-["VSA_stormMaxDelay","SLIDER",["Max Delay (s)","Maximum seconds between storms"],"Viceroy's STALKER ALife - Storms",[0,7200,3600,0]] call CBA_fnc_addSetting;
-["VSA_stormDuration","SLIDER",["Storm Duration (s)","Length of each psy-storm"],"Viceroy's STALKER ALife - Storms",[30,600,180,0]] call CBA_fnc_addSetting;
-["VSA_stormLightningStart","SLIDER",["Lightning Start","Lightning strikes per second at storm start"],"Viceroy's STALKER ALife - Storms",[6,200,6,0]] call CBA_fnc_addSetting;
-["VSA_stormLightningEnd","SLIDER",["Lightning End","Lightning strikes per second when storm ends"],"Viceroy's STALKER ALife - Storms",[6,200,12,0]] call CBA_fnc_addSetting;
-["VSA_stormDischargeStart","SLIDER",["Discharge Start","Psy discharge occurrences per second at storm start"],"Viceroy's STALKER ALife - Storms",[6,200,6,0]] call CBA_fnc_addSetting;
-["VSA_stormDischargeEnd","SLIDER",["Discharge End","Psy discharge occurrences per second when storm ends"],"Viceroy's STALKER ALife - Storms",[6,200,12,0]] call CBA_fnc_addSetting;
-["VSA_stormFogEnd","SLIDER",["Fog at Peak","Fog level when the storm peaks"],"Viceroy's STALKER ALife - Storms",[0,1,0.6,2]] call CBA_fnc_addSetting;
-["VSA_stormRainEnd","SLIDER",["Rain at Peak","Rain intensity when the storm peaks"],"Viceroy's STALKER ALife - Storms",[0,1,0.8,2]] call CBA_fnc_addSetting;
+[
+    "VSA_stormMinDelay",
+    "SLIDER",
+    [localize "STR_VSA_stormMinDelay", localize "STR_VSA_stormMinDelay_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [60, 3600, 600, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormMinDelay = _value;
+    }
+] call CBA_fnc_addSetting;
 
-["VSA_stormRadius","SLIDER",["Storm Radius","Maximum distance from players for storm effects"],"Viceroy's STALKER ALife - Storms",[100,7500,1500,0]] call CBA_fnc_addSetting;
+[
+    "VSA_stormMaxDelay",
+    "SLIDER",
+    [localize "STR_VSA_stormMaxDelay", localize "STR_VSA_stormMaxDelay_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [60, 7200, 3600, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormMaxDelay = _value;
+    }
+] call CBA_fnc_addSetting;
 
-["VSA_stormGasDischarges","CHECKBOX",["Gas Under Discharges","Spawn Nova gas clouds at discharge locations"],"Viceroy's STALKER ALife - Storms",true] call CBA_fnc_addSetting;
 
-// Size of the spawned Nova mist in meters
-["VSA_stormGasRadius","SLIDER",["Gas Radius","Nova mist radius at each discharge"],"Viceroy's STALKER ALife - Storms",[0,50,20,0]] call CBA_fnc_addSetting;
+[
+    "VSA_stormDuration",
+    "SLIDER",
+    [localize "STR_VSA_stormDuration", localize "STR_VSA_stormDuration_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [60, 600, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormDuration = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// How thick/dense the mist appears
-["VSA_stormGasDensity","SLIDER",["Gas Density","Mist thickness at each discharge"],"Viceroy's STALKER ALife - Storms",[1,10,3,0]] call CBA_fnc_addSetting;
+[
+    "VSA_stormLightningStart",
+    "SLIDER",
+    [localize "STR_VSA_stormLightningStart", localize "STR_VSA_stormLightningStart_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 10, 0.2, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormLightningStart = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// Vertical spread from the ground up or down
-["VSA_stormGasVertical","SLIDER",["Gas Vertical Spread","Vertical spread of the mist"],"Viceroy's STALKER ALife - Storms",[-2,2,1,2]] call CBA_fnc_addSetting;
+[
+    "VSA_stormLightningEnd",
+    "SLIDER",
+    [localize "STR_VSA_stormLightningEnd", localize "STR_VSA_stormLightningEnd_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 10, 1, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormLightningEnd = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
+[
+    "VSA_stormDischargeStart",
+    "SLIDER",
+    [localize "STR_VSA_stormDischargeStart", localize "STR_VSA_stormDischargeStart_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 10, 0, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormDischargeStart = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormDischargeEnd",
+    "SLIDER",
+    [localize "STR_VSA_stormDischargeEnd", localize "STR_VSA_stormDischargeEnd_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 10, 0.5, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormDischargeEnd = _value;
+    }
+] call CBA_fnc_addSetting;
+
+
+[
+    "VSA_stormFogEnd",
+    "SLIDER",
+    [localize "STR_VSA_stormFogEnd", localize "STR_VSA_stormFogEnd_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 1, 0.8, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormFogEnd = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormRainEnd",
+    "SLIDER",
+    [localize "STR_VSA_stormRainEnd", localize "STR_VSA_stormRainEnd_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 1, 1, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormRainEnd = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormRadius",
+    "SLIDER",
+    [localize "STR_VSA_stormRadius", localize "STR_VSA_stormRadius_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [100, 2000, 800, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormRadius = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormGasDischarges",
+    "CHECKBOX",
+    [localize "STR_VSA_stormGasDischarges", localize "STR_VSA_stormGasDischarges_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_stormGasDischarges = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormGasRadius",
+    "SLIDER",
+    [localize "STR_VSA_stormGasRadius", localize "STR_VSA_stormGasRadius_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [1, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormGasRadius = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormGasDensity",
+    "SLIDER",
+    [localize "STR_VSA_stormGasDensity", localize "STR_VSA_stormGasDensity_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [1, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormGasDensity = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormGasVertical",
+    "SLIDER",
+    [localize "STR_VSA_stormGasVertical", localize "STR_VSA_stormGasVertical_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [1, 30, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormGasVertical = _value;
+    }
+] call CBA_fnc_addSetting;
+
 // Blowouts
-// -----------------------------------------------------------------------------
 [
     "VSA_enableBlowouts",
     "CHECKBOX",
-    ["Enable Blowouts", "Toggle emission blowouts"],
-    "Viceroy's STALKER ALife - Blowouts",
-    true
+    [localize "STR_VSA_enableBlowouts", localize "STR_VSA_enableBlowouts_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableBlowouts = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_blowoutMinDelay","SLIDER",["Min Delay (h)","Minimum hours between blowouts"],"Viceroy's STALKER ALife - Blowouts",[0,168,12,0]] call CBA_fnc_addSetting;
-["VSA_blowoutMaxDelay","SLIDER",["Max Delay (h)","Maximum hours between blowouts"],"Viceroy's STALKER ALife - Blowouts",[0,168,72,0]] call CBA_fnc_addSetting;
-["VSA_blowoutDurationMin","SLIDER",["Min Duration (s)","Shortest blowout length"],"Viceroy's STALKER ALife - Blowouts",[60,3600,300,0]] call CBA_fnc_addSetting;
-["VSA_blowoutDurationMax","SLIDER",["Max Duration (s)","Longest blowout length"],"Viceroy's STALKER ALife - Blowouts",[60,3600,900,0]] call CBA_fnc_addSetting;
-["VSA_blowoutDirection","SLIDER",["Wave Direction","Approach direction in degrees"],"Viceroy's STALKER ALife - Blowouts",[0,359,0,0]] call CBA_fnc_addSetting;
-["VSA_blowoutSpeedMin","SLIDER",["Wave Speed Min","Minimum wave speed"],"Viceroy's STALKER ALife - Blowouts",[50,300,125,0]] call CBA_fnc_addSetting;
-["VSA_blowoutSpeedMax","SLIDER",["Wave Speed Max","Maximum wave speed"],"Viceroy's STALKER ALife - Blowouts",[50,300,125,0]] call CBA_fnc_addSetting;
+[
+    "VSA_blowoutMinDelay",
+    "SLIDER",
+    [localize "STR_VSA_blowoutMinDelay", localize "STR_VSA_blowoutMinDelay_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [0, 24, 2, 1],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutMinDelay = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// kill AI units caught outside during a blowout
-["VSA_killAIEmission","CHECKBOX",["Kill Unsheltered AI","AI without shelter die during a blowout"],"Viceroy's STALKER ALife - Blowouts",true] call CBA_fnc_addSetting;
+[
+    "VSA_blowoutMaxDelay",
+    "SLIDER",
+    [localize "STR_VSA_blowoutMaxDelay", localize "STR_VSA_blowoutMaxDelay_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [0, 48, 6, 1],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutMaxDelay = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
-// Overcast behaviour
-// -----------------------------------------------------------------------------
-["VSA_stormOvercast","SLIDER",["Storm Overcast","Cloud coverage during a storm"],"Viceroy's STALKER ALife - Storms",[0,1,1,2]] call CBA_fnc_addSetting;
-["VSA_stormOvercastTime","SLIDER",["Overcast Transition (s)","Seconds to reach full overcast"],"Viceroy's STALKER ALife - Storms",[0,300,60,0]] call CBA_fnc_addSetting;
+[
+    "VSA_blowoutDurationMin",
+    "SLIDER",
+    [localize "STR_VSA_blowoutDurationMin", localize "STR_VSA_blowoutDurationMin_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [60, 600, 180, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutDurationMin = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_blowoutDurationMax",
+    "SLIDER",
+    [localize "STR_VSA_blowoutDurationMax", localize "STR_VSA_blowoutDurationMax_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [60, 1200, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutDurationMax = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_blowoutDirection",
+    "SLIDER",
+    [localize "STR_VSA_blowoutDirection", localize "STR_VSA_blowoutDirection_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [0, 360, 0, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutDirection = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_blowoutSpeedMin",
+    "SLIDER",
+    [localize "STR_VSA_blowoutSpeedMin", localize "STR_VSA_blowoutSpeedMin_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [1, 100, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutSpeedMin = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_blowoutSpeedMax",
+    "SLIDER",
+    [localize "STR_VSA_blowoutSpeedMax", localize "STR_VSA_blowoutSpeedMax_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"],
+    [1, 100, 30, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_blowoutSpeedMax = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_killAIEmission",
+    "CHECKBOX",
+    [localize "STR_VSA_killAIEmission", localize "STR_VSA_killAIEmission_Tooltip"],
+    [localize "STR_VSA_Category_Blowouts"], // Should arguably be under Blowouts or Emission
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_killAIEmission = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormOvercast",
+    "SLIDER",
+    [localize "STR_VSA_stormOvercast", localize "STR_VSA_stormOvercast_Tooltip"],
+    [localize "STR_VSA_Category_Storms"], // This seems like it belongs to Storms
+    [0, 1, 0.8, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_stormOvercast = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_stormOvercastTime",
+    "SLIDER",
+    [localize "STR_VSA_stormOvercastTime", localize "STR_VSA_stormOvercastTime_Tooltip"],
+    [localize "STR_VSA_Category_Storms"],
+    [0, 300, 60, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_stormOvercastTime = _value;
+    }
+] call CBA_fnc_addSetting;
 
 
-// -----------------------------------------------------------------------------
 // Zombification
-// -----------------------------------------------------------------------------
 [
     "VSA_enableZombification",
     "CHECKBOX",
-    ["Enable Zombification", "Toggle NPC zombification mechanics"],
-    "Viceroy's STALKER ALife - Zombification",
-    true
+    [localize "STR_VSA_enableZombification", localize "STR_VSA_enableZombification_Tooltip"],
+    [localize "STR_VSA_Category_Zombification"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableZombification = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_zombieCount",
     "SLIDER",
-    ["Max Zombies", "Maximum zombies spawned from bodies"],
-    "Viceroy's STALKER ALife - Zombification",
-    [0, 100, 15, 0]
+    [localize "STR_VSA_zombieCount", localize "STR_VSA_zombieCount_Tooltip"],
+    [localize "STR_VSA_Category_Zombification"],
+    [0, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_zombieCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_zombieSpawnWeight",
     "SLIDER",
-    ["Zombie Spawn Weight", "Relative chance that dead bodies zombify"],
-    "Viceroy's STALKER ALife - Zombification",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_zombieSpawnWeight", localize "STR_VSA_zombieSpawnWeight_Tooltip"],
+    [localize "STR_VSA_Category_Zombification"],
+    [0, 1, 0.8, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_zombieSpawnWeight = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_zombiesNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Bodies zombify only at night"],
-    "Viceroy's STALKER ALife - Zombification",
-    false
+    [localize "STR_VSA_zombiesNightOnly", localize "STR_VSA_zombiesNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Zombification"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_zombiesNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
+
 // Necroplague
-// -----------------------------------------------------------------------------
 [
     "VSA_enableNecroplague",
     "CHECKBOX",
-    ["Enable Necroplague", "Allow periodic zombie hordes"],
-    "Viceroy's STALKER ALife - Necroplague",
-    true
+    [localize "STR_VSA_enableNecroplague", localize "STR_VSA_enableNecroplague_Tooltip"],
+    [localize "STR_VSA_Category_Necroplague"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableNecroplague = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 [
     "VSA_necroMinDelay",
     "SLIDER",
-    ["Min Delay (s)", "Minimum seconds between necroplague events"],
-    "Viceroy's STALKER ALife - Necroplague",
-    [0,7200,1800,0]
+    [localize "STR_VSA_necroMinDelay", localize "STR_VSA_necroMinDelay_Tooltip"],
+    [localize "STR_VSA_Category_Necroplague"],
+    [60, 3600, 600, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_necroMinDelay = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 [
     "VSA_necroMaxDelay",
     "SLIDER",
-    ["Max Delay (s)", "Maximum seconds between necroplague events"],
-    "Viceroy's STALKER ALife - Necroplague",
-    [0,7200,3600,0]
+    [localize "STR_VSA_necroMaxDelay", localize "STR_VSA_necroMaxDelay_Tooltip"],
+    [localize "STR_VSA_Category_Necroplague"],
+    [60, 7200, 1800, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_necroMaxDelay = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 [
     "VSA_necroHordes",
     "SLIDER",
-    ["Hordes per Player", "Number of zombie groups around each player"],
-    "Viceroy's STALKER ALife - Necroplague",
-    [1,5,2,0]
+    [localize "STR_VSA_necroHordes", localize "STR_VSA_necroHordes_Tooltip"],
+    [localize "STR_VSA_Category_Necroplague"],
+    [1, 10, 2, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_necroHordes = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 [
     "VSA_necroZombies",
     "SLIDER",
-    ["Zombies per Horde", "Zombies spawned in each group"],
-    "Viceroy's STALKER ALife - Necroplague",
-    [1,20,5,0]
+    [localize "STR_VSA_necroZombies", localize "STR_VSA_necroZombies_Tooltip"],
+    [localize "STR_VSA_Category_Necroplague"],
+    [1, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_necroZombies = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
-// AI Behaviour
-// -----------------------------------------------------------------------------
+
+// AI Tweaks
 [
     "VSA_enableAIBehaviour",
     "CHECKBOX",
-    ["Enable AI Behaviour Tweaks", "Toggle custom AI behaviour"],
-    "Viceroy's STALKER ALife - AI",
-    true
+    [localize "STR_VSA_enableAIBehaviour", localize "STR_VSA_enableAIBehaviour_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableAIBehaviour = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 
 [
     "VSA_panicThreshold",
     "SLIDER",
-    ["AI Panic Threshold", "Chance for AI to panic when threatened"],
-    "Viceroy's STALKER ALife - AI",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_panicThreshold", localize "STR_VSA_panicThreshold_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    [0, 1, 0.3, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_panicThreshold = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_aiNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "AI tweaks only active at night"],
-    "Viceroy's STALKER ALife - AI",
-    false
+    [localize "STR_VSA_aiNightOnly", localize "STR_VSA_aiNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_aiNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 
 [
     "VSA_aiAnomalyAvoidChance",
     "SLIDER",
-    ["Anomaly Avoid Chance", "Chance AI moves away from nearby anomalies"],
-    "Viceroy's STALKER ALife - AI",
-    [0, 100, 50, 0]
+    [localize "STR_VSA_aiAnomalyAvoidChance", localize "STR_VSA_aiAnomalyAvoidChance_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    [0, 1, 0.8, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_aiAnomalyAvoidChance = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_aiAnomalyAvoidRange",
     "SLIDER",
-    ["Anomaly Avoid Range", "Distance to check for anomalies around AI"],
-    "Viceroy's STALKER ALife - AI",
-    [0, 100, 20, 0]
+    [localize "STR_VSA_aiAnomalyAvoidRange", localize "STR_VSA_aiAnomalyAvoidRange_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    [0, 100, 20, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_aiAnomalyAvoidRange = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_fieldAvoidEnabled",
     "CHECKBOX",
-    ["Avoid Anomaly Fields", "AI will steer clear of anomaly field areas"],
-    "Viceroy's STALKER ALife - AI",
-    true
+    [localize "STR_VSA_fieldAvoidEnabled", localize "STR_VSA_fieldAvoidEnabled_Tooltip"],
+    [localize "STR_VSA_Category_AI"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_fieldAvoidEnabled = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 
-// Hostile mutant spawns
+// Extra Mutant Settings
 [
     "VSA_mutantGroupCountHostile",
     "SLIDER",
-    ["Post-Emission Groups", "Number of mutant groups after an emission"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 25, 1, 0]
+    [localize "STR_VSA_mutantGroupCountHostile", localize "STR_VSA_mutantGroupCountHostile_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_mutantGroupCountHostile = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_mutantThreat",
     "SLIDER",
-    ["Units per Hostile Group", "Units spawned in each hostile group"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 30, 3, 0]
+    [localize "STR_VSA_mutantThreat", localize "STR_VSA_mutantThreat_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_mutantThreat = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_mutantNightOnlyHostile",
     "CHECKBOX",
-    ["Night Time Only", "Spawn hostile groups only at night"],
-    "Viceroy's STALKER ALife - Mutants",
-    false
+    [localize "STR_VSA_mutantNightOnlyHostile", localize "STR_VSA_mutantNightOnlyHostile_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_mutantNightOnlyHostile = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// Ambient herds
 [
     "VSA_ambientHerdCount",
     "SLIDER",
-    ["Roaming Herds", "Number of roaming herds"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 10, 2, 0]
+    [localize "STR_VSA_ambientHerdCount", localize "STR_VSA_ambientHerdCount_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambientHerdCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_ambientHerdSize",
     "SLIDER",
-    ["Herd Size", "Units per roaming herd"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 50, 4, 0]
+    [localize "STR_VSA_ambientHerdSize", localize "STR_VSA_ambientHerdSize_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambientHerdSize = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_ambientNightOnly",
     "CHECKBOX",
-    ["Night Time Only", "Spawn herds only at night"],
-    "Viceroy's STALKER ALife - Mutants",
-    false
+    [localize "STR_VSA_ambientNightOnly", localize "STR_VSA_ambientNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_ambientNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_predatorAttackChance","SLIDER",["Predator Attack Chance","Chance each check to spawn an ambush"],"Viceroy's STALKER ALife - Mutants",[0, 100, 5, 0]] call CBA_fnc_addSetting;
-["VSA_predatorRange","SLIDER",["Predator Range","Distance from players to spawn predators"],"Viceroy's STALKER ALife - Mutants",[0, 7500, 1500, 0]] call CBA_fnc_addSetting;
-["VSA_predatorCheckIntervalDay","SLIDER",["Predator Check (Day)","Seconds between predator attack checks during daylight"],"Viceroy's STALKER ALife - Mutants",[60, 900, 600, 0]] call CBA_fnc_addSetting;
-["VSA_predatorCheckIntervalNight","SLIDER",["Predator Check (Night)","Seconds between predator attack checks at night"],"Viceroy's STALKER ALife - Mutants",[60, 900, 300, 0]] call CBA_fnc_addSetting;
-["VSA_proximityCheckInterval","SLIDER",["Proximity Check Interval","Seconds between player distance checks (0 for constant)"],"Viceroy's STALKER ALife - Mutants",[0, 300, 0, 0]] call CBA_fnc_addSetting;
-["VSA_habitatCheckInterval","SLIDER",["Habitat Check Interval","Seconds between habitat updates"],"Viceroy's STALKER ALife - Mutants",[1, 60, 5, 0]] call CBA_fnc_addSetting;
+[
+    "VSA_predatorAttackChance",
+    "SLIDER",
+    [localize "STR_VSA_predatorAttackChance", localize "STR_VSA_predatorAttackChance_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 1, 0.2, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_predatorAttackChance = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_predatorRange",
+    "SLIDER",
+    [localize "STR_VSA_predatorRange", localize "STR_VSA_predatorRange_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [100, 2000, 500, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_predatorRange = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_predatorCheckIntervalDay",
+    "SLIDER",
+    [localize "STR_VSA_predatorCheckIntervalDay", localize "STR_VSA_predatorCheckIntervalDay_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [60, 3600, 600, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_predatorCheckIntervalDay = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_predatorCheckIntervalNight",
+    "SLIDER",
+    [localize "STR_VSA_predatorCheckIntervalNight", localize "STR_VSA_predatorCheckIntervalNight_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [60, 3600, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_predatorCheckIntervalNight = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_proximityCheckInterval",
+    "SLIDER",
+    [localize "STR_VSA_proximityCheckInterval", localize "STR_VSA_proximityCheckInterval_Tooltip"],
+    [localize "STR_VSA_Category_Core"],
+    [0, 60, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_proximityCheckInterval = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatCheckInterval",
+    "SLIDER",
+    [localize "STR_VSA_habitatCheckInterval", localize "STR_VSA_habitatCheckInterval_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [60, 3600, 600, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatCheckInterval = _value;
+    }
+] call CBA_fnc_addSetting;
 
 [
     "VSA_maxAmbientHerds",
     "SLIDER",
-    ["Max Active Herds", "Maximum number of roaming herds"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 100, 5, 0]
+    [localize "STR_VSA_maxAmbientHerds", localize "STR_VSA_maxAmbientHerds_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_maxAmbientHerds = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_maxHostileGroups",
     "SLIDER",
-    ["Max Hostile Groups", "Maximum active hostile mutant groups"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 50, 5, 0]
+    [localize "STR_VSA_maxHostileGroups", localize "STR_VSA_maxHostileGroups_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_maxHostileGroups = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_maxMutantNests",
     "SLIDER",
-    ["Max Mutant Nests", "Maximum active bloodsucker nests"],
-    "Viceroy's STALKER ALife - Mutants",
-    [0, 30, 3, 0]
+    [localize "STR_VSA_maxMutantNests", localize "STR_VSA_maxMutantNests_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [0, 20, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_maxMutantNests = _value;
+    }
 ] call CBA_fnc_addSetting;
+
 
 [
     "VSA_nestsNightOnly",
     "CHECKBOX",
-    ["Night Time Nests", "Generate nests only during night"],
-    "Viceroy's STALKER ALife - Mutants",
-    true
+    [localize "STR_VSA_nestsNightOnly", localize "STR_VSA_nestsNightOnly_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_nestsNightOnly = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-["VSA_habitatSize_Bloodsucker","SLIDER",["Bloodsucker Habitat Size","Max bloodsuckers per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 60, 12, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Dog","SLIDER",["Dog Habitat Size","Max dogs per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 250, 50, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Boar","SLIDER",["Boar Habitat Size","Max boars per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 50, 10, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Cat","SLIDER",["Cat Habitat Size","Max cats per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 50, 10, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Flesh","SLIDER",["Flesh Habitat Size","Max flesh per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 50, 10, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Pseudodog","SLIDER",["Pseudodog Habitat Size","Max pseudodogs per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 100, 20, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Controller","SLIDER",["Controller Habitat Size","Max controllers per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 40, 8, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Pseudogiant","SLIDER",["Pseudogiant Habitat Size","Max pseudogiants per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 30, 6, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Izlom","SLIDER",["Izlom Habitat Size","Max izlom per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 50, 10, 0]] call CBA_fnc_addSetting;
-["VSA_habitatSize_Snork","SLIDER",["Snork Habitat Size","Max snorks per habitat"],"Viceroy's STALKER ALife - Mutants",[0, 60, 12, 0]] call CBA_fnc_addSetting;
+// Habitat sizes
+[
+    "VSA_habitatSize_Bloodsucker",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Bloodsucker", localize "STR_VSA_habitatSize_Bloodsucker_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 10, 3, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Bloodsucker = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
+[
+    "VSA_habitatSize_Dog",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Dog", localize "STR_VSA_habitatSize_Dog_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 20, 8, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Dog = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Boar",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Boar", localize "STR_VSA_habitatSize_Boar_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 15, 6, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Boar = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Cat",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Cat", localize "STR_VSA_habitatSize_Cat_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 10, 4, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Cat = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Flesh",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Flesh", localize "STR_VSA_habitatSize_Flesh_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 15, 6, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Flesh = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Pseudodog",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Pseudodog", localize "STR_VSA_habitatSize_Pseudodog_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 10, 4, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Pseudodog = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Controller",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Controller", localize "STR_VSA_habitatSize_Controller_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 3, 1, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Controller = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Pseudogiant",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Pseudogiant", localize "STR_VSA_habitatSize_Pseudogiant_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 3, 1, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Pseudogiant = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Izlom",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Izlom", localize "STR_VSA_habitatSize_Izlom_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 10, 4, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Izlom = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_habitatSize_Snork",
+    "SLIDER",
+    [localize "STR_VSA_habitatSize_Snork", localize "STR_VSA_habitatSize_Snork_Tooltip"],
+    [localize "STR_VSA_Category_Mutants"],
+    [1, 10, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_habitatSize_Snork = _value;
+    }
+] call CBA_fnc_addSetting;
+
 // Ambushes
-// -----------------------------------------------------------------------------
-["VSA_enableAmbushes","CHECKBOX",["Enable Ambushes","Toggle road ambush spawning"],"Viceroy's STALKER ALife - Ambushes",true] call CBA_fnc_addSetting;
-["VSA_ambushCount","SLIDER",["Ambushes per Area","Number of ambush sites generated"],"Viceroy's STALKER ALife - Ambushes",[0,20,3,0]] call CBA_fnc_addSetting;
-["VSA_ambushTownDistance","SLIDER",["Outside Town Distance","Distance beyond the town radius for ambush placement"],"Viceroy's STALKER ALife - Ambushes",[50,1000,200,0]] call CBA_fnc_addSetting;
-["VSA_ambushMinUnits","SLIDER",["Min Units","Minimum units spawned at an ambush"],"Viceroy's STALKER ALife - Ambushes",[0,20,3,0]] call CBA_fnc_addSetting;
-["VSA_ambushMaxUnits","SLIDER",["Max Units","Maximum units spawned at an ambush"],"Viceroy's STALKER ALife - Ambushes",[0,20,6,0]] call CBA_fnc_addSetting;
+[
+    "VSA_enableAmbushes",
+    "CHECKBOX",
+    [localize "STR_VSA_enableAmbushes", localize "STR_VSA_enableAmbushes_Tooltip"],
+    [localize "STR_VSA_Category_Ambushes"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableAmbushes = _value;
+    }
+] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
+[
+    "VSA_ambushCount",
+    "SLIDER",
+    [localize "STR_VSA_ambushCount", localize "STR_VSA_ambushCount_Tooltip"],
+    [localize "STR_VSA_Category_Ambushes"],
+    [0, 50, 10, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambushCount = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_ambushTownDistance",
+    "SLIDER",
+    [localize "STR_VSA_ambushTownDistance", localize "STR_VSA_ambushTownDistance_Tooltip"],
+    [localize "STR_VSA_Category_Ambushes"],
+    [0, 1000, 300, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambushTownDistance = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_ambushMinUnits",
+    "SLIDER",
+    [localize "STR_VSA_ambushMinUnits", localize "STR_VSA_ambushMinUnits_Tooltip"],
+    [localize "STR_VSA_Category_Ambushes"],
+    [1, 10, 3, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambushMinUnits = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_ambushMaxUnits",
+    "SLIDER",
+    [localize "STR_VSA_ambushMaxUnits", localize "STR_VSA_ambushMaxUnits_Tooltip"],
+    [localize "STR_VSA_Category_Ambushes"],
+    [1, 20, 6, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_ambushMaxUnits = _value;
+    }
+] call CBA_fnc_addSetting;
+
+
 // Minefields
-// -----------------------------------------------------------------------------
 [
     "VSA_enableMinefields",
     "CHECKBOX",
-    ["Enable Minefields", "Toggle spawning of minefields"],
-    "Viceroy's STALKER ALife - Minefields",
-    true
+    [localize "STR_VSA_enableMinefields", localize "STR_VSA_enableMinefields_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableMinefields = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_minefieldCount",
     "SLIDER",
-    ["APERS Fields per Area", "Number of APERS minefields generated"],
-    "Viceroy's STALKER ALife - Minefields",
-    [0, 400, 2, 0]
+    [localize "STR_VSA_minefieldCount", localize "STR_VSA_minefieldCount_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [0, 50, 15, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_minefieldCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_minefieldSize",
     "SLIDER",
-    ["APERS Field Radius", "Radius in meters for APERS minefields"],
-    "Viceroy's STALKER ALife - Minefields",
-    [10, 200, 30, 0]
+    [localize "STR_VSA_minefieldSize", localize "STR_VSA_minefieldSize_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [5, 100, 25, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_minefieldSize = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_IEDCount",
     "SLIDER",
-    ["IEDs per Area", "Number of IEDs placed on roads"],
-    "Viceroy's STALKER ALife - Minefields",
-    [0, 20, 2, 0]
+    [localize "STR_VSA_IEDCount", localize "STR_VSA_IEDCount_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [0, 50, 20, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_IEDCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_enableBoobyTraps",
     "CHECKBOX",
-    ["Enable Booby Traps", "Place tripwires and booby traps in buildings"],
-    "Viceroy's STALKER ALife - Minefields",
-    true
+    [localize "STR_VSA_enableBoobyTraps", localize "STR_VSA_enableBoobyTraps_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableBoobyTraps = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_boobyTrapCount",
     "SLIDER",
-    ["Booby Traps per Area", "Number of building traps spawned"],
-    "Viceroy's STALKER ALife - Minefields",
-    [0, 20, 5, 0]
+    [localize "STR_VSA_boobyTrapCount", localize "STR_VSA_boobyTrapCount_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [0, 50, 15, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_boobyTrapCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
 // Wrecks
-// -----------------------------------------------------------------------------
 [
     "VSA_enableWrecks",
     "CHECKBOX",
-    ["Enable Abandoned Vehicles", "Spawn damaged vehicles near roads"],
-    "Viceroy's STALKER ALife - Wrecks",
-    true
+    [localize "STR_VSA_enableWrecks", localize "STR_VSA_enableWrecks_Tooltip"],
+    [localize "STR_VSA_Category_Wrecks"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableWrecks = _value;
+    }
 ] call CBA_fnc_addSetting;
 
 [
     "VSA_wreckCount",
     "SLIDER",
-    ["Abandoned Vehicle Count", "Number of vehicles spawned across the map"],
-    "Viceroy's STALKER ALife - Wrecks",
-    [0, 50, 10, 0]
+    [localize "STR_VSA_wreckCount", localize "STR_VSA_wreckCount_Tooltip"],
+    [localize "STR_VSA_Category_Wrecks"],
+    [0, 100, 30, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_wreckCount = _value;
+    }
 ] call CBA_fnc_addSetting;
 
-// -----------------------------------------------------------------------------
-// Antistasi Integration
-// -----------------------------------------------------------------------------
+// Antistasi
 [
     "VSA_disableA3UWeather",
     "CHECKBOX",
-    ["Disable Antistasi Weather", "Stop Antistasi persistent weather script"],
-    "Viceroy's STALKER ALife - Antistasi",
-    false
+    [localize "STR_VSA_disableA3UWeather", localize "STR_VSA_disableA3UWeather_Tooltip"],
+    [localize "STR_VSA_Category_Antistasi"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_disableA3UWeather = _value;
+    }
 ] call CBA_fnc_addSetting;
-// -----------------------------------------------------------------------------
+
+
 // Debug
-// -----------------------------------------------------------------------------
 [
     "VSA_debugMode",
     "CHECKBOX",
-    ["Enable Debug Mode", "Show on-screen logs and enable testing actions"],
-    "Viceroy's STALKER ALife - Debug",
-    false
+    [localize "STR_VSA_debugMode", localize "STR_VSA_debugMode_Tooltip"],
+    [localize "STR_VSA_Category_Debug"],
+    false,
+    true,
+    {
+        params ["_value"];
+        VSA_debugMode = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_AIPanicEnabled",
+    "CHECKBOX",
+    [localize "STR_VSA_AIPanicEnabled", localize "STR_VSA_AIPanicEnabled_Tooltip"],
+    [localize "STR_VSA_Category_Emission"],
+    true,
+    true
 ] call CBA_fnc_addSetting;

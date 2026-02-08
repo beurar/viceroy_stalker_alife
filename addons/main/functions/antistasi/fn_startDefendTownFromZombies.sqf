@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Starts the Defend Town from Zombies mission for Antistasi
     - Randomly selects a friendly town at night

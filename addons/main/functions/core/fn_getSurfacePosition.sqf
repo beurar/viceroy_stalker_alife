@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Returns the 3D ASL position at the surface (terrain or object) for the given 2D position.
 

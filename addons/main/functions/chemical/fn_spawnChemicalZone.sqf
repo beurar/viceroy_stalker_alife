@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a chemical mist cloud using CBRN_fnc_spawnMist.
     The gas defaults to the Asphyxiant chemical index and lasts for

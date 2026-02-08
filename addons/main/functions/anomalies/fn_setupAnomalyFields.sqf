@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Generates anomaly fields across the map using the same logic as mutant habitats.
     This runs on the server during initialization.

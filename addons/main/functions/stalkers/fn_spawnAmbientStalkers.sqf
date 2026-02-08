@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns roaming stalker groups that patrol random areas of the map.
     Settings via CBA:

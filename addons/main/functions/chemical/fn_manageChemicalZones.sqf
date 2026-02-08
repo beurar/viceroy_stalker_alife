@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates chemical zones based on player proximity
     and removes expired entries. Zones are stored in

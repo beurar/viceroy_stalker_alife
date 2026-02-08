@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds sniper vantage points by firing multiple vertical rays onto each
     building. The highest impact position from each ray burst becomes a

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a single sniper at one of the nearest cached sniper spots.
     The unit garrisons that position using lambs_wp_fnc_taskGarrison.

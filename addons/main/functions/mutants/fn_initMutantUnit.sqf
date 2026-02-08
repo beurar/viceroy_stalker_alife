@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Applies common properties to a newly spawned mutant so that it remains silent.
 

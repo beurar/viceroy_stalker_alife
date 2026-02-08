@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns an aggressive mutant predator near the given player position and
     orders it to attack that player. Used by the ambient predator system and

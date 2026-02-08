@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Trigger a single blowout using Diwako's Anomalies.
     Params: None. All emission settings are handled by

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Manages the behavior of a sniper team (snipers) and their security detail (assault).
     If an enemy is spotted by the sniper group, the mobile ground units are ordered to hunt them down.

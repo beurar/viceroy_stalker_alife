@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Generates simple habitat markers for various mutant types.
     This runs on the server during postInit.

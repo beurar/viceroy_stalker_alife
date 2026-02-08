@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Makes a sniper unit periodically scan the horizon/surroundings.
     

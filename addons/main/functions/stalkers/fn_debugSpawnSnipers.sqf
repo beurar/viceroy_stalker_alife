@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Debug function to force generation of sniper spots around a position
     and spawn them immediately with markers.

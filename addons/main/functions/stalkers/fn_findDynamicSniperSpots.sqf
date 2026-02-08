@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds tactical sniper positions around a center position.
     Searches for high building positions and terrain vantage points.

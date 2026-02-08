@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds a building suitable for a stalker camp.
     Camps are distributed across the map but only activate when

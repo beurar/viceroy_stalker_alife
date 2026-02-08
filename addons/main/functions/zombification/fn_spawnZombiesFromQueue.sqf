@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 // Spawn zombies from the tracked corpse queue once the emission ends
 
 

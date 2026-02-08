@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Antistasi Custom Mission: Defend Friendly Town from Zombie Attack
     - Randomly triggers at night

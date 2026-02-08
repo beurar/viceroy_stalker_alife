@@ -1,9 +1,8 @@
 /*
-    STALKER ALife Ã¢â‚¬â€œ postInit
+    STALKER ALife  postInit
 */
 
 
-// --- PostInit event handlers migrated from fn_masterInit.sqf ---
 ["postInit", {
     // ABORT if in Main Menu background ("Intro") or Editor Preview
     if ((missionName select [0, 5]) == "Intro" || is3DEN) exitWith {};
@@ -27,6 +26,19 @@
         [] remoteExec ["VIC_fnc_markPlayerRanges", 0];
     };
     [] call antistasi_fnc_manageAntistasiEvents;
+    
+    // Override Diwako's psy wave texture function
+    [] spawn {
+        sleep 1;
+        if (!isNil "diwako_anomalies_main_fnc_showPsyWavesInSky") then {
+            systemChat "Viceroy: Overriding diwako_anomalies_main_fnc_showPsyWavesInSky";
+            diwako_anomalies_main_fnc_showPsyWavesInSky = compileScript ["\z\viceroy_stalker_alife\addons\main\functions\overrides\fn_showPsyWavesInSky.sqf"];
+        } else {
+             systemChat "Viceroy: diwako_anomalies_main_fnc_showPsyWavesInSky IS NIL";
+             // Try to force compile it anyway to see if it helps
+             diwako_anomalies_main_fnc_showPsyWavesInSky = compileScript ["\z\viceroy_stalker_alife\addons\main\functions\overrides\fn_showPsyWavesInSky.sqf"];
+        };
+    };
 }] call CBA_fnc_addEventHandler;
 
 

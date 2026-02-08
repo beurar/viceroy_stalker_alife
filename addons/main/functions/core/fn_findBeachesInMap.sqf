@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Scans the map on a grid and records every midpoint between two adjacent
     grid cells where one is water and the other is land. These points represent

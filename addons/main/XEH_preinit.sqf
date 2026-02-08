@@ -1,25 +1,11 @@
 #include "script_component.hpp"
+#include "XEH_PREP.hpp"
+#include "cba_settings.sqf"
+
 /*
     STALKER ALife â€“ preInit
-    - Register CBA settings
-    - Compile functions
-    - Define constants
+    - Register Hooks
 */
-
-
-// --- Shared initializations migrated from fn_masterInit.sqf ---
-#include "XEH_PREP.hpp"
-
-private _settings = QPATHTOF(cba_settings.sqf);
-private _start = diag_tickTime;
-waitUntil {
-    !isNil "CBA_fnc_addSetting" || {diag_tickTime - _start > 5}
-};
-if (isNil "CBA_fnc_addSetting") exitWith {
-    diag_log "STALKER ALife: CBA not found - skipping initialization";
-};
-call compile preprocessFileLineNumbers _settings;
-
 
 // Register emission event hooks early
 missionNamespace setVariable ["emission_active", false];

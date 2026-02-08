@@ -2,9 +2,7 @@
     STALKER ALife â€“ clientInit
 */
 
-
-// --- Client-specific logic migrated from fn_masterInit.sqf ---
-["postInit", {
+["clientInit", {
     if (hasInterface && { ["VSA_debugMode", false] call VIC_fnc_getSetting }) then {
         [] call VIC_fnc_setupDebugActions;
     };

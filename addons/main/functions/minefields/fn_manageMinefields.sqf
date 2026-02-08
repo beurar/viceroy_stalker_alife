@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates minefields based on player proximity.
     STALKER_minefields entries: [center, anchor, type, size, objects, marker, active]

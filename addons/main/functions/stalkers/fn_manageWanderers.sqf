@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Handles ambient stalker wanderer groups. Groups are removed when their
     patrol grid cell becomes inactive and respawned when the cell is active.

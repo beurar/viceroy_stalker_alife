@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Periodically updates player proximity for mutant habitats and herds.
 */

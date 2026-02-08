@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds a hilly open space for springboard anomaly fields.
     Params:

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Creates a hidden logic object at the supplied position. The object is used
     as an anchor for proximity based systems.

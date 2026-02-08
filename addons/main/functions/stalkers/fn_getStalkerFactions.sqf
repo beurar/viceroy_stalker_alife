@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Returns the definition of Stalker factions, their sides, and unit classes.
     Format: [FactionName, [allowed sides], [unit classes]]

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     File: fn_avoidAnomalies.sqf
     Author: Viceroy's STALKER ALife

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds clusters of buildings that are at least 1km away from any town (of any type) or named location.
 

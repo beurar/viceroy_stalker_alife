@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Scans the entire map for bridge-like objects using classnames and model path heuristics.
 

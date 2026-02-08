@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Manages spawned spook zones by toggling their units based on activity.
     drg_activeSpookZones entries are trigger objects with variables:

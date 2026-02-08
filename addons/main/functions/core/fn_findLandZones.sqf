@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds mostly evenly distributed land positions across the map using a grid search.
     Each grid cell tries to locate one valid land position using VIC_fnc_findLandPos.

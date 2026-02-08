@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns valley chemical zone clusters across the entire map.
     Each grid cell rolls a chance to spawn a cluster anchored to the

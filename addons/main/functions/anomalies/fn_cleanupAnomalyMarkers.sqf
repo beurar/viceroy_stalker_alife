@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Removes map markers created for anomaly fields.
     Iterates over the global STALKER_anomalyMarkers array, deletes each

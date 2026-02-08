@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns mutant hunting parties from the nearest five habitats to the player.
     Params:

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Handles spawned sniper units. Snipers are removed when their
     spawns when players are nearby and despawns when they leave.

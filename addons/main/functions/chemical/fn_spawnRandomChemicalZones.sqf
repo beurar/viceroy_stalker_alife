@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns multiple chemical gas zones around a position using CBA settings.
     Params:

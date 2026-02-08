@@ -2,6 +2,9 @@
     "sqf.enableCBA": true,
     "sqf.enableACE3": true,
     "sqf.enableARMA3": true,
+    "sqf.linter.includePaths": [
+        "include"
+    ],
     "sqf.linter.ignoredVariables": [
         "CBA_*"
     ],

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     File: fn_resetAIBehavior.sqf
     Author: Viceroy's STALKER ALife

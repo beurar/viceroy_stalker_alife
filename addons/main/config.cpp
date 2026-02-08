@@ -8,40 +8,14 @@ class CfgPatches {
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {
             "A3_Functions_F",
-            "CBA_Extended_EventHandlers",
-            "cba_main"
+            "cba_main",
+            "cba_common",
+            "cba_xeh",
+            "diwako_anomalies_main"
         };
         author = "Viceroy and PG";
         authorUrl = "https://github.com/beurar/viceroy_stalker_alife";
         VERSION_CONFIG;
-    };
-};
-
-class CfgMods {
-    class PREFIX {
-        dir = "@viceroy_stalker_alife";
-        name = "Viceroy's STALKER A-Life";
-        picture = "logo.paa";
-        logo = "Icon.paa";
-        logoOver = "Icon.paa";
-        logoSmall = "Icon.paa";
-        hidePicture = "false";
-        hideName = "false";
-        actionName = "Website";
-        action = "https://github.com/beurar/viceroy_stalker_alife";
-        description = "Dynamic A-Life system";
-    };
-};
-
-class Extended_PreInit_EventHandlers {
-    class ADDON {
-        init = "call compileScript ['\z\viceroy_stalker_alife\addons\main\XEH_preInit.sqf']";
-    };
-};
-
-class Extended_PostInit_EventHandlers {
-    class ADDON {
-        init = "call compileScript ['\z\viceroy_stalker_alife\addons\main\XEH_postInit.sqf']";
     };
 };
 
@@ -89,3 +63,5 @@ class CfgRemoteExec {
         class DFUNC(radioMessage)        { allowedTargets = 0; };
     };
 };
+
+#include "cfgEventHandlers.hpp"

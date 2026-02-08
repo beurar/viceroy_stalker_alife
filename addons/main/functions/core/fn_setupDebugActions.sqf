@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Adds interaction actions to the player for triggering major
     STALKER ALife systems. Only runs when VSA_debugMode is enabled.
@@ -8,6 +9,16 @@ if (missionNamespace getVariable ["VSA_debugActionsAdded", false]) exitWith {};
 missionNamespace setVariable ["VSA_debugActionsAdded", true];
 
 // --- Spawning Actions ---
+player addAction ["<t color='#00FFFF'>[DEBUG] Force Psy Sky Override</t>", {
+    systemChat "Attempting manual override of Psy Sky texture...";
+    diwako_anomalies_main_fnc_showPsyWavesInSky = compileScript ["\z\viceroy_stalker_alife\addons\main\functions\overrides\fn_showPsyWavesInSky.sqf"];
+    if (isNil "diwako_anomalies_main_fnc_showPsyWavesInSky") then {
+        systemChat "Override FAILED: Variable is still nil.";
+    } else {
+        systemChat "Override SUCCESS: Function reassigned.";
+    };
+}];
+
 player addAction ["<t color='#ff0000'>Spawn Psy-Storm</t>", {
     private _dur = ["VSA_stormDuration", 180] call VIC_fnc_getSetting;
     private _lStart = ["VSA_stormLightningStart", 6] call VIC_fnc_getSetting;

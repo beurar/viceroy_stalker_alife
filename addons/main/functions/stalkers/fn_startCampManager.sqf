@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Starts the stalker camp management loop. Debug use only.
     Periodically manages STALKER_camps, removing excess camps

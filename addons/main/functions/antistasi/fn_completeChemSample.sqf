@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Completes the chemical sampling mission and pays the reward.
     Params:

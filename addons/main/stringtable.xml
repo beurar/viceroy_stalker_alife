@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Viceroy Stalker ALife">
+    <Package name="Main">
+        <Container name="Settings">
+            <!-- Emission -->
+            <Key ID="STR_VSA_AIPanicEnabled">
+                <Original>Enable AI Emission Panic</Original>
+            </Key>
+            <Key ID="STR_VSA_AIPanicEnabled_Tooltip">
+                <Original>AI units will attempt to find cover indoors or in trenches when an emission is building up.</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_AI">
+                <Original>Viceroy's STALKER ALife - AI</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Ambushes">
+                <Original>Viceroy's STALKER ALife - Ambushes</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Anomalies">
+                <Original>Viceroy's STALKER ALife - Anomalies</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_AnomalyDensity">
+                <Original>Viceroy's STALKER ALife - Anomaly Density</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_AnomalyWeights">
+                <Original>Viceroy's STALKER ALife - Anomaly Weights</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Antistasi">
+                <Original>Viceroy's STALKER ALife - Antistasi</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Blowouts">
+                <Original>Viceroy's STALKER ALife - Blowouts</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Chemical">
+                <Original>Viceroy's STALKER ALife - Chemical</Original>
+            </Key>
+            <!-- Categories -->
+            <Key ID="STR_VSA_Category_Core">
+                <Original>Viceroy's STALKER ALife - Core</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Debug">
+                <Original>Viceroy's STALKER ALife - Debug</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Emission">
+                <Original>Viceroy's STALKER ALife - Emission</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Minefields">
+                <Original>Viceroy's STALKER ALife - Minefields</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Mutants">
+                <Original>Viceroy's STALKER ALife - Mutants</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Necroplague">
+                <Original>Viceroy's STALKER ALife - Necroplague</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Spooks">
+                <Original>Viceroy's STALKER ALife - Spooks</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_StalkerCamps">
+                <Original>Viceroy's STALKER ALife - Stalker Camps</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Storms">
+                <Original>Viceroy's STALKER ALife - Storms</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_WanderingStalkers">
+                <Original>Viceroy's STALKER ALife - Wandering Stalkers</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Wrecks">
+                <Original>Viceroy's STALKER ALife - Wrecks</Original>
+            </Key>
+            <Key ID="STR_VSA_Category_Zombification">
+                <Original>Viceroy's STALKER ALife - Zombification</Original>
+            </Key>
+            <Key ID="STR_VSA_IEDCount">
+                <Original>IEDs per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_IEDCount_Tooltip">
+                <Original>Number of IEDs placed on roads</Original>
+            </Key>
+            <Key ID="STR_VSA_IEDSiteCount">
+                <Original>Total IED Sites</Original>
+            </Key>
+            <Key ID="STR_VSA_IEDSiteCount_Tooltip">
+                <Original>Number of road IED locations maintained</Original>
+            </Key>
+            <Key ID="STR_VSA_Option_Move">
+                <Original>Move</Original>
+            </Key>
+            <!-- Options -->
+            <Key ID="STR_VSA_Option_None">
+                <Original>None</Original>
+            </Key>
+            <Key ID="STR_VSA_Option_Respawn">
+                <Original>Respawn</Original>
+            </Key>
+            <Key ID="STR_VSA_Option_Sarid">
+                <Original>Sarid</Original>
+            </Key>
+            <Key ID="STR_VSA_Option_TearGas">
+                <Original>Tear Gas</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationCount">
+                <Original>Abomination Count</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationCount_Tooltip">
+                <Original>Units spawned when an Abomination zone appears</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationSpawnWeight">
+                <Original>Abomination Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationSpawnWeight_Tooltip">
+                <Original>Relative chance to choose an Abomination</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationTime">
+                <Original>Abomination Active Time</Original>
+            </Key>
+            <Key ID="STR_VSA_abominationTime_Tooltip">
+                <Original>When Abominations may spawn</Original>
+            </Key>
+            <Key ID="STR_VSA_aiAnomalyAvoidChance">
+                <Original>Anomaly Avoid Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_aiAnomalyAvoidChance_Tooltip">
+                <Original>Chance AI moves away from nearby anomalies</Original>
+            </Key>
+            <Key ID="STR_VSA_aiAnomalyAvoidRange">
+                <Original>Anomaly Avoid Range</Original>
+            </Key>
+            <Key ID="STR_VSA_aiAnomalyAvoidRange_Tooltip">
+                <Original>Distance to check for anomalies around AI</Original>
+            </Key>
+            <Key ID="STR_VSA_aiNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_aiNightOnly_Tooltip">
+                <Original>AI tweaks only active at night</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientHerdCount">
+                <Original>Roaming Herds</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientHerdCount_Tooltip">
+                <Original>Number of roaming herds</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientHerdSize">
+                <Original>Herd Size</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientHerdSize_Tooltip">
+                <Original>Units per roaming herd</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientNightOnly_Tooltip">
+                <Original>Spawn herds only at night</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerGroups">
+                <Original>Stalker Groups per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerGroups_Tooltip">
+                <Original>Number of roaming stalker groups</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerNightOnly_Tooltip">
+                <Original>Ambient stalkers spawn only at night</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerSize">
+                <Original>Stalker Group Size</Original>
+            </Key>
+            <Key ID="STR_VSA_ambientStalkerSize_Tooltip">
+                <Original>Units per ambient group</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushCount">
+                <Original>Ambushes per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushCount_Tooltip">
+                <Original>Number of ambush sites generated</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushMaxUnits">
+                <Original>Max Units</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushMaxUnits_Tooltip">
+                <Original>Maximum units spawned at an ambush</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushMinUnits">
+                <Original>Min Units</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushMinUnits_Tooltip">
+                <Original>Minimum units spawned at an ambush</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushTownDistance">
+                <Original>Outside Town Distance</Original>
+            </Key>
+            <Key ID="STR_VSA_ambushTownDistance_Tooltip">
+                <Original>Distance beyond the town radius for ambush placement</Original>
+            </Key>
+            <Key ID="STR_VSA_anomaliesPerField">
+                <Original>Max Anomalies per Field</Original>
+            </Key>
+            <Key ID="STR_VSA_anomaliesPerField_Tooltip">
+                <Original>Upper limit for anomalies spawned</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Bridge">
+                <Original>Bridge Anomaly Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Bridge_Tooltip">
+                <Original>Multiplier for Bridge anomaly count</Original>
+            </Key>
+            <!-- Anomaly Density -->
+            <Key ID="STR_VSA_anomalyDensity_Burner">
+                <Original>Burner Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Burner_Tooltip">
+                <Original>Multiplier for Burner anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Clicker">
+                <Original>Clicker Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Clicker_Tooltip">
+                <Original>Multiplier for Clicker anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Electra">
+                <Original>Electra Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Electra_Tooltip">
+                <Original>Multiplier for Electra anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Fruitpunch">
+                <Original>Fruit Punch Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Fruitpunch_Tooltip">
+                <Original>Multiplier for Fruit Punch anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Gravi">
+                <Original>Gravi Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Gravi_Tooltip">
+                <Original>Multiplier for Gravi anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Launchpad">
+                <Original>Launchpad Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Launchpad_Tooltip">
+                <Original>Multiplier for Launchpad anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Leech">
+                <Original>Leech Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Leech_Tooltip">
+                <Original>Multiplier for Leech anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Meatgrinder">
+                <Original>Meatgrinder Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Meatgrinder_Tooltip">
+                <Original>Multiplier for Meatgrinder anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Springboard">
+                <Original>Springboard Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Springboard_Tooltip">
+                <Original>Multiplier for Springboard anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Trapdoor">
+                <Original>Trapdoor Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Trapdoor_Tooltip">
+                <Original>Multiplier for Trapdoor anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Whirligig">
+                <Original>Whirligig Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Whirligig_Tooltip">
+                <Original>Multiplier for Whirligig anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Zapper">
+                <Original>Zapper Density</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyDensity_Zapper_Tooltip">
+                <Original>Multiplier for Zapper anomaly count</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyEmissionMode">
+                <Original>Field Change On Emission</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyEmissionMode_Tooltip">
+                <Original>How anomaly fields react to emissions</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyFieldCount">
+                <Original>Anomaly Fields per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyFieldCount_Tooltip">
+                <Original>Number of fields spawned per area</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyFieldRadius">
+                <Original>Anomaly Field Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyFieldRadius_Tooltip">
+                <Original>Radius of each anomaly field</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyNightOnly_Tooltip">
+                <Original>Anomalies only spawn at night</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalySpawnWeight">
+                <Original>Anomaly Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalySpawnWeight_Tooltip">
+                <Original>Relative spawn chance of anomaly types</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Bridge">
+                <Original>Bridge Anomaly Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Bridge_Tooltip">
+                <Original>Relative spawn chance for Bridge anomaly fields</Original>
+            </Key>
+            <!-- Anomaly Weights -->
+            <Key ID="STR_VSA_anomalyWeight_Burner">
+                <Original>Burner Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Burner_Tooltip">
+                <Original>Relative spawn chance for Burner fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Clicker">
+                <Original>Clicker Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Clicker_Tooltip">
+                <Original>Relative spawn chance for Clicker fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Electra">
+                <Original>Electra Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Electra_Tooltip">
+                <Original>Relative spawn chance for Electra fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Fruitpunch">
+                <Original>Fruit Punch Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Fruitpunch_Tooltip">
+                <Original>Relative spawn chance for Fruit Punch fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Gravi">
+                <Original>Gravi Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Gravi_Tooltip">
+                <Original>Relative spawn chance for Gravi fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Launchpad">
+                <Original>Launchpad Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Launchpad_Tooltip">
+                <Original>Relative spawn chance for Launchpad fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Leech">
+                <Original>Leech Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Leech_Tooltip">
+                <Original>Relative spawn chance for Leech fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Meatgrinder">
+                <Original>Meatgrinder Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Meatgrinder_Tooltip">
+                <Original>Relative spawn chance for Meatgrinder fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Springboard">
+                <Original>Springboard Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Springboard_Tooltip">
+                <Original>Relative spawn chance for Springboard fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Trapdoor">
+                <Original>Trapdoor Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Trapdoor_Tooltip">
+                <Original>Relative spawn chance for Trapdoor fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Whirligig">
+                <Original>Whirligig Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Whirligig_Tooltip">
+                <Original>Relative spawn chance for Whirligig fields</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Zapper">
+                <Original>Zapper Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_anomalyWeight_Zapper_Tooltip">
+                <Original>Relative spawn chance for Zapper fields</Original>
+            </Key>
+            <Key ID="STR_VSA_autoInit">
+                <Original>Automatically Initialize</Original>
+            </Key>
+            <Key ID="STR_VSA_autoInit_Tooltip">
+                <Original>Populate the world and start managers on mission start</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDirection">
+                <Original>Wave Direction</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDirection_Tooltip">
+                <Original>Approach direction in degrees</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDurationMax">
+                <Original>Max Duration (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDurationMax_Tooltip">
+                <Original>Longest blowout length</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDurationMin">
+                <Original>Min Duration (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutDurationMin_Tooltip">
+                <Original>Shortest blowout length</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutMaxDelay">
+                <Original>Max Delay (h)</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutMaxDelay_Tooltip">
+                <Original>Maximum hours between blowouts</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutMinDelay">
+                <Original>Min Delay (h)</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutMinDelay_Tooltip">
+                <Original>Minimum hours between blowouts</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutSpeedMax">
+                <Original>Wave Speed Max</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutSpeedMax_Tooltip">
+                <Original>Maximum wave speed</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutSpeedMin">
+                <Original>Wave Speed Min</Original>
+            </Key>
+            <Key ID="STR_VSA_blowoutSpeedMin_Tooltip">
+                <Original>Minimum wave speed</Original>
+            </Key>
+            <Key ID="STR_VSA_boobyTrapCount">
+                <Original>Booby Traps per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_boobyTrapCount_Tooltip">
+                <Original>Number of building traps spawned</Original>
+            </Key>
+            <Key ID="STR_VSA_bridgeFieldRadius">
+                <Original>Bridge Field Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_bridgeFieldRadius_Tooltip">
+                <Original>Radius of bridge anomaly fields</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalGasType">
+                <Original>Chemical Gas Type</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalGasType_Tooltip">
+                <Original>Gas used for chemical zones</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalNightOnly_Tooltip">
+                <Original>Chemical zones only appear at night</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalSpawnWeight">
+                <Original>Chemical Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalSpawnWeight_Tooltip">
+                <Original>Relative chance for chemical zone creation</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalZoneCount">
+                <Original>Chemical Zones per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalZoneCount_Tooltip">
+                <Original>Number of chemical zones created</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalZoneRadius">
+                <Original>Chemical Zone Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_chemicalZoneRadius_Tooltip">
+                <Original>Radius of each chemical zone</Original>
+            </Key>
+            <!-- Debug -->
+            <Key ID="STR_VSA_debugMode">
+                <Original>Enable Debug Mode</Original>
+            </Key>
+            <Key ID="STR_VSA_debugMode_Tooltip">
+                <Original>Show on-screen logs and enable testing actions</Original>
+            </Key>
+            <!-- Antistasi -->
+            <Key ID="STR_VSA_disableA3UWeather">
+                <Original>Disable Antistasi Weather</Original>
+            </Key>
+            <Key ID="STR_VSA_disableA3UWeather_Tooltip">
+                <Original>Stop Antistasi persistent weather script</Original>
+            </Key>
+            <Key ID="STR_VSA_emissionChemicalCount">
+                <Original>Zones After Emission</Original>
+            </Key>
+            <Key ID="STR_VSA_emissionChemicalCount_Tooltip">
+                <Original>Chemical zones spawned after an emission</Original>
+            </Key>
+            <Key ID="STR_VSA_emissionChemicalRadius">
+                <Original>Emission Chemical Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_emissionChemicalRadius_Tooltip">
+                <Original>Search radius around players for emission zones</Original>
+            </Key>
+            <!-- AI -->
+            <Key ID="STR_VSA_enableAIBehaviour">
+                <Original>Enable AI Behaviour Tweaks</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAIBehaviour_Tooltip">
+                <Original>Toggle custom AI behaviour</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAcidSmasher">
+                <Original>Enable Acid Smashers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAcidSmasher_Tooltip">
+                <Original>Allow acid smasher spawns</Original>
+            </Key>
+            <!-- Ambient Stalkers -->
+            <Key ID="STR_VSA_enableAmbientStalkers">
+                <Original>Enable Ambient Stalkers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAmbientStalkers_Tooltip">
+                <Original>Toggle roaming stalker groups</Original>
+            </Key>
+            <!-- Ambushes -->
+            <Key ID="STR_VSA_enableAmbushes">
+                <Original>Enable Ambushes</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAmbushes_Tooltip">
+                <Original>Toggle road ambush spawning</Original>
+            </Key>
+            <!-- Anomalies -->
+            <Key ID="STR_VSA_enableAnomalies">
+                <Original>Enable Anomaly Fields</Original>
+            </Key>
+            <Key ID="STR_VSA_enableAnomalies_Tooltip">
+                <Original>Toggle anomaly field spawning</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBehemoth">
+                <Original>Enable Behemoths</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBehemoth_Tooltip">
+                <Original>Allow behemoth spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBlindDog">
+                <Original>Enable Blind Dogs</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBlindDog_Tooltip">
+                <Original>Allow blind dog spawns</Original>
+            </Key>
+            <!-- Mutants Toggles -->
+            <Key ID="STR_VSA_enableBloodsucker">
+                <Original>Enable Bloodsuckers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBloodsucker_Tooltip">
+                <Original>Allow bloodsucker spawns</Original>
+            </Key>
+            <!-- Blowouts -->
+            <Key ID="STR_VSA_enableBlowouts">
+                <Original>Enable Blowouts</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBlowouts_Tooltip">
+                <Original>Toggle emission blowouts</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBoar">
+                <Original>Enable Boars</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBoar_Tooltip">
+                <Original>Allow boar spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBoobyTraps">
+                <Original>Enable Booby Traps</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBoobyTraps_Tooltip">
+                <Original>Place tripwires and booby traps in buildings</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBully">
+                <Original>Enable Bullies</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBully_Tooltip">
+                <Original>Allow bully spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableCat">
+                <Original>Enable Cats</Original>
+            </Key>
+            <Key ID="STR_VSA_enableCat_Tooltip">
+                <Original>Allow cat spawns</Original>
+            </Key>
+            <!-- Chemical -->
+            <Key ID="STR_VSA_enableChemicalZones">
+                <Original>Enable Chemical Zones</Original>
+            </Key>
+            <Key ID="STR_VSA_enableChemicalZones_Tooltip">
+                <Original>Toggle chemical gas zone spawning</Original>
+            </Key>
+            <Key ID="STR_VSA_enableChimera">
+                <Original>Enable Chimeras</Original>
+            </Key>
+            <Key ID="STR_VSA_enableChimera_Tooltip">
+                <Original>Allow chimera spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableController">
+                <Original>Enable Controllers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableController_Tooltip">
+                <Original>Allow controller spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableCorruptor">
+                <Original>Enable Corruptors</Original>
+            </Key>
+            <Key ID="STR_VSA_enableCorruptor_Tooltip">
+                <Original>Allow corruptor spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableFlesh">
+                <Original>Enable Flesh</Original>
+            </Key>
+            <Key ID="STR_VSA_enableFlesh_Tooltip">
+                <Original>Allow flesh spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableHivemind">
+                <Original>Enable Hiveminds</Original>
+            </Key>
+            <Key ID="STR_VSA_enableHivemind_Tooltip">
+                <Original>Allow hivemind spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableIzlom">
+                <Original>Enable Izlom</Original>
+            </Key>
+            <Key ID="STR_VSA_enableIzlom_Tooltip">
+                <Original>Allow izlom spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableJumper">
+                <Original>Enable Jumpers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableJumper_Tooltip">
+                <Original>Allow jumper spawns</Original>
+            </Key>
+            <!-- Minefields -->
+            <Key ID="STR_VSA_enableMinefields">
+                <Original>Enable Minefields</Original>
+            </Key>
+            <Key ID="STR_VSA_enableMinefields_Tooltip">
+                <Original>Toggle spawning of minefields</Original>
+            </Key>
+            <!-- Mutants -->
+            <Key ID="STR_VSA_enableMutants">
+                <Original>Enable Mutants</Original>
+            </Key>
+            <Key ID="STR_VSA_enableMutants_Tooltip">
+                <Original>Toggle mutant spawning</Original>
+            </Key>
+            <!-- Necroplague -->
+            <Key ID="STR_VSA_enableNecroplague">
+                <Original>Enable Necroplague</Original>
+            </Key>
+            <Key ID="STR_VSA_enableNecroplague_Tooltip">
+                <Original>Allow periodic zombie hordes</Original>
+            </Key>
+            <Key ID="STR_VSA_enableParasite">
+                <Original>Enable Parasites</Original>
+            </Key>
+            <Key ID="STR_VSA_enableParasite_Tooltip">
+                <Original>Allow parasite spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enablePseudodog">
+                <Original>Enable Pseudodogs</Original>
+            </Key>
+            <Key ID="STR_VSA_enablePseudodog_Tooltip">
+                <Original>Allow pseudodog spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enablePseudogiant">
+                <Original>Enable Pseudogiants</Original>
+            </Key>
+            <Key ID="STR_VSA_enablePseudogiant_Tooltip">
+                <Original>Allow pseudogiant spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSmasher">
+                <Original>Enable Smashers</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSmasher_Tooltip">
+                <Original>Allow smasher spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSnork">
+                <Original>Enable Snorks</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSnork_Tooltip">
+                <Original>Allow snork spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSpitter">
+                <Original>Enable Spitters</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSpitter_Tooltip">
+                <Original>Allow spitter spawns</Original>
+            </Key>
+            <!-- Spooks -->
+            <Key ID="STR_VSA_enableSpooks">
+                <Original>Enable Spook Zones</Original>
+            </Key>
+            <Key ID="STR_VSA_enableSpooks_Tooltip">
+                <Original>Toggle paranormal event spawning</Original>
+            </Key>
+            <Key ID="STR_VSA_enableStalker">
+                <Original>Enable Stalkers</Original>
+            </Key>
+            <!-- Stalker Camps -->
+            <Key ID="STR_VSA_enableStalkerCamps">
+                <Original>Enable Stalker Camps</Original>
+            </Key>
+            <Key ID="STR_VSA_enableStalkerCamps_Tooltip">
+                <Original>Toggle stalker camp spawning</Original>
+            </Key>
+            <Key ID="STR_VSA_enableStalker_Tooltip">
+                <Original>Allow stalker mutant spawns</Original>
+            </Key>
+            <!-- Storms -->
+            <Key ID="STR_VSA_enableStorms">
+                <Original>Enable Psy-Storms</Original>
+            </Key>
+            <Key ID="STR_VSA_enableStorms_Tooltip">
+                <Original>Toggle psy-storm events</Original>
+            </Key>
+            <!-- Wrecks -->
+            <Key ID="STR_VSA_enableWrecks">
+                <Original>Enable Abandoned Vehicles</Original>
+            </Key>
+            <Key ID="STR_VSA_enableWrecks_Tooltip">
+                <Original>Spawn damaged vehicles near roads</Original>
+            </Key>
+            <Key ID="STR_VSA_enableZombie">
+                <Original>Enable Zombies</Original>
+            </Key>
+            <Key ID="STR_VSA_enableZombie_Tooltip">
+                <Original>Allow zombie spawns</Original>
+            </Key>
+            <!-- Zombification -->
+            <Key ID="STR_VSA_enableZombification">
+                <Original>Enable Zombification</Original>
+            </Key>
+            <Key ID="STR_VSA_enableZombification_Tooltip">
+                <Original>Toggle NPC zombification mechanics</Original>
+            </Key>
+            <Key ID="STR_VSA_fieldAvoidEnabled">
+                <Original>Avoid Anomaly Fields</Original>
+            </Key>
+            <Key ID="STR_VSA_fieldAvoidEnabled_Tooltip">
+                <Original>AI will steer clear of anomaly field areas</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatCheckInterval">
+                <Original>Habitat Check Interval</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatCheckInterval_Tooltip">
+                <Original>Seconds between habitat updates</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Bloodsucker">
+                <Original>Bloodsucker Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Bloodsucker_Tooltip">
+                <Original>Max bloodsuckers per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Boar">
+                <Original>Boar Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Boar_Tooltip">
+                <Original>Max boars per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Cat">
+                <Original>Cat Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Cat_Tooltip">
+                <Original>Max cats per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Controller">
+                <Original>Controller Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Controller_Tooltip">
+                <Original>Max controllers per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Dog">
+                <Original>Dog Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Dog_Tooltip">
+                <Original>Max dogs per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Flesh">
+                <Original>Flesh Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Flesh_Tooltip">
+                <Original>Max flesh per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Izlom">
+                <Original>Izlom Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Izlom_Tooltip">
+                <Original>Max izlom per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Pseudodog">
+                <Original>Pseudodog Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Pseudodog_Tooltip">
+                <Original>Max pseudodogs per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Pseudogiant">
+                <Original>Pseudogiant Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Pseudogiant_Tooltip">
+                <Original>Max pseudogiants per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Snork">
+                <Original>Snork Habitat Size</Original>
+            </Key>
+            <Key ID="STR_VSA_habitatSize_Snork_Tooltip">
+                <Original>Max snorks per habitat</Original>
+            </Key>
+            <Key ID="STR_VSA_killAIEmission">
+                <Original>Kill Unsheltered AI</Original>
+            </Key>
+            <Key ID="STR_VSA_killAIEmission_Tooltip">
+                <Original>AI without shelter die during a blowout</Original>
+            </Key>
+            <Key ID="STR_VSA_maxAmbientHerds">
+                <Original>Max Active Herds</Original>
+            </Key>
+            <Key ID="STR_VSA_maxAmbientHerds_Tooltip">
+                <Original>Maximum number of roaming herds</Original>
+            </Key>
+            <Key ID="STR_VSA_maxAnomalyFields">
+                <Original>Max Active Fields</Original>
+            </Key>
+            <Key ID="STR_VSA_maxAnomalyFields_Tooltip">
+                <Original>Maximum number of anomaly fields present at once</Original>
+            </Key>
+            <Key ID="STR_VSA_maxHostileGroups">
+                <Original>Max Hostile Groups</Original>
+            </Key>
+            <Key ID="STR_VSA_maxHostileGroups_Tooltip">
+                <Original>Maximum active hostile mutant groups</Original>
+            </Key>
+            <Key ID="STR_VSA_maxMutantNests">
+                <Original>Max Mutant Nests</Original>
+            </Key>
+            <Key ID="STR_VSA_maxMutantNests_Tooltip">
+                <Original>Maximum active bloodsucker nests</Original>
+            </Key>
+            <Key ID="STR_VSA_maxStalkerCamps">
+                <Original>Max Active Camps</Original>
+            </Key>
+            <Key ID="STR_VSA_maxStalkerCamps_Tooltip">
+                <Original>Maximum number of stalker camps</Original>
+            </Key>
+            <Key ID="STR_VSA_minCampPositions">
+                <Original>Min Building Positions</Original>
+            </Key>
+            <Key ID="STR_VSA_minCampPositions_Tooltip">
+                <Original>Minimum number of positions inside camp buildings</Original>
+            </Key>
+            <Key ID="STR_VSA_minStalkerCamps">
+                <Original>Min Active Camps</Original>
+            </Key>
+            <Key ID="STR_VSA_minStalkerCamps_Tooltip">
+                <Original>Minimum number of stalker camps</Original>
+            </Key>
+            <Key ID="STR_VSA_minefieldCount">
+                <Original>APERS Fields per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_minefieldCount_Tooltip">
+                <Original>Number of APERS minefields generated</Original>
+            </Key>
+            <Key ID="STR_VSA_minefieldSize">
+                <Original>APERS Field Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_minefieldSize_Tooltip">
+                <Original>Radius in meters for APERS minefields</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantGroupCount">
+                <Original>Mutant Groups per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantGroupCountHostile">
+                <Original>Post-Emission Groups</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantGroupCountHostile_Tooltip">
+                <Original>Number of mutant groups after an emission</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantGroupCount_Tooltip">
+                <Original>Number of mutant groups</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantNightOnlyHostile">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantNightOnlyHostile_Tooltip">
+                <Original>Spawn hostile groups only at night</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantSpawnWeight">
+                <Original>Mutant Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantSpawnWeight_Tooltip">
+                <Original>Relative chance for mutant spawns</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantThreat">
+                <Original>Units per Hostile Group</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantThreat_Tooltip">
+                <Original>Units spawned in each hostile group</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantsNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_mutantsNightOnly_Tooltip">
+                <Original>Mutants only spawn at night</Original>
+            </Key>
+            <Key ID="STR_VSA_necroHordes">
+                <Original>Hordes per Player</Original>
+            </Key>
+            <Key ID="STR_VSA_necroHordes_Tooltip">
+                <Original>Number of zombie groups around each player</Original>
+            </Key>
+            <Key ID="STR_VSA_necroMaxDelay">
+                <Original>Max Delay (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_necroMaxDelay_Tooltip">
+                <Original>Maximum seconds between necroplague events</Original>
+            </Key>
+            <Key ID="STR_VSA_necroMinDelay">
+                <Original>Min Delay (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_necroMinDelay_Tooltip">
+                <Original>Minimum seconds between necroplague events</Original>
+            </Key>
+            <Key ID="STR_VSA_necroZombies">
+                <Original>Zombies per Horde</Original>
+            </Key>
+            <Key ID="STR_VSA_necroZombies_Tooltip">
+                <Original>Zombies spawned in each group</Original>
+            </Key>
+            <Key ID="STR_VSA_nestsNightOnly">
+                <Original>Night Time Nests</Original>
+            </Key>
+            <Key ID="STR_VSA_nestsNightOnly_Tooltip">
+                <Original>Generate nests only during night</Original>
+            </Key>
+            <Key ID="STR_VSA_panicThreshold">
+                <Original>AI Panic Threshold</Original>
+            </Key>
+            <Key ID="STR_VSA_panicThreshold_Tooltip">
+                <Original>Chance for AI to panic when threatened</Original>
+            </Key>
+            <!-- Core -->
+            <Key ID="STR_VSA_playerNearbyRange">
+                <Original>Player Nearby Range</Original>
+            </Key>
+            <Key ID="STR_VSA_playerNearbyRange_Tooltip">
+                <Original>Distance used to check if players are near</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorAttackChance">
+                <Original>Predator Attack Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorAttackChance_Tooltip">
+                <Original>Chance each check to spawn an ambush</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorCheckIntervalDay">
+                <Original>Predator Check (Day)</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorCheckIntervalDay_Tooltip">
+                <Original>Seconds between predator attack checks during daylight</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorCheckIntervalNight">
+                <Original>Predator Check (Night)</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorCheckIntervalNight_Tooltip">
+                <Original>Seconds between predator attack checks at night</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorRange">
+                <Original>Predator Range</Original>
+            </Key>
+            <Key ID="STR_VSA_predatorRange_Tooltip">
+                <Original>Distance from players to spawn predators</Original>
+            </Key>
+            <Key ID="STR_VSA_proximityCheckInterval">
+                <Original>Proximity Check Interval</Original>
+            </Key>
+            <Key ID="STR_VSA_proximityCheckInterval_Tooltip">
+                <Original>Seconds between player distance checks (0 for constant)</Original>
+            </Key>
+            <Key ID="STR_VSA_spookSpawnWeight">
+                <Original>Spook Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_spookSpawnWeight_Tooltip">
+                <Original>Relative chance for spook events</Original>
+            </Key>
+            <Key ID="STR_VSA_spookZoneCount">
+                <Original>Spook Zones per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_spookZoneCount_Tooltip">
+                <Original>Number of paranormal zones</Original>
+            </Key>
+            <Key ID="STR_VSA_spooksNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_spooksNightOnly_Tooltip">
+                <Original>Spooks are active only at night</Original>
+            </Key>
+            <Key ID="STR_VSA_stableFieldChance">
+                <Original>Stable Field Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_stableFieldChance_Tooltip">
+                <Original>Percentage of fields that are stable</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampBLUChance">
+                <Original>BLUFOR Camp Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampBLUChance_Tooltip">
+                <Original>Relative chance for BLUFOR camps</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampCount">
+                <Original>Stalker Camps per Area</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampCount_Tooltip">
+                <Original>Number of stalker camps</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampINDChance">
+                <Original>Independent Camp Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampINDChance_Tooltip">
+                <Original>Relative chance for independent camps</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampOPFChance">
+                <Original>OPFOR Camp Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampOPFChance_Tooltip">
+                <Original>Relative chance for OPFOR camps</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampSize">
+                <Original>Stalker Camp Size</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampSize_Tooltip">
+                <Original>Units defending each camp</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampSpacing">
+                <Original>Camp Spacing</Original>
+            </Key>
+            <Key ID="STR_VSA_stalkerCampSpacing_Tooltip">
+                <Original>Minimum distance between camps</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDischargeEnd">
+                <Original>Discharge End</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDischargeEnd_Tooltip">
+                <Original>Psy discharge occurrences per second when storm ends</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDischargeStart">
+                <Original>Discharge Start</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDischargeStart_Tooltip">
+                <Original>Psy discharge occurrences per second at storm start</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDuration">
+                <Original>Storm Duration (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_stormDuration_Tooltip">
+                <Original>Length of each psy-storm</Original>
+            </Key>
+            <Key ID="STR_VSA_stormFogEnd">
+                <Original>Fog at Peak</Original>
+            </Key>
+            <Key ID="STR_VSA_stormFogEnd_Tooltip">
+                <Original>Fog level when the storm peaks</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasDensity">
+                <Original>Gas Density</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasDensity_Tooltip">
+                <Original>Mist thickness at each discharge</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasDischarges">
+                <Original>Gas Under Discharges</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasDischarges_Tooltip">
+                <Original>Spawn Nova gas clouds at discharge locations</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasRadius">
+                <Original>Gas Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasRadius_Tooltip">
+                <Original>Nova mist radius at each discharge</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasVertical">
+                <Original>Gas Vertical Spread</Original>
+            </Key>
+            <Key ID="STR_VSA_stormGasVertical_Tooltip">
+                <Original>Vertical spread of the mist</Original>
+            </Key>
+            <Key ID="STR_VSA_stormInterval">
+                <Original>Storm Interval (min)</Original>
+            </Key>
+            <Key ID="STR_VSA_stormInterval_Tooltip">
+                <Original>Minutes between possible storms</Original>
+            </Key>
+            <Key ID="STR_VSA_stormLightningEnd">
+                <Original>Lightning End</Original>
+            </Key>
+            <Key ID="STR_VSA_stormLightningEnd_Tooltip">
+                <Original>Lightning strikes per second when storm ends</Original>
+            </Key>
+            <Key ID="STR_VSA_stormLightningStart">
+                <Original>Lightning Start</Original>
+            </Key>
+            <Key ID="STR_VSA_stormLightningStart_Tooltip">
+                <Original>Lightning strikes per second at storm start</Original>
+            </Key>
+            <Key ID="STR_VSA_stormMaxDelay">
+                <Original>Max Delay (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_stormMaxDelay_Tooltip">
+                <Original>Maximum seconds between storms</Original>
+            </Key>
+            <Key ID="STR_VSA_stormMinDelay">
+                <Original>Min Delay (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_stormMinDelay_Tooltip">
+                <Original>Minimum seconds between storms</Original>
+            </Key>
+            <Key ID="STR_VSA_stormOvercast">
+                <Original>Storm Overcast</Original>
+            </Key>
+            <Key ID="STR_VSA_stormOvercastTime">
+                <Original>Overcast Transition (s)</Original>
+            </Key>
+            <Key ID="STR_VSA_stormOvercastTime_Tooltip">
+                <Original>Seconds to reach full overcast</Original>
+            </Key>
+            <Key ID="STR_VSA_stormOvercast_Tooltip">
+                <Original>Cloud coverage during a storm</Original>
+            </Key>
+            <Key ID="STR_VSA_stormRadius">
+                <Original>Storm Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_stormRadius_Tooltip">
+                <Original>Maximum distance from players for storm effects</Original>
+            </Key>
+            <Key ID="STR_VSA_stormRainEnd">
+                <Original>Rain at Peak</Original>
+            </Key>
+            <Key ID="STR_VSA_stormRainEnd_Tooltip">
+                <Original>Rain intensity when the storm peaks</Original>
+            </Key>
+            <Key ID="STR_VSA_stormSpawnWeight">
+                <Original>Storm Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_stormSpawnWeight_Tooltip">
+                <Original>Relative chance for a storm to occur</Original>
+            </Key>
+            <Key ID="STR_VSA_stormsNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_stormsNightOnly_Tooltip">
+                <Original>Storms only trigger at night</Original>
+            </Key>
+            <Key ID="STR_VSA_townHysteresis">
+                <Original>Town Hysteresis</Original>
+            </Key>
+            <Key ID="STR_VSA_townHysteresis_Tooltip">
+                <Original>Extra distance beyond town radius for debug markers</Original>
+            </Key>
+            <Key ID="STR_VSA_townRadius">
+                <Original>Town Radius</Original>
+            </Key>
+            <Key ID="STR_VSA_townRadius_Tooltip">
+                <Original>Distance considered inside a town</Original>
+            </Key>
+            <Key ID="STR_VSA_wreckCount">
+                <Original>Abandoned Vehicle Count</Original>
+            </Key>
+            <Key ID="STR_VSA_wreckCount_Tooltip">
+                <Original>Number of vehicles spawned across the map</Original>
+            </Key>
+            <Key ID="STR_VSA_zombieCount">
+                <Original>Max Zombies</Original>
+            </Key>
+            <Key ID="STR_VSA_zombieCount_Tooltip">
+                <Original>Maximum zombies spawned from bodies</Original>
+            </Key>
+            <Key ID="STR_VSA_zombieSpawnWeight">
+                <Original>Zombie Spawn Weight</Original>
+            </Key>
+            <Key ID="STR_VSA_zombieSpawnWeight_Tooltip">
+                <Original>Relative chance that dead bodies zombify</Original>
+            </Key>
+            <Key ID="STR_VSA_zombiesNightOnly">
+                <Original>Night Time Only</Original>
+            </Key>
+            <Key ID="STR_VSA_zombiesNightOnly_Tooltip">
+                <Original>Bodies zombify only at night</Original>
+            </Key>
+        </Container>
+    </Package>
+</Project>

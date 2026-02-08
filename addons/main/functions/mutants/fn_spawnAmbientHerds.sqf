@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns roaming mutant herds that sleep when players are far away.
     Only a single leader unit is created initially and used as an anchor

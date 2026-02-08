@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Generates a thematic name for an anomaly field marker based on type.
     Params:

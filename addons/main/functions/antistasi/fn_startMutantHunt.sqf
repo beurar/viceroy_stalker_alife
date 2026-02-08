@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Starts a timed mutant hunting mission that awards money per kill.
 

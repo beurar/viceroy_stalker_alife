@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds a location for clicker anomaly fields near light vegetation.
     Params:

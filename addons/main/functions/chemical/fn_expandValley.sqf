@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Performs a flood fill starting from a valley seed position to gather
     contiguous low points similar to the logic used by fn_findValleys.

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Reshuffles stable anomaly fields and relocates unstable ones.
     Called when an emission ends or via debug action.

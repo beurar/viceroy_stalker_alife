@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Identifies swamp-like areas by scanning the entire map for shallow water
     with dense vegetation.

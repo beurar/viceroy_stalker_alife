@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Handles roaming mutant herds. The leader always remains in the world
     while the rest of the herd is only spawned when players are nearby.

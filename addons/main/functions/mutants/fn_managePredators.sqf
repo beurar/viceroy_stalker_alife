@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Periodically spawns predator attacks on players and cleans up finished groups.
     STALKER_activePredators entries: [group, target, marker, near]

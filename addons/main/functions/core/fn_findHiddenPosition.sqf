@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds a hidden position within a given radius of any player,
     that is not visible to any of them.

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Simplified wrapper that returns a land position using BIS_fnc_randomPos.
     The old expanding search logic has been removed.

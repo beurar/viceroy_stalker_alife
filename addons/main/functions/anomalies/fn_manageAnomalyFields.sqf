@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates anomaly fields based on player proximity and
     removes expired entries.

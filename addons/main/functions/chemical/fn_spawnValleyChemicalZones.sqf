@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns clusters of chemical zone sites around a center position.
     Each cluster is anchored to the lowest point within a small grid

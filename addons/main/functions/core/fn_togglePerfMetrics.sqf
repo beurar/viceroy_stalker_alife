@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Toggle a client-side thread which periodically requests server metrics
     and prints them to chat.

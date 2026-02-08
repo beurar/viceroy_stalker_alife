@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Activates or deactivates booby traps based on player proximity.
     STALKER_boobyTraps entries: [position, anchor, objects, marker, active]

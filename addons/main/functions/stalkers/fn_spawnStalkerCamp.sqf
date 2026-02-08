@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Spawns a single stalker camp at the given position.
     A random faction is selected with a valid side according to the

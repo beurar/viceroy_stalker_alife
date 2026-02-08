@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Scans the map for wreck objects. Object references are stored in
     STALKER_wrecks for runtime use while their positions are returned and

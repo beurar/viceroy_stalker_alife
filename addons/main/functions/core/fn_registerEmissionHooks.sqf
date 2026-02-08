@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Register hooks for blowout events from Diwako's Anomalies.  The
     `blowOutStage` event indicates the current stage of the blowout.

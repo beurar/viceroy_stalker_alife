@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Places tripwires and booby traps inside random town buildings.
     Params:

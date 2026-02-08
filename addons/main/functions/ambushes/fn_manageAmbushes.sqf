@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Handles ambush activation and cleanup.
     STALKER_ambushes entries: [position, anchor, vehicle, mines, groups, triggered, marker, active]

@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Antistasi Event Manager Extension
     - Periodically checks for night and randomly triggers the Defend Town from Zombies mission

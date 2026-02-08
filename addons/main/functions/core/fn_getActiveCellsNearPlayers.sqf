@@ -1,9 +1,10 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Returns active spatial cells near players
 */
 
 private _cellSize = 1000;
-private _radiusCells = 2; // 2 cells â‰ˆ 2km radius
+private _radiusCells = 2; // 2 cells Ã¢â€°Ë† 2km radius
 
 private _cells = [];
 
