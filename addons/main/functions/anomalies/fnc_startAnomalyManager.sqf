@@ -1,0 +1,18 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
+/*
+    Starts the anomaly field management loop. Debug use only.
+*/
+
+if (!isServer) exitWith {};
+
+if (missionNamespace getVariable ["VIC_anomalyManagerRunning", false]) exitWith {};
+missionNamespace setVariable ["VIC_anomalyManagerRunning", true];
+
+[] spawn {
+    while { missionNamespace getVariable ["VIC_anomalyManagerRunning", false] } do {
+        [] call viceroy_stalker_alife_anomalies_fnc_manageAnomalyFields;
+        sleep 6;
+    };
+};
+
+true

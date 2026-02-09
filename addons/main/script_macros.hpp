@@ -2,10 +2,10 @@
 
 #ifdef DISABLE_COMPILE_CACHE
   #undef PREP
-  #define PREP(fncName) DFUNC(fncName) = compileScript [QPATHTOF(functions\DOUBLES(fn,fncName).sqf)]
+  #define PREP(fncName) DFUNC(fncName) = compileScript [QPATHTOF(functions\DOUBLES(fnc,fncName).sqf)]
 #else
   #undef PREP
-  #define PREP(fncName) [QPATHTOF(functions\DOUBLES(fn,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
+  #define PREP(fncName) [QPATHTOF(functions\DOUBLES(fnc,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
 #endif
 
 #define DFUNC(var1) TRIPLES(ADDON,fnc,var1)
@@ -17,7 +17,7 @@
 #ifdef DISABLE_COMPILE_CACHE
     #define SUBPREP(sub,fncName) DFUNC(fncName) = compileScript [QPATHTOF(functions\sub\DOUBLES(fn,fncName).sqf)]
 #else
-    #define SUBPREP(sub,fncName) [QPATHTOF(functions\sub\DOUBLES(fn,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
+    #define SUBPREP(sub,fncName) [QPATHTOF(functions\sub\DOUBLES(fnc,fncName).sqf), QFUNC(fncName)] call CBA_fnc_compileFunction
 #endif
 
 #define MACRO_ADDITEM(ITEM,COUNT) class _xx_##ITEM { \

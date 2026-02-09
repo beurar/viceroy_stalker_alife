@@ -32,12 +32,12 @@ missionNamespace setVariable ["emission_active", false];
             [] call chemical_fnc_onEmissionEnd;
             [] call zombification_fnc_onEmissionEnd;
 
-            [true] call VIC_fnc_cleanupChemicalZones;
+            [true] call viceroy_stalker_alife_chemical_fnc_cleanupChemicalZones;
 
-            private _radius = ["VSA_emissionChemicalRadius", 300] call VIC_fnc_getSetting;
-            private _count  = ["VSA_emissionChemicalCount", 2] call VIC_fnc_getSetting;
+            private _radius = ["VSA_emissionChemicalRadius", 300] call viceroy_stalker_alife_cba_fnc_getSetting;
+            private _count  = ["VSA_emissionChemicalCount", 2] call viceroy_stalker_alife_cba_fnc_getSetting;
             {
-                [_x, _radius, _count, -1] call VIC_fnc_spawnRandomChemicalZones;
+                [_x, _radius, _count, -1] call viceroy_stalker_alife_chemical_fnc_spawnRandomChemicalZones;
             } forEach allPlayers;
         };
         default {};

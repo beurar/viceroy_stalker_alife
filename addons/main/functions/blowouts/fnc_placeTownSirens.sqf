@@ -1,0 +1,25 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
+/*
+    Place siren objects at all towns on the map.
+    Params:
+        0: STRING - siren class name (default "Land_Siren_F")
+*/
+params [["_class","Land_Siren_F"]];
+
+
+
+if (!isServer) exitWith {
+};
+
+if (["VSA_blowoutSirens", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+};
+
+STALKER_blowoutSirens = [];
+
+private _locs = nearestLocations [[worldSize/2,worldSize/2,0],["NameVillage","NameCity","NameCityCapital","NameLocal"],worldSize];
+{
+    private _pos = locationPosition _x;
+    private _obj = _class createVehicle _pos;
+    STALKER_blowoutSirens pushBack _obj;
+} forEach _locs;
+

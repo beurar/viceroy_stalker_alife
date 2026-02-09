@@ -1,0 +1,17 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
+/*
+    Server-side helper executed by viceroy_stalker_alife_server_fnc_callServer.
+    Params:
+        0: CODE   - function to run
+        1: ARRAY  - arguments to pass
+        2: STRING - result variable name
+        3: NUMBER - client owner id
+*/
+params ["_fnc", ["_args", []], "_var", "_client"];
+
+if (!isServer) exitWith {};
+
+private _result = _args call _fnc;
+[_var, _result] remoteExecCall ["viceroy_stalker_alife_server_fnc_remoteReturn", _client];
+
+true
