@@ -2,7 +2,7 @@
 // Spawn zombies from the tracked corpse queue once the emission ends
 
 
-if (["VSA_enableZombification", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableZombification", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
 // read and clear the queue
 private _queue = missionNamespace getVariable ["ALF_zombieQueue", []];
@@ -25,7 +25,7 @@ private _zClasses = [
         private _class = selectRandom _zClasses;
         private _zombie = createAgent [_class, _pos, [], 0, "NONE"];
         _zombie setDir _dir;
-        [_zombie] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_zombie] call FUNC(initMutantUnit);
     };
 } forEach _queue;
 

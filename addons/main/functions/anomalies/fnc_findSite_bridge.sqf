@@ -13,7 +13,7 @@ private _posCenter = if (_center isEqualType objNull) then { getPos _center } el
 // Cache bridge objects for performance
 private _bridges = missionNamespace getVariable ["VIC_cachedBridges", []];
 if (_bridges isEqualTo []) then {
-    _bridges = [] call viceroy_stalker_alife_core_fnc_findBridges;
+    _bridges = [] call FUNC(findBridges);
     missionNamespace setVariable ["VIC_cachedBridges", _bridges];
 };
 
@@ -22,4 +22,4 @@ if (_candidates isEqualTo []) then { [] };
 
 private _bridge = selectRandom _candidates;
 private _pos = getPosATL _bridge;
-[_pos, 0, 10] call viceroy_stalker_alife_core_fnc_findLandPos
+[_pos, 0, 10] call FUNC(findLandPos)

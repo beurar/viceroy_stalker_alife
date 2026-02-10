@@ -22,5 +22,5 @@ private _options = [];
     };
 } forEach _categories;
 if (_options isEqualTo []) exitWith { objNull };
-private _subset = [_options] call viceroy_stalker_alife_core_fnc_weightedPick;
+private _subset = [_options] call FUNC(weightedPick);
 selectRandom _subset

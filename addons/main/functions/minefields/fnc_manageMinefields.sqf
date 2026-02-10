@@ -15,12 +15,12 @@ private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
     _x params ["_center","_anchor","_type","_size","_objs","_marker",["_active",false]];
     // Use the stored position rather than the anchor object so proximity works
     // even if the logic was deleted
-    private _newActive = [_center,_dist,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_center,_dist,_active] call FUNC(evalSiteProximity);
     if (_newActive) then {
         if (!_active) then {
             _objs = switch (_type) do {
-                case "APERS": { [_center,_size] call viceroy_stalker_alife_minefields_fnc_spawnAPERSField };
-                case "IED":   { [_center] call viceroy_stalker_alife_minefields_fnc_spawnIED };
+                case "APERS": { [_center,_size] call FUNC(spawnAPERSField) };
+                case "IED":   { [_center] call FUNC(spawnIED) };
                 default { [] };
             };
         };

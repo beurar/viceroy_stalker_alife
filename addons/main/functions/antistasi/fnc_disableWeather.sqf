@@ -6,7 +6,7 @@
         BOOL - true if any weather scripts were disabled
 */
 
-if !(call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate) exitWith {false};
+if !(call FUNC(isAntistasiUltimate)) exitWith {false};
 if (!isServer) exitWith {false};
 
 

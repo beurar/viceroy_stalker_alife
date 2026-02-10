@@ -8,7 +8,7 @@ params [["_count", 10]];
 
 
 if (!isServer) exitWith {};
-if (["VSA_enableWrecks", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableWrecks", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
 if (isNil "STALKER_wrecks") then { STALKER_wrecks = []; };
 
@@ -55,9 +55,9 @@ private _classes = [
 ];
 
 for "_i" from 1 to _count do {
-    private _roadPos = [] call viceroy_stalker_alife_core_fnc_getRandomRoad;
+    private _roadPos = [] call FUNC(getRandomRoad);
     private _pos = _roadPos getPos [2 + random 3, random 360];
-    _pos = [_pos] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+    _pos = [_pos] call FUNC(getLandSurfacePosition);
     if (_pos isNotEqualTo []) then {
         private _type = selectRandom _classes;
         private _typeName = getText (configFile / "CfgVehicles" / _type / "displayName");
@@ -68,7 +68,7 @@ for "_i" from 1 to _count do {
         _veh setFuel 0;
         _veh lock 2;
         _veh setVariable ["VIC_wreckSite", ASLToATL _pos];
-        private _anchor = [ASLToATL _pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+        private _anchor = [ASLToATL _pos] call FUNC(createProximityAnchor);
         _veh setVariable ["VIC_anchor", _anchor];
         STALKER_wrecks = STALKER_wrecks + [_veh];
     };

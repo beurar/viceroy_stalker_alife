@@ -7,8 +7,8 @@
 params ["_pos"];
 
 
-if !( ["Bloodsucker"] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) exitWith {
+if !( ["Bloodsucker"] call FUNC(isMutantEnabled) ) exitWith {
 };
 
 private _classes = ["armst_krovosos", "armst_krovosos2"];
-[_pos, selectRandom _classes] call viceroy_stalker_alife_mutants_fnc_spawnMutantNest;
+[_pos, selectRandom _classes] call FUNC(spawnMutantNest);

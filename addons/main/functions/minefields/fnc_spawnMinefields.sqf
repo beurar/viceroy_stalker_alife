@@ -13,14 +13,14 @@ params ["_center", ["_radius",500], ["_fieldCount",-1], ["_iedCount",-1]];
 if (!isServer) exitWith {
 };
 
-if (["VSA_enableMinefields", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableMinefields", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 if (isNil "STALKER_minefields") then { STALKER_minefields = []; };
 
-if (_fieldCount < 0) then { _fieldCount = ["VSA_minefieldCount",2] call viceroy_stalker_alife_cba_fnc_getSetting; };
-if (_iedCount < 0) then { _iedCount = ["VSA_IEDCount",2] call viceroy_stalker_alife_cba_fnc_getSetting; };
-private _size = ["VSA_minefieldSize",30] call viceroy_stalker_alife_cba_fnc_getSetting;
+if (_fieldCount < 0) then { _fieldCount = ["VSA_minefieldCount",2] call FUNC(getSetting); };
+if (_iedCount < 0) then { _iedCount = ["VSA_IEDCount",2] call FUNC(getSetting); };
+private _size = ["VSA_minefieldSize",30] call FUNC(getSetting);
 
 private _fieldsSpawned = 0;
 private _iedsSpawned = 0;
@@ -34,21 +34,21 @@ if (_useFallback) then {
 for "_i" from 1 to _fieldCount do {
     private _pos = [];
     if (_useFallback) then {
-        _pos = [_center, _radius, 20] call viceroy_stalker_alife_core_fnc_findRoadPosition;
-        if (isNil {_pos}) then { _pos = [_radius, 20] call viceroy_stalker_alife_core_fnc_findRandomRoadPosition; };
+        _pos = [_center, _radius, 20] call FUNC(findRoadPosition);
+        if (isNil {_pos}) then { _pos = [_radius, 20] call FUNC(findRandomRoadPosition); };
     } else {
         private _town = selectRandom _towns;
         private _tPos = locationPosition _town;
         _pos = _tPos getPos [150 + random 200, random 360];
-        _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPos;
+        _pos = [_pos] call FUNC(findLandPos);
     };
     if (isNil {_pos} || { _pos isEqualTo [] }) then { continue; };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
     private _marker = "";
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         _marker = format ["mf_%1", diag_tickTime];
-        [_marker, _pos, "ELLIPSE", "", "#(1,1,0,1)", 0.2, "APERS Field"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ELLIPSE", "", "#(1,1,0,1)", 0.2, "APERS Field"] call FUNC(createGlobalMarker);
         _marker setMarkerSize [_size, _size];
     };
     STALKER_minefields pushBack [_pos,_anchor,"APERS",_size,[],_marker,false];
@@ -58,27 +58,27 @@ for "_i" from 1 to _fieldCount do {
 for "_i" from 1 to _iedCount do {
     private _pos = [];
     if (_useFallback) then {
-        _pos = [_center, _radius, 20] call viceroy_stalker_alife_core_fnc_findRoadPosition;
-        if (isNil {_pos}) then { _pos = [_radius, 20] call viceroy_stalker_alife_core_fnc_findRandomRoadPosition; };
+        _pos = [_center, _radius, 20] call FUNC(findRoadPosition);
+        if (isNil {_pos}) then { _pos = [_radius, 20] call FUNC(findRandomRoadPosition); };
     } else {
         private _town = selectRandom _towns;
         private _tPos = locationPosition _town;
-        _pos = [_tPos, 200, 10] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+        _pos = [_tPos, 200, 10] call FUNC(findRoadPosition);
     };
     if (isNil {_pos}) then { continue; };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
     private _marker = "";
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         _marker = format ["ied_%1", diag_tickTime];
-        [_marker, _pos, "ICON", "mil_triangle", "#(0.9,0.2,0.2,1)", 0.2, "IED"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ICON", "mil_triangle", "#(0.9,0.2,0.2,1)", 0.2, "IED"] call FUNC(createGlobalMarker);
     };
     STALKER_minefields pushBack [_pos,_anchor,"IED",0,[],_marker,false];
     _iedsSpawned = _iedsSpawned + 1;
 };
 
 if !(missionNamespace getVariable ["VIC_minefieldManagerRunning", false]) then {
-    [] call viceroy_stalker_alife_minefields_fnc_startMinefieldManager;
+    [] call FUNC(startMinefieldManager);
 };
 
 

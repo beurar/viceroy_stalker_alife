@@ -85,7 +85,7 @@ if (isNull _snpGrp || isNull _assaultGrp) exitWith {};
                     _assaultGrp setCombatMode "RED";
                 };
                 
-                if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+                if (["VSA_debugMode", false] call FUNC(getSetting)) then {
                     systemChat format ["Sniper Spotter (%2): Ordering Assault Team to Hunt %1", name _enemy, groupId _snpGrp];
                 };
             };

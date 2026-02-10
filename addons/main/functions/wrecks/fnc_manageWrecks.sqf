@@ -31,7 +31,7 @@ for [{_i = (count STALKER_wrecks) - 1}, {_i >= 0}, {_i = _i - 1}] do {
     _veh setVariable ["VIC_wreckSite", _site];
     private _anchor = _veh getVariable ["VIC_anchor", objNull];
     if (isNull _anchor) then {
-        _anchor = [_site] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+        _anchor = [_site] call FUNC(createProximityAnchor);
         _veh setVariable ["VIC_anchor", _anchor];
     };
 
@@ -45,7 +45,7 @@ for [{_i = (count STALKER_wrecks) - 1}, {_i >= 0}, {_i = _i - 1}] do {
         continue;
     };
 
-    private _near = [_anchor, _dist] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+    private _near = [_anchor, _dist] call FUNC(hasPlayersNearby);
     if (!_near) then {
         deleteVehicle _veh;
         if (!isNil "STALKER_wreckMarkers") then {

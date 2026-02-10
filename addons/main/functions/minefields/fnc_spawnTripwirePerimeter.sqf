@@ -28,7 +28,7 @@ for "_i" from 0 to (_count - 1) do {
     private _dist = _radius - random 5;
     private _angle = _offset + (360 / _count) * _i;
     private _pos = _center getPos [_dist, _angle];
-    _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPos;
+    _pos = [_pos] call FUNC(findLandPos);
     if (isNil {_pos} || {_pos isEqualTo []}) then { continue };
     _positions pushBack _pos;
 };
@@ -44,9 +44,9 @@ for "_i" from 0 to ((count _positions) - 1) do {
     _mine setDir ([_pos, _nextPos] call BIS_fnc_dirTo);
     _objs pushBack _mine;
 
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         private _marker = format ["tw_%1", diag_tickTime + _i];
-        [_marker, _pos, "ICON", "mil_triangle", "#(1,0.5,0,1)", 0.2, "Tripwire"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ICON", "mil_triangle", "#(1,0.5,0,1)", 0.2, "Tripwire"] call FUNC(createGlobalMarker);
     };
 };
 

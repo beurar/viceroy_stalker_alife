@@ -31,24 +31,24 @@ for "_x" from 0 to _size step _step do {
     if ((_x / _step) % 5 == 0) then { sleep 0.01; };
     for "_y" from 0 to _size step _step do {
         private _pos    = [_x, _y, 0];
-        private _isWater = [_pos] call viceroy_stalker_alife_core_fnc_isWaterPosition;
+        private _isWater = [_pos] call FUNC(isWaterPosition);
 
         if (_x + _step <= _size) then {
             private _posE = [_x + _step, _y, 0];
-            private _waterE = [_posE] call viceroy_stalker_alife_core_fnc_isWaterPosition;
+            private _waterE = [_posE] call FUNC(isWaterPosition);
             if (_isWater != _waterE) then {
                 private _mid = [_x + (_step / 2), _y, 0];
-                private _surf = [_mid] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
+                private _surf = [_mid] call FUNC(getSurfacePosition);
                 _spots pushBackUnique (ASLToAGL _surf);
             };
         };
 
         if (_y + _step <= _size) then {
             private _posN = [_x, _y + _step, 0];
-            private _waterN = [_posN] call viceroy_stalker_alife_core_fnc_isWaterPosition;
+            private _waterN = [_posN] call FUNC(isWaterPosition);
             if (_isWater != _waterN) then {
                 private _mid = [_x, _y + (_step / 2), 0];
-                private _surf = [_mid] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
+                private _surf = [_mid] call FUNC(getSurfacePosition);
                 _spots pushBackUnique (ASLToAGL _surf);
             };
         };

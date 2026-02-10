@@ -12,7 +12,7 @@
 params ["_center", ["_radius",50], ["_step",10]];
 
 
-private _debug = ["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _debug = ["VSA_debugMode", false] call FUNC(getSetting);
 if (_debug && {isServer}) then {
     if (isNil "STALKER_valleySearchMarkers") then { STALKER_valleySearchMarkers = [] };
     { if (_x != "") then { deleteMarker _x } } forEach STALKER_valleySearchMarkers;
@@ -26,7 +26,7 @@ private _bestHeight = 1e9;
 for "_xOff" from -_radius to _radius step _step do {
     for "_yOff" from -_radius to _radius step _step do {
         private _p = [(_base select 0) + _xOff, (_base select 1) + _yOff];
-        private _surf = [_p] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+        private _surf = [_p] call FUNC(getLandSurfacePosition);
         if (_surf isEqualTo []) then { continue };
         private _h = _surf select 2;
         if (_h < _bestHeight) then {
@@ -38,7 +38,7 @@ for "_xOff" from -_radius to _radius step _step do {
 
 if (_debug && {isServer && { _bestPos isNotEqualTo [] }}) then {
     private _name = format ["valleyPos_%1", diag_tickTime + random 1000];
-    private _m = [_name, ASLToAGL _bestPos, "ICON", "mil_arrow", VIC_colorGasYellow] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    private _m = [_name, ASLToAGL _bestPos, "ICON", "mil_arrow", VIC_colorGasYellow] call FUNC(createGlobalMarker);
     STALKER_valleySearchMarkers pushBack _m;
 };
 

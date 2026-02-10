@@ -11,7 +11,7 @@
 */
 params [["_duration",90],["_reward",100]];
 
-if !(call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate) exitWith {false};
+if !(call FUNC(isAntistasiUltimate)) exitWith {false};
 if (!isServer) exitWith {false};
 if (isNil "STALKER_chemicalZones" || {STALKER_chemicalZones isEqualTo []}) exitWith {false};
 
@@ -24,10 +24,10 @@ missionNamespace setVariable ["STALKER_chemSample_active", true];
     params ["_pos","_rad","_dur","_reward"];
     private _time = 0;
     while {missionNamespace getVariable ["STALKER_chemSample_active",false] && {_time < _dur}} do {
-        if ([_pos,_rad] call viceroy_stalker_alife_core_fnc_hasPlayersNearby) then { _time = _time + 1; };
+        if ([_pos,_rad] call FUNC(hasPlayersNearby)) then { _time = _time + 1; };
         sleep 1;
     };
-    if (_time >= _dur) then { [_reward] call viceroy_stalker_alife_antistasi_fnc_completeChemSample; };
+    if (_time >= _dur) then { [_reward] call FUNC(completeChemSample); };
     missionNamespace setVariable ["STALKER_chemSample_active", false];
 };
 

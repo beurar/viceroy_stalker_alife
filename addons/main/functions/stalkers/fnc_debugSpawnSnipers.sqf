@@ -11,7 +11,7 @@ params ["_target"];
 if (!isServer) exitWith {};
 
 private _pos = _target call BIS_fnc_position;
-private _spots = [_pos, 100, 1000] call viceroy_stalker_alife_stalkers_fnc_findDynamicSniperSpots;
+private _spots = [_pos, 100, 1000] call FUNC(findDynamicSniperSpots);
 
 ["DebugSniper", format ["Found %1 spots near %2", count _spots, _pos]] call BIS_fnc_logFormat;
 if (hasInterface) then {
@@ -22,13 +22,13 @@ if (hasInterface) then {
      private _sPos = _x;
      // Visualize
      private _marker = format ["snp_debug_%1", diag_tickTime + _forEachIndex];
-     [_marker, _sPos, "ICON", "mil_ambush", "#(1,0,0,1)", 0.8, "Debug Sniper"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+     [_marker, _sPos, "ICON", "mil_ambush", "#(1,0,0,1)", 0.8, "Debug Sniper"] call FUNC(createGlobalMarker);
      
      // Spawn immediately
      private _grp = createGroup east;
      
      // 1. SELECT FACTION
-    private _factions = [] call viceroy_stalker_alife_stalkers_fnc_getStalkerFactions;
+    private _factions = [] call FUNC(getStalkerFactions);
     private _validFactions = _factions select { 
             private _sides = _x select 1;
             independent in _sides || opfor in _sides
@@ -68,7 +68,7 @@ if (hasInterface) then {
         _unit setVariable ["VIC_isSniper", true];
         _unit allowFleeing 0;
         
-        [_unit] call viceroy_stalker_alife_stalkers_fnc_sniperScan;
+        [_unit] call FUNC(sniperScan);
     };
     
     // 3. SPAWN GROUND TEAM (2-4)
@@ -89,10 +89,10 @@ if (hasInterface) then {
     };
 
      // 4. PERIMETER
-     [_sPos, 200, 30] spawn viceroy_stalker_alife_stalkers_fnc_spawnSmartFlarePerimeter;
+     [_sPos, 200, 30] spawn FUNC(spawnSmartFlarePerimeter);
      
      // Register in system so they get managed/deleted later
-     private _anchor = [_sPos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+     private _anchor = [_sPos] call FUNC(createProximityAnchor);
      
      if (isNil "STALKER_snipers") then { STALKER_snipers = [] };
      STALKER_snipers pushBack [_snpGrp, _grdGrp, _sPos, _anchor, _marker, true];
@@ -100,6 +100,6 @@ if (hasInterface) then {
      _snpGrp setBehaviour "COMBAT"; _snpGrp setCombatMode "RED";
      _grdGrp setBehaviour "AWARE";  _grdGrp setCombatMode "YELLOW";
      
-     [_snpGrp, _grdGrp] call viceroy_stalker_alife_stalkers_fnc_sniperAssaultLogic;
+     [_snpGrp, _grdGrp] call FUNC(sniperAssaultLogic);
      
 } forEach _spots;

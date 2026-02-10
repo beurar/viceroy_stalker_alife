@@ -21,11 +21,11 @@ for [{_i = (count STALKER_chemicalZones) - 1}, {_i >= 0}, {_i = _i - 1}] do {
         continue;
     };
 
-    private _newActive = [_pos,_range,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_pos,_range,_active] call FUNC(evalSiteProximity);
     if (_newActive) then {
         if (!_active) then {
             private _dur = if (_expires < 0) then {-1} else {_expires - diag_tickTime};
-            [_pos,_radius,_dur] call viceroy_stalker_alife_chemical_fnc_spawnChemicalZone;
+            [_pos,_radius,_dur] call FUNC(spawnChemicalZone);
         };
         if (_marker != "") then { _marker setMarkerAlpha 1; };
     } else {

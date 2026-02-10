@@ -1,7 +1,7 @@
 #include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     Finds mostly evenly distributed land positions across the map using a grid search.
-    Each grid cell tries to locate one valid land position using viceroy_stalker_alife_core_fnc_findLandPos.
+    Each grid cell tries to locate one valid land position using FUNC(findLandPos).
 
     Params:
         0: NUMBER - grid step size in meters (default: 1000)
@@ -26,7 +26,7 @@ for "_x" from 0 to worldSize step _step do {
         // _center: search origin
         // _half: search radius (half the step size prevents significant overlap)
         // 10: presumably max gradient or similar constraint
-        private _pos = [_center, _half, 10] call viceroy_stalker_alife_core_fnc_findLandPos;
+        private _pos = [_center, _half, 10] call FUNC(findLandPos);
         
         // Handle nil return from search function
         if (isNil {_pos}) then { _pos = [] };

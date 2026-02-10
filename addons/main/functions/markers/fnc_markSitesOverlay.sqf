@@ -18,7 +18,7 @@ private _markers = [];
 private _addMarker = {
     params ["_pos", "_text", "_col"];
     private _name = format ["VIC_debug_site_%1", floor (diag_tickTime * 1000) + random 1000];
-    private _m = [_name, _pos, "ICON", "mil_dot", _col, 0.8, _text, [1.5,1.5]] call viceroy_stalker_alife_markers_fnc_createLocalMarker;
+    private _m = [_name, _pos, "ICON", "mil_dot", _col, 0.8, _text, [1.5,1.5]] call FUNC(createLocalMarker);
     _markers pushBack _name;
 };
 

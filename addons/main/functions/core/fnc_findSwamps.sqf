@@ -27,7 +27,7 @@ for "_x" from 0 to worldSize step _step do {
         private _depthOk = false;
 
         // Check the current grid position first
-        if ([_pos] call viceroy_stalker_alife_core_fnc_isWaterPosition) then {
+        if ([_pos] call FUNC(isWaterPosition)) then {
             _waterNearby = true;
             if ((abs (getTerrainHeightASL _pos)) <= _maxDepth) then {
                 _depthOk = true;
@@ -37,7 +37,7 @@ for "_x" from 0 to worldSize step _step do {
             {
                 private _dir = _x;
                 private _test = _pos getPos [_step / 2, _dir];
-                if ([_test] call viceroy_stalker_alife_core_fnc_isWaterPosition) exitWith {
+                if ([_test] call FUNC(isWaterPosition)) exitWith {
                     _waterNearby = true;
                     if ((abs (getTerrainHeightASL _test)) <= _maxDepth) then {
                         _depthOk = true;

@@ -13,7 +13,7 @@ scriptName "viceroy_stalker_alife_smart_terrains_fnc_scanMap";
 
 if (!canSuspend) exitWith { 
     systemChat "Running Smart Terrain Scan in background...";
-    [] spawn viceroy_stalker_alife_smart_terrains_fnc_scanMap; 
+    [] spawn FUNC(scanMap); 
 };
 
 systemChat "--- Starting Smart Terrain Scan ---";
@@ -41,7 +41,7 @@ private _locations = nearestLocations [_centerMap, ["NameCity", "NameCityCapital
     
     // -- Find Sniper/Vantage Points overlapping this location --
     // We look for positions that overlook this location (300-600m away)
-    private _spots = [_locPos, 300, 600] call viceroy_stalker_alife_stalkers_fnc_findDynamicSniperSpots;
+    private _spots = [_locPos, 300, 600] call FUNC(findDynamicSniperSpots);
     
     // Group close spots to avoid clutter
     private _clusters = [];

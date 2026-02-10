@@ -20,52 +20,52 @@ player addAction ["<t color='#00FFFF'>[DEBUG] Force Psy Sky Override</t>", {
 }];
 
 player addAction ["<t color='#ff0000'>Spawn Psy-Storm</t>", {
-    private _dur = ["VSA_stormDuration", 180] call viceroy_stalker_alife_cba_fnc_getSetting;
-    private _lStart = ["VSA_stormLightningStart", 6] call viceroy_stalker_alife_cba_fnc_getSetting;
-    private _lEnd   = ["VSA_stormLightningEnd", 12] call viceroy_stalker_alife_cba_fnc_getSetting;
-    private _dStart = ["VSA_stormDischargeStart", 6] call viceroy_stalker_alife_cba_fnc_getSetting;
-    private _dEnd   = ["VSA_stormDischargeEnd", 12] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _dur = ["VSA_stormDuration", 180] call FUNC(getSetting);
+    private _lStart = ["VSA_stormLightningStart", 6] call FUNC(getSetting);
+    private _lEnd   = ["VSA_stormLightningEnd", 12] call FUNC(getSetting);
+    private _dStart = ["VSA_stormDischargeStart", 6] call FUNC(getSetting);
+    private _dEnd   = ["VSA_stormDischargeEnd", 12] call FUNC(getSetting);
     if (isServer) then {
-        [_dur, _lStart, _lEnd, _dStart, _dEnd] call viceroy_stalker_alife_storms_fnc_triggerPsyStorm;
+        [_dur, _lStart, _lEnd, _dStart, _dEnd] call FUNC(triggerPsyStorm);
     } else {
-        [_dur, _lStart, _lEnd, _dStart, _dEnd] remoteExec ["viceroy_stalker_alife_storms_fnc_triggerPsyStorm", 2];
+        [_dur, _lStart, _lEnd, _dStart, _dEnd] remoteExec ["FUNC(triggerPsyStorm)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Trigger Blowout</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_blowouts_fnc_triggerBlowout;
+        [] call FUNC(triggerBlowout);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_blowouts_fnc_triggerBlowout", 2];
+        [] remoteExec ["FUNC(triggerBlowout)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Chemical Zone</t>", {
     if (isServer) then {
-        [getPos player, 100] call viceroy_stalker_alife_chemical_fnc_spawnChemicalZone;
+        [getPos player, 100] call FUNC(spawnChemicalZone);
     } else {
-        [getPos player, 100] remoteExec ["viceroy_stalker_alife_chemical_fnc_spawnChemicalZone", 2];
+        [getPos player, 100] remoteExec ["FUNC(spawnChemicalZone)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Random Chemicals</t>", {
     if (isServer) then {
-        [getPos player, 200] call viceroy_stalker_alife_chemical_fnc_spawnRandomChemicalZones;
+        [getPos player, 200] call FUNC(spawnRandomChemicalZones);
     } else {
-        [getPos player, 200] remoteExec ["viceroy_stalker_alife_chemical_fnc_spawnRandomChemicalZones", 2];
+        [getPos player, 200] remoteExec ["FUNC(spawnRandomChemicalZones)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Valley Chemicals</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_chemical_fnc_spawnValleyChemicalFields;
+        [] call FUNC(spawnValleyChemicalFields);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_chemical_fnc_spawnValleyChemicalFields", 2];
+        [] remoteExec ["FUNC(spawnValleyChemicalFields)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Stable Fields</t>", {
     for "_i" from 1 to 100 do {
         private _pos = [random worldSize, random worldSize, 0];
         if (isServer) then {
-            [_pos, 1000, 1] call viceroy_stalker_alife_anomalies_fnc_spawnAllAnomalyFields;
+            [_pos, 1000, 1] call FUNC(spawnAllAnomalyFields);
         } else {
-            [_pos, 1000, 1] remoteExec ["viceroy_stalker_alife_anomalies_fnc_spawnAllAnomalyFields", 2];
+            [_pos, 1000, 1] remoteExec ["FUNC(spawnAllAnomalyFields)", 2];
         };
     };
 }];
@@ -73,253 +73,253 @@ player addAction ["<t color='#ff0000'>Spawn Unstable Fields</t>", {
     for "_i" from 1 to 100 do {
         private _pos = [random worldSize, random worldSize, 0];
         if (isServer) then {
-            [_pos, 1000, 0] call viceroy_stalker_alife_anomalies_fnc_spawnAllAnomalyFields;
+            [_pos, 1000, 0] call FUNC(spawnAllAnomalyFields);
         } else {
-            [_pos, 1000, 0] remoteExec ["viceroy_stalker_alife_anomalies_fnc_spawnAllAnomalyFields", 2];
+            [_pos, 1000, 0] remoteExec ["FUNC(spawnAllAnomalyFields)", 2];
         };
     };
 }];
 // --- Cycle/Manager Actions ---
 player addAction ["<t color='#0000ff'>Cycle Anomaly Fields</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_anomalies_fnc_cycleAnomalyFields;
+        [] call FUNC(cycleAnomalyFields);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_anomalies_fnc_cycleAnomalyFields", 2];
+        [] remoteExec ["FUNC(cycleAnomalyFields)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Mutant Group</t>", {
     if (isServer) then {
-        [getPos player] call viceroy_stalker_alife_mutants_fnc_spawnMutantGroup;
+        [getPos player] call FUNC(spawnMutantGroup);
     } else {
-        [getPos player] remoteExec ["viceroy_stalker_alife_mutants_fnc_spawnMutantGroup", 2];
+        [getPos player] remoteExec ["FUNC(spawnMutantGroup)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Spook Zone</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_spooks_fnc_spawnSpookZone;
+        [] call FUNC(spawnSpookZone);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_spooks_fnc_spawnSpookZone", 2];
+        [] remoteExec ["FUNC(spawnSpookZone)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Zombies From Queue</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_zombification_fnc_spawnZombiesFromQueue;
+        [] call FUNC(spawnZombiesFromQueue);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_zombification_fnc_spawnZombiesFromQueue", 2];
+        [] remoteExec ["FUNC(spawnZombiesFromQueue)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Trigger Necroplague</t>", {
-    private _z = ["VSA_necroZombies",5] call viceroy_stalker_alife_cba_fnc_getSetting;
-    private _h = ["VSA_necroHordes",2] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _z = ["VSA_necroZombies",5] call FUNC(getSetting);
+    private _h = ["VSA_necroHordes",2] call FUNC(getSetting);
     if (isServer) then {
-        [_z, _h, true] call viceroy_stalker_alife_necroplague_fnc_triggerNecroplague;
+        [_z, _h, true] call FUNC(triggerNecroplague);
     } else {
-        [_z, _h, true] remoteExec ["viceroy_stalker_alife_necroplague_fnc_triggerNecroplague", 2];
+        [_z, _h, true] remoteExec ["FUNC(triggerNecroplague)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Ambient Herds</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_mutants_fnc_spawnAmbientHerds;
+        [] call FUNC(spawnAmbientHerds);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_mutants_fnc_spawnAmbientHerds", 2];
+        [] remoteExec ["FUNC(spawnAmbientHerds)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Ambient Stalkers</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_stalkers_fnc_spawnAmbientStalkers;
+        [] call FUNC(spawnAmbientStalkers);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_stalkers_fnc_spawnAmbientStalkers", 2];
+        [] remoteExec ["FUNC(spawnAmbientStalkers)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Stalker Camps</t>", {
     if (isServer) then {
-        [getPos player, 300] call viceroy_stalker_alife_stalkers_fnc_spawnStalkerCamps;
+        [getPos player, 300] call FUNC(spawnStalkerCamps);
     } else {
-        [getPos player, 300] remoteExec ["viceroy_stalker_alife_stalkers_fnc_spawnStalkerCamps", 2];
+        [getPos player, 300] remoteExec ["FUNC(spawnStalkerCamps)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Sniper</t>", {
     if (isServer) then {
-        [getPos player] call viceroy_stalker_alife_stalkers_fnc_spawnSniper;
+        [getPos player] call FUNC(spawnSniper);
     } else {
-        [getPos player] remoteExec ["viceroy_stalker_alife_stalkers_fnc_spawnSniper", 2];
+        [getPos player] remoteExec ["FUNC(spawnSniper)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>DEBUG: Force Generate Snipers</t>", {
     if (isServer) then {
-        [player] call viceroy_stalker_alife_stalkers_fnc_debugSpawnSnipers;
+        [player] call FUNC(debugSpawnSnipers);
     } else {
-        [player] remoteExec ["viceroy_stalker_alife_stalkers_fnc_debugSpawnSnipers", 2];
+        [player] remoteExec ["FUNC(debugSpawnSnipers)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Predator Attack</t>", {
     if (isServer) then {
-        [player] call viceroy_stalker_alife_mutants_fnc_spawnPredatorAttack;
+        [player] call FUNC(spawnPredatorAttack);
     } else {
-        [player] remoteExec ["viceroy_stalker_alife_mutants_fnc_spawnPredatorAttack", 2];
+        [player] remoteExec ["FUNC(spawnPredatorAttack)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Habitat Hunters</t>", {
     if (isServer) then {
-        [player] call viceroy_stalker_alife_mutants_fnc_spawnHabitatHunters;
+        [player] call FUNC(spawnHabitatHunters);
     } else {
-        [player] remoteExec ["viceroy_stalker_alife_mutants_fnc_spawnHabitatHunters", 2];
+        [player] remoteExec ["FUNC(spawnHabitatHunters)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Minefields</t>", {
     private _center = [worldSize / 2, worldSize / 2, 0];
     private _radius = worldSize;
     if (isServer) then {
-        [_center, _radius] call viceroy_stalker_alife_minefields_fnc_spawnMinefields;
+        [_center, _radius] call FUNC(spawnMinefields);
     } else {
-        [_center, _radius] remoteExec ["viceroy_stalker_alife_minefields_fnc_spawnMinefields", 2];
+        [_center, _radius] remoteExec ["FUNC(spawnMinefields)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn IED Sites</t>", {
     if (isServer) then {
-        [getPos player, 300] call viceroy_stalker_alife_minefields_fnc_spawnIEDSites;
+        [getPos player, 300] call FUNC(spawnIEDSites);
     } else {
-        [getPos player, 300] remoteExec ["viceroy_stalker_alife_minefields_fnc_spawnIEDSites", 2];
+        [getPos player, 300] remoteExec ["FUNC(spawnIEDSites)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Booby Traps</t>", {
     if (isServer) then {
-        [getPos player, 200] call viceroy_stalker_alife_minefields_fnc_spawnBoobyTraps;
+        [getPos player, 200] call FUNC(spawnBoobyTraps);
     } else {
-        [getPos player, 200] remoteExec ["viceroy_stalker_alife_minefields_fnc_spawnBoobyTraps", 2];
+        [getPos player, 200] remoteExec ["FUNC(spawnBoobyTraps)", 2];
     };
 }];
 player addAction ["<t color='#ff0000'>Spawn Ambush</t>", {
     if (isServer) then {
-        [getPos player, 300] call viceroy_stalker_alife_ambushes_fnc_spawnAmbushes;
+        [getPos player, 300] call FUNC(spawnAmbushes);
     } else {
-        [getPos player, 300] remoteExec ["viceroy_stalker_alife_ambushes_fnc_spawnAmbushes", 2];
+        [getPos player, 300] remoteExec ["FUNC(spawnAmbushes)", 2];
     };
 }];
 player addAction ["<t color='#0000ff'>Cycle Habitats</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_mutants_fnc_manageHabitats;
+        [] call FUNC(manageHabitats);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_mutants_fnc_manageHabitats", 2];
+        [] remoteExec ["FUNC(manageHabitats)", 2];
     };
 }];
 player addAction ["<t color='#0000ff'>Trigger AI Panic</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_ai_fnc_triggerAIPanic;
+        [] call FUNC(triggerAIPanic);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_ai_fnc_triggerAIPanic", 2];
+        [] remoteExec ["FUNC(triggerAIPanic)", 2];
     };
 }];
 player addAction ["<t color='#0000ff'>Reset AI Behaviour</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_ai_fnc_resetAIBehavior;
+        [] call FUNC(resetAIBehavior);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_ai_fnc_resetAIBehavior", 2];
+        [] remoteExec ["FUNC(resetAIBehavior)", 2];
     };
 }];
 player addAction ["<t color='#0000ff'>Toggle Field Avoidance</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_ai_fnc_toggleFieldAvoid;
+        [] call FUNC(toggleFieldAvoid);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_ai_fnc_toggleFieldAvoid", 2];
+        [] remoteExec ["FUNC(toggleFieldAvoid)", 2];
     };
 }];
 // --- Cache Actions ---
 player addAction ["<t color='#ffff00'>Cache Map Wrecks</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_wrecks_fnc_findWrecks;
+        [] call FUNC(findWrecks);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_wrecks_fnc_findWrecks", 2];
+        [] remoteExec ["FUNC(findWrecks)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Sniper Spots</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findSniperSpots;
+        [] call FUNC(findSniperSpots);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findSniperSpots", 2];
+        [] remoteExec ["FUNC(findSniperSpots)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Roads</t>", {
     if (isServer) then {
-        private _data = ["STALKER_roads"] call viceroy_stalker_alife_cache_fnc_loadCache;
+        private _data = ["STALKER_roads"] call FUNC(loadCache);
         if (isNil {_data}) then {
-            _data = [] call viceroy_stalker_alife_core_fnc_findRoads;
-            ["STALKER_roads", _data] call viceroy_stalker_alife_cache_fnc_saveCache;
+            _data = [] call FUNC(findRoads);
+            ["STALKER_roads", _data] call FUNC(saveCache);
         };
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findRoads", 2];
+        [] remoteExec ["FUNC(findRoads)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Crossroads</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findCrossroads;
+        [] call FUNC(findCrossroads);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findCrossroads", 2];
+        [] remoteExec ["FUNC(findCrossroads)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Bridges</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findBridges;
+        [] call FUNC(findBridges);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findBridges", 2];
+        [] remoteExec ["FUNC(findBridges)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Valleys</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findValleys;
+        [] call FUNC(findValleys);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findValleys", 2];
+        [] remoteExec ["FUNC(findValleys)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Beach Spots</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findBeachesInMap;
+        [] call FUNC(findBeachesInMap);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findBeachesInMap", 2];
+        [] remoteExec ["FUNC(findBeachesInMap)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Swamps</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_findSwamps;
+        [] call FUNC(findSwamps);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findSwamps", 2];
+        [] remoteExec ["FUNC(findSwamps)", 2];
     };
 }];
 player addAction ["<t color='#ffff00'>Cache Land Zones</t>", {
     if (isServer) then {
-        private _data = ["STALKER_landZones"] call viceroy_stalker_alife_cache_fnc_loadCache;
+        private _data = ["STALKER_landZones"] call FUNC(loadCache);
         if (isNil {_data}) then {
-            _data = [] call viceroy_stalker_alife_core_fnc_findLandZones;
-            ["STALKER_landZones", _data] call viceroy_stalker_alife_cache_fnc_saveCache;
+            _data = [] call FUNC(findLandZones);
+            ["STALKER_landZones", _data] call FUNC(saveCache);
         };
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_findLandZones", 2];
+        [] remoteExec ["FUNC(findLandZones)", 2];
     };
 }];
 
 player addAction ["<t color='#ffff00'>Place Cached Markers</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_cache_fnc_placeCachedMarkers;
+        [] call FUNC(placeCachedMarkers);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_cache_fnc_placeCachedMarkers", 2];
+        [] remoteExec ["FUNC(placeCachedMarkers)", 2];
     };
 }];
 
 player addAction ["<t color='#00ff00'>Regenerate Map Points</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_core_fnc_regenMapPoints;
+        [] call FUNC(regenMapPoints);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_regenMapPoints", 2];
+        [] remoteExec ["FUNC(regenMapPoints)", 2];
     };
 }];
 
 player addAction ["<t color='#00ff00'>Load Cache and Init Managers</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_init_fnc_initMap;
-        [] call viceroy_stalker_alife_init_fnc_initManagers;
+        [] call FUNC(initMap);
+        [] call FUNC(initManagers);
     } else {
-        [] remoteExec ["viceroy_stalker_alife_init_fnc_initMap", 2];
-        [] remoteExec ["viceroy_stalker_alife_init_fnc_initManagers", 2];
+        [] remoteExec ["FUNC(initMap)", 2];
+        [] remoteExec ["FUNC(initManagers)", 2];
     };
 }];
 
@@ -327,23 +327,23 @@ player addAction ["<t color='#00ff00'>Load Cache and Init Managers</t>", {
 // --- Diagnostic overlays ---
 player addAction ["<t color='#00ff0f'>Toggle Site Overlay</t>", {
     if (isServer) then {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_toggleSiteOverlay", 2];
+        [] remoteExec ["FUNC(toggleSiteOverlay)", 2];
     } else {
-        [] call viceroy_stalker_alife_core_fnc_toggleSiteOverlay;
+        [] call FUNC(toggleSiteOverlay);
     };
 }];
 player addAction ["<t color='#00ff0f'>Toggle Perf Metrics (chat)</t>", {
     if (isServer) then {
-        [] remoteExec ["viceroy_stalker_alife_core_fnc_togglePerfMetrics", 2];
+        [] remoteExec ["FUNC(togglePerfMetrics)", 2];
     } else {
-        [] call viceroy_stalker_alife_core_fnc_togglePerfMetrics;
+        [] call FUNC(togglePerfMetrics);
     };
 }];
 player addAction ["<t color='#00ff0f'>Resync Server State</t>", {
     if (isServer) then {
-        [] call viceroy_stalker_alife_server_fnc_sendServerState;
+        [] call FUNC(sendServerState);
     } else {
-        [] call viceroy_stalker_alife_server_fnc_requestServerState;
+        [] call FUNC(requestServerState);
     };
 }];
 

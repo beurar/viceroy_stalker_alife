@@ -15,8 +15,8 @@ _entry params ["_center","_type","_size","_objs","_marker",["_active",false]];
 
 if (_objs isEqualTo []) then {
     _objs = switch (_type) do {
-        case "APERS": { [_center,_size] call viceroy_stalker_alife_minefields_fnc_spawnAPERSField };
-        case "IED":   { [_center] call viceroy_stalker_alife_minefields_fnc_spawnIED };
+        case "APERS": { [_center,_size] call FUNC(spawnAPERSField) };
+        case "IED":   { [_center] call FUNC(spawnIED) };
         default { [] };
     };
 };

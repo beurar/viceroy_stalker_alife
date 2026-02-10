@@ -4,15 +4,15 @@
 */
 
 
-[] call viceroy_stalker_alife_markers_fnc_markRockClusters;
-[] call viceroy_stalker_alife_markers_fnc_markSniperSpots;
-[] call viceroy_stalker_alife_markers_fnc_markSwamps;
-[] call viceroy_stalker_alife_markers_fnc_markBeaches;
-[] call viceroy_stalker_alife_markers_fnc_markValleys;
-[] call viceroy_stalker_alife_markers_fnc_markLandZones;
-[] call viceroy_stalker_alife_markers_fnc_markBuildingClusters;
-[] call viceroy_stalker_alife_markers_fnc_markBridges;
-[] call viceroy_stalker_alife_markers_fnc_markRoads;
-[] call viceroy_stalker_alife_wrecks_fnc_markWrecks;
+[] call FUNC(markRockClusters);
+[] call FUNC(markSniperSpots);
+[] call FUNC(markSwamps);
+[] call FUNC(markBeaches);
+[] call FUNC(markValleys);
+[] call FUNC(markLandZones);
+[] call FUNC(markBuildingClusters);
+[] call FUNC(markBridges);
+[] call FUNC(markRoads);
+[] call FUNC(markWrecks);
 
 true

@@ -12,13 +12,13 @@ params [["_center", [worldSize/2, worldSize/2, 0]], ["_radius",500], ["_count",-
 
 if (!isServer) exitWith {};
 
-if (["VSA_enableStalkerCamps", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableStalkerCamps", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
-if (_count < 0) then { _count = ["VSA_stalkerCampCount",1] call viceroy_stalker_alife_cba_fnc_getSetting; };
+if (_count < 0) then { _count = ["VSA_stalkerCampCount",1] call FUNC(getSetting); };
 
 for "_i" from 1 to _count do {
-    private _building = [] call viceroy_stalker_alife_stalkers_fnc_findCampBuilding;
+    private _building = [] call FUNC(findCampBuilding);
     if (isNull _building) exitWith {};
     private _campPos = getPosATL _building;
-    [_campPos] call viceroy_stalker_alife_stalkers_fnc_spawnStalkerCamp;
+    [_campPos] call FUNC(spawnStalkerCamp);
 };

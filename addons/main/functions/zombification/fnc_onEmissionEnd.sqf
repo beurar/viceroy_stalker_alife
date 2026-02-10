@@ -5,6 +5,6 @@
 */
 
 
-[] call viceroy_stalker_alife_zombification_fnc_spawnZombiesFromQueue;
+[] call FUNC(spawnZombiesFromQueue);
 
 true

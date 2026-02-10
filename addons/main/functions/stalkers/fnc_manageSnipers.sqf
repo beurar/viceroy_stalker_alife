@@ -10,7 +10,7 @@ if (!isServer) exitWith {};
 if (isNil "STALKER_snipers") exitWith {};
 
 private _range = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-private _debug = ["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _debug = ["VSA_debugMode", false] call FUNC(getSetting);
 
 // --- DYNAMIC GENERATION ---
 // Run generation check periodically (every 60s approx)
@@ -19,7 +19,7 @@ if (diag_tickTime - _lastGen > 60) then {
     missionNamespace setVariable ["STALKER_lastSniperGen", diag_tickTime];
 
     // Pre-calc factions for this generation cycle
-    private _factionsAll = [] call viceroy_stalker_alife_stalkers_fnc_getStalkerFactions;
+    private _factionsAll = [] call FUNC(getStalkerFactions);
     private _validFactionsGen = _factionsAll select { 
             private _sides = _x select 1;
             independent in _sides || opfor in _sides
@@ -37,7 +37,7 @@ if (diag_tickTime - _lastGen > 60) then {
              } count STALKER_snipers;
              
              if (_nearbySnipers < 4) then { // Target: ~4 potential snipers in 1.2km radius
-                 private _spots = [getPos _player, 500, 1000] call viceroy_stalker_alife_stalkers_fnc_findDynamicSniperSpots;
+                 private _spots = [getPos _player, 500, 1000] call FUNC(findDynamicSniperSpots);
                  
                  // Add up to 2 new spots per cycle per player
                  private _added = 0;
@@ -49,12 +49,12 @@ if (diag_tickTime - _lastGen > 60) then {
                      private _tooClose = { (_x select 2) distance2D _pos < 300 } count STALKER_snipers > 0;
                      
                      if (!_tooClose) then {
-                         private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+                         private _anchor = [_pos] call FUNC(createProximityAnchor);
                          
                          private _marker = "";
                          if (_debug) then {
                              _marker = format ["snp_dyn_%1", diag_tickTime + _forEachIndex];
-                             [_marker, _pos, "ICON", "mil_ambush", "#(1,0,0,1)", 0.6, "Sniper"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+                             [_marker, _pos, "ICON", "mil_ambush", "#(1,0,0,1)", 0.6, "Sniper"] call FUNC(createGlobalMarker);
                          };
                          
                          private _siteFaction = selectRandom _validFactionsGen;
@@ -93,7 +93,7 @@ private _toDeleteIndices = [];
         
     } else {
         // Normal proximity update
-        private _newActive = [_anchor,_range,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+        private _newActive = [_anchor,_range,_active] call FUNC(evalSiteProximity);
 
         if (_newActive) then {
             // ACTIVATE
@@ -103,7 +103,7 @@ private _toDeleteIndices = [];
                 // Use stored faction if available, or pick new one (legacy support)
                 private _chosenFaction = _siteFaction;
                 if (_chosenFaction isEqualTo []) then {
-                    private _factions = [] call viceroy_stalker_alife_stalkers_fnc_getStalkerFactions;
+                    private _factions = [] call FUNC(getStalkerFactions);
                     private _validFactions = _factions select { 
                         private _sides = _x select 1;
                         independent in _sides || opfor in _sides
@@ -188,7 +188,7 @@ private _toDeleteIndices = [];
                     _unit enableAI "AUTOTARGET"; 
                     _unit enableAI "ANIM";
 
-                    [_unit] call viceroy_stalker_alife_stalkers_fnc_sniperScan;
+                    [_unit] call FUNC(sniperScan);
                 };
                 
                 // 3. SPAWN GROUND TEAM (2-4)
@@ -207,14 +207,14 @@ private _toDeleteIndices = [];
                 };
 
                 // Spawn Perimeter (passing owner side now)
-                [_pos, 200, 15, [_snpGrp, _grdGrp], _chosenSide] spawn viceroy_stalker_alife_stalkers_fnc_spawnSmartFlarePerimeter;
+                [_pos, 200, 15, [_snpGrp, _grdGrp], _chosenSide] spawn FUNC(spawnSmartFlarePerimeter);
                 
                 // 4. GROUP BEHAVIOR
                 _snpGrp setBehaviour "COMBAT"; _snpGrp setCombatMode "RED";
                 _grdGrp setBehaviour "AWARE";  _grdGrp setCombatMode "YELLOW";
                 
                 // Start Assault Logic passing both groups
-                [_snpGrp, _grdGrp] call viceroy_stalker_alife_stalkers_fnc_sniperAssaultLogic;
+                [_snpGrp, _grdGrp] call FUNC(sniperAssaultLogic);
             };
             if (_marker != "") then { _marker setMarkerAlpha 1; };
         } else {

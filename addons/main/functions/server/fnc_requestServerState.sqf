@@ -22,12 +22,12 @@ _clientCounts pushBack (if (isNil "STALKER_mutantNests") then { -1 } else { coun
 _clientCounts pushBack (if (isNil "STALKER_camps") then { -1 } else { count STALKER_camps });
 _clientCounts pushBack (if (isNil "STALKER_wreckPositions") then { -1 } else { count STALKER_wreckPositions });
 
-[_var, clientOwner, _clientCounts] remoteExec ["viceroy_stalker_alife_server_fnc_sendServerState", 2];
+[_var, clientOwner, _clientCounts] remoteExec ["FUNC(sendServerState)", 2];
 
 waitUntil { !isNil { missionNamespace getVariable _var } };
 private _state = missionNamespace getVariable _var;
 missionNamespace setVariable [_var, nil];
 
-[ _state ] call viceroy_stalker_alife_server_fnc_applyServerState;
+[ _state ] call FUNC(applyServerState);
 
 true

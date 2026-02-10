@@ -35,14 +35,14 @@ private _grp = createGroup east;
 _grp createUnit ["O_sniper_F", _spotAGL, [], 0, "FORM"];
 // Increase search radius and prioritize high vantage points
 [_grp, _spotAGL, 100, [], true, true, 0, true] call lambs_wp_fnc_taskGarrison;
-[_spotAGL, 6, 0, 4] call viceroy_stalker_alife_minefields_fnc_spawnTripwirePerimeter;
+[_spotAGL, 6, 0, 4] call FUNC(spawnTripwirePerimeter);
 
-private _anchor = [_spotAGL] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+private _anchor = [_spotAGL] call FUNC(createProximityAnchor);
 
 private _marker = "";
-if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+if (["VSA_debugMode", false] call FUNC(getSetting)) then {
     _marker = format ["snp_%1", diag_tickTime];
-    [_marker, _spotAGL, "ICON", "mil_ambush", "#(1,0,0,1)", 0.6, "Sniper"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_marker, _spotAGL, "ICON", "mil_ambush", "#(1,0,0,1)", 0.6, "Sniper"] call FUNC(createGlobalMarker);
 };
 
 STALKER_snipers pushBack [_grp, _spotAGL, _anchor, _marker, true];

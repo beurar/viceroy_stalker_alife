@@ -11,17 +11,17 @@
 
 if (!isServer) exitWith {
 };
-if (["VSA_enableAIBehaviour", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableAIBehaviour", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 if !(missionNamespace getVariable ["VSA_fieldAvoidEnabled", true]) exitWith {
 };
-if (["VSA_aiNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting && { dayTime > 5 && dayTime < 20 }) exitWith {
+if (["VSA_aiNightOnly", false] call FUNC(getSetting) && { dayTime > 5 && dayTime < 20 }) exitWith {
 };
 if (isNil "STALKER_anomalyFields") exitWith {
 };
 
-private _chance = ["VSA_aiAnomalyAvoidChance", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _buffer = ["VSA_aiAnomalyAvoidRange", 20] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _chance = ["VSA_aiAnomalyAvoidChance", 50] call FUNC(getSetting);
+private _buffer = ["VSA_aiAnomalyAvoidRange", 20] call FUNC(getSetting);
 
 private _fields = STALKER_anomalyFields apply { [ _x select 0, _x select 2 ] };
 if (_fields isEqualTo []) exitWith {

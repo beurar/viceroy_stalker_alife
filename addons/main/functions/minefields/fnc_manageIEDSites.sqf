@@ -11,7 +11,7 @@ private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
 
 {
     _x params ["_pos","_obj","_marker",["_active",false]];
-    private _newActive = [_pos,_dist,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_pos,_dist,_active] call FUNC(evalSiteProximity);
     if (_newActive) then {
         if (isNull _obj) then {
             _obj = createMine [selectRandom ["IEDUrbanBig_F", "IEDLandBig_F", "IEDUrbanSmall_F", "IEDLandSmall_F"], _pos, [], 0];
@@ -49,9 +49,9 @@ private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
 } forEach STALKER_iedSites;
 
 // Maintain site count
-private _target = ["VSA_IEDSiteCount",10] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _target = ["VSA_IEDSiteCount",10] call FUNC(getSetting);
 while { count STALKER_iedSites < _target } do {
-    [ [worldSize/2, worldSize/2, 0], worldSize, 1 ] call viceroy_stalker_alife_minefields_fnc_spawnIEDSites;
+    [ [worldSize/2, worldSize/2, 0], worldSize, 1 ] call FUNC(spawnIEDSites);
 };
 
 true

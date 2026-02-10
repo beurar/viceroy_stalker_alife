@@ -14,11 +14,11 @@
 
 params ["_anchor", "_range", "_active"];
 
-private _near = [_anchor, _range] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+private _near = [_anchor, _range] call FUNC(hasPlayersNearby);
 
 if (_active) then {
     if (!_near) then {
-        if !([_anchor, _range + 200] call viceroy_stalker_alife_core_fnc_hasPlayersNearby) then {
+        if !([_anchor, _range + 200] call FUNC(hasPlayersNearby)) then {
             _active = false;
         } else {
             _active = true;

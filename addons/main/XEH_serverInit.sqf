@@ -1,3 +1,4 @@
+#include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
 /*
     STALKER ALife Ã¢â‚¬â€œ serverInit
     Server-only bootstrap and world initialization
@@ -24,7 +25,7 @@
     STALKER_wanderers        = [];
 
     // Map bootstrap
-    [] call viceroy_stalker_alife_init_fnc_initMap;
+    [] call FUNC(initMap);
 
     // HEAVY INIT: Run in background to prevent load-screen freeze
     [] spawn {
@@ -33,44 +34,44 @@
         // --- Minefields, IEDs, Booby Traps ---
         private _center = [0,0,0];
         private _worldSize = worldSize;
-        [_center, _worldSize] call viceroy_stalker_alife_minefields_fnc_spawnMinefields;
-        [_center, _worldSize] call viceroy_stalker_alife_minefields_fnc_spawnIEDSites;
-        [_center, _worldSize] call viceroy_stalker_alife_minefields_fnc_spawnBoobyTraps;
+        [_center, _worldSize] call FUNC(spawnMinefields);
+        [_center, _worldSize] call FUNC(spawnIEDSites);
+        [_center, _worldSize] call FUNC(spawnBoobyTraps);
 
 
         // --- Wrecks ---
-        private _wreckCount = ["VSA_wreckCount", 10] call viceroy_stalker_alife_cba_fnc_getSetting;
-        [_wreckCount] call viceroy_stalker_alife_wrecks_fnc_spawnAbandonedVehicles;
+        private _wreckCount = ["VSA_wreckCount", 10] call FUNC(getSetting);
+        [_wreckCount] call FUNC(spawnAbandonedVehicles);
 
         // --- Anomalies ---
-        [_center, _worldSize, 1] call viceroy_stalker_alife_anomalies_fnc_spawnAllAnomalyFields;
-        [1] call viceroy_stalker_alife_anomalies_fnc_spawnBridgeAnomalyFields;
+        [_center, _worldSize, 1] call FUNC(spawnAllAnomalyFields);
+        [1] call FUNC(spawnBridgeAnomalyFields);
 
         // --- Managers ---
-        [] call viceroy_stalker_alife_init_fnc_initManagers;
+        [] call FUNC(initManagers);
     };
 
     // --- Activity / proximity thread ---
     missionNamespace setVariable [
         "STALKER_activityRadius",
-        ["VSA_playerNearbyRange", 1500] call viceroy_stalker_alife_cba_fnc_getSetting
+        ["VSA_playerNearbyRange", 1500] call FUNC(getSetting)
     ];
 
-    [] call viceroy_stalker_alife_core_fnc_registerEmissionHooks;
+    [] call FUNC(registerEmissionHooks);
 
     if (isNil "VIC_activityThread") then {
         VIC_activityThread = [] spawn {
             sleep 8;
             while { true } do {
-                [] call viceroy_stalker_alife_mutants_fnc_updateProximity;
+                [] call FUNC(updateProximity);
                 sleep 6;
             };
         };
     };
 
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
-        [] call viceroy_stalker_alife_core_fnc_setupDebugActions;
-        [] remoteExec ["viceroy_stalker_alife_markers_fnc_markPlayerRanges", 0];
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
+        [] call FUNC(setupDebugActions);
+        [] remoteExec ["FUNC(markPlayerRanges)", 0];
     };
 
 }] call CBA_fnc_addEventHandler;
@@ -80,7 +81,7 @@
     "EntityKilled",
     {
         params ["_unit"];
-        [_unit] call viceroy_stalker_alife_zombification_fnc_trackDeadForZombify;
-        [_unit] call viceroy_stalker_alife_markers_fnc_markDeathLocation;
+        [_unit] call trackDeadForZombify;
+        [_unit] call FUNC(markDeathLocation);
     }
 ] call CBA_fnc_addEventHandler;

@@ -11,65 +11,65 @@ if (!isServer) exitWith { false };
 // Note: Road caching (STALKER_roads) removed in favor of dynamic 'nearRoads' checks
 
 // Land zones are optional but load if present
-private _zones = ["STALKER_landZones"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _zones = ["STALKER_landZones"] call FUNC(loadCache);
 if (!isNil {_zones} && {_zones isEqualType [] && {count _zones == 0}}) then {
-    _zones = [] call viceroy_stalker_alife_core_fnc_findLandZones;
-    ["STALKER_landZones", _zones] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _zones = [] call FUNC(findLandZones);
+    ["STALKER_landZones", _zones] call FUNC(saveCache);
 };
 
-private _rockClusters = ["STALKER_rockClusters"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _rockClusters = ["STALKER_rockClusters"] call FUNC(loadCache);
 if (isNil {_rockClusters} || {_rockClusters isEqualTo []}) then {
-    _rockClusters = [] call viceroy_stalker_alife_core_fnc_findRockClusters;
-    ["STALKER_rockClusters", _rockClusters] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _rockClusters = [] call FUNC(findRockClusters);
+    ["STALKER_rockClusters", _rockClusters] call FUNC(saveCache);
 };
 
-private _sniperSpots = ["STALKER_sniperSpots"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _sniperSpots = ["STALKER_sniperSpots"] call FUNC(loadCache);
 if (isNil {_sniperSpots} || {_sniperSpots isEqualTo []}) then {
-    _sniperSpots = [] call viceroy_stalker_alife_core_fnc_findSniperSpots;
-    ["STALKER_sniperSpots", _sniperSpots] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _sniperSpots = [] call FUNC(findSniperSpots);
+    ["STALKER_sniperSpots", _sniperSpots] call FUNC(saveCache);
 };
 
-private _swamps = ["STALKER_swamps"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _swamps = ["STALKER_swamps"] call FUNC(loadCache);
 if (isNil {_swamps} || {_swamps isEqualTo []}) then {
-    _swamps = [] call viceroy_stalker_alife_core_fnc_findSwamps;
-    ["STALKER_swamps", _swamps] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _swamps = [] call FUNC(findSwamps);
+    ["STALKER_swamps", _swamps] call FUNC(saveCache);
 };
 
-private _beaches = ["STALKER_beachSpots"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _beaches = ["STALKER_beachSpots"] call FUNC(loadCache);
 if (isNil {_beaches} || {_beaches isEqualTo []}) then {
-    _beaches = [] call viceroy_stalker_alife_core_fnc_findBeachesInMap;
-    ["STALKER_beachSpots", _beaches] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _beaches = [] call FUNC(findBeachesInMap);
+    ["STALKER_beachSpots", _beaches] call FUNC(saveCache);
 };
 
-private _valleys = ["STALKER_valleys"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _valleys = ["STALKER_valleys"] call FUNC(loadCache);
 if (isNil {_valleys} || {_valleys isEqualTo []}) then {
-    _valleys = [] call viceroy_stalker_alife_core_fnc_findValleys;
-    ["STALKER_valleys", _valleys] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _valleys = [] call FUNC(findValleys);
+    ["STALKER_valleys", _valleys] call FUNC(saveCache);
 };
 
-private _bridges = ["STALKER_bridges"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _bridges = ["STALKER_bridges"] call FUNC(loadCache);
 if (isNil {_bridges} || {_bridges isEqualTo []}) then {
-    _bridges = [] call viceroy_stalker_alife_core_fnc_findBridges;
-    ["STALKER_bridges", _bridges] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _bridges = [] call FUNC(findBridges);
+    ["STALKER_bridges", _bridges] call FUNC(saveCache);
 };
 
-private _crossroads = ["STALKER_crossroads"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _crossroads = ["STALKER_crossroads"] call FUNC(loadCache);
 if (isNil {_crossroads} || {_crossroads isEqualTo []}) then {
-    _crossroads = [] call viceroy_stalker_alife_core_fnc_findCrossroads;
-    ["STALKER_crossroads", _crossroads] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _crossroads = [] call FUNC(findCrossroads);
+    ["STALKER_crossroads", _crossroads] call FUNC(saveCache);
 };
 
 // Building clusters are cached as arrays of positions
-private _bClusterPositions = ["STALKER_buildingClusters"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _bClusterPositions = ["STALKER_buildingClusters"] call FUNC(loadCache);
 if (isNil {_bClusterPositions} || {_bClusterPositions isEqualTo []}) then {
-    _bClusterPositions = [] call viceroy_stalker_alife_core_fnc_findBuildingClusters;
-    ["STALKER_buildingClusters", _bClusterPositions] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _bClusterPositions = [] call FUNC(findBuildingClusters);
+    ["STALKER_buildingClusters", _bClusterPositions] call FUNC(saveCache);
 }; 
 
-private _wreckPositions = ["STALKER_wreckPositions"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _wreckPositions = ["STALKER_wreckPositions"] call FUNC(loadCache);
 if (isNil {_wreckPositions} || {_wreckPositions isEqualTo []}) then {
-    _wreckPositions = [] call viceroy_stalker_alife_wrecks_fnc_findWrecks;
-    ["STALKER_wreckPositions", _wreckPositions] call viceroy_stalker_alife_cache_fnc_saveCache;
+    _wreckPositions = [] call FUNC(findWrecks);
+    ["STALKER_wreckPositions", _wreckPositions] call FUNC(saveCache);
 };
 if (isNil "STALKER_wrecks") then { STALKER_wrecks = []; };
 {
@@ -84,17 +84,17 @@ if (isNil "STALKER_wrecks") then { STALKER_wrecks = []; };
 } forEach _wreckPositions;
 
 // Load or generate mutant habitats
-private _habData = ["STALKER_mutantHabitatData"] call viceroy_stalker_alife_cache_fnc_loadCache;
+private _habData = ["STALKER_mutantHabitatData"] call FUNC(loadCache);
 if (isNil {_habData} || {_habData isEqualTo []}) then {
-    [] call viceroy_stalker_alife_mutants_fnc_setupMutantHabitats;
+    [] call FUNC(setupMutantHabitats);
     _habData = missionNamespace getVariable ["STALKER_mutantHabitatData", []];
-    ["STALKER_mutantHabitatData", _habData] call viceroy_stalker_alife_cache_fnc_saveCache;
+    ["STALKER_mutantHabitatData", _habData] call FUNC(saveCache);
 } else {
-    [_habData] call viceroy_stalker_alife_mutants_fnc_spawnCachedHabitats;
+    [_habData] call FUNC(spawnCachedHabitats);
 };
 
 // Automatically display cached points when debug mode is active
-if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+if (["VSA_debugMode", false] call FUNC(getSetting)) then {
     // Marker autogeneration disabled in production. Use placeCachedMarkers for debugging.
 };
 

@@ -10,15 +10,15 @@
 params ["_center","_radius", ["_count", -1], ["_duration", -1]];
 
 
-if (["VSA_enableChemicalZones", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableChemicalZones", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 if (_count < 0) then {
-    _count = ["VSA_chemicalZoneCount", 2] call viceroy_stalker_alife_cba_fnc_getSetting;
+    _count = ["VSA_chemicalZoneCount", 2] call FUNC(getSetting);
 };
-private _weight = ["VSA_chemicalSpawnWeight", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _nightOnly = ["VSA_chemicalNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _zoneRadius = ["VSA_chemicalZoneRadius", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _weight = ["VSA_chemicalSpawnWeight", 50] call FUNC(getSetting);
+private _nightOnly = ["VSA_chemicalNightOnly", false] call FUNC(getSetting);
+private _zoneRadius = ["VSA_chemicalZoneRadius", 50] call FUNC(getSetting);
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
 };
@@ -29,9 +29,9 @@ for "_i" from 1 to _count do {
     private _ang = random 360;
     private _dist = random _radius;
     private _base = [(_centerPos select 0) + _dist * sin _ang, (_centerPos select 1) + _dist * cos _ang, _centerPos select 2];
-    private _pos = [_base] call viceroy_stalker_alife_core_fnc_findLandPosition;
+    private _pos = [_base] call FUNC(findLandPosition);
     if !(isNil {_pos} || {_pos isEqualTo []}) then {
-        [_pos, _zoneRadius, _duration] call viceroy_stalker_alife_chemical_fnc_spawnChemicalZone;
+        [_pos, _zoneRadius, _duration] call FUNC(spawnChemicalZone);
     };
 };
 

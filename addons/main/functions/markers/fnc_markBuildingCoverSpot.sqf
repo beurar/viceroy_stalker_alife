@@ -15,11 +15,11 @@ if (isNil "STALKER_coverMarkers") then { STALKER_coverMarkers = [] };
 { if (_x != "") then { deleteMarker _x } } forEach STALKER_coverMarkers;
 STALKER_coverMarkers = [];
 
-private _pos = [player] call viceroy_stalker_alife_core_fnc_findBuildingCoverSpot;
+private _pos = [player] call FUNC(findBuildingCoverSpot);
 if (isNil {_pos}) exitWith { false };
 
 private _name = format ["cover_%1", diag_tickTime + random 1000];
-private _marker = [_name, _pos, "ICON", "mil_objective", "#(0,1,0,1)", 1, "", [1,1], _global] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+private _marker = [_name, _pos, "ICON", "mil_objective", "#(0,1,0,1)", 1, "", [1,1], _global] call FUNC(createGlobalMarker);
 STALKER_coverMarkers pushBack _marker;
 
 true

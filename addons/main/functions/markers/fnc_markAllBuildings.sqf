@@ -22,7 +22,7 @@ _buildings = _buildings arrayIntersect _buildings; // remove duplicates
     private _type = typeOf _x;
     private _pos = getPosATL _x;
     private _name = format ["bld_%1_%2", toLower _type, diag_tickTime + random 1000];
-    private _marker = [_name, _pos, "ICON", "mil_box", "#(1,1,0,1)", 1, "", [1,1], _global] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    private _marker = [_name, _pos, "ICON", "mil_box", "#(1,1,0,1)", 1, "", [1,1], _global] call FUNC(createGlobalMarker);
     [_name, _type] remoteExecCall ["setMarkerText", 0, true];
     STALKER_buildingMarkers pushBack _marker;
 } forEach _buildings;

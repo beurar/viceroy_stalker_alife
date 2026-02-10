@@ -14,5 +14,5 @@ if ((count _pos) < 2) exitWith { false };
 
 _pos params [["_x",0],["_y",0],["_z",0]];
 
-private _surf = [[_x,_y,_z]] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
+private _surf = [[_x,_y,_z]] call FUNC(getSurfacePosition);
 (ASLToAGL _surf select 2) <= 0

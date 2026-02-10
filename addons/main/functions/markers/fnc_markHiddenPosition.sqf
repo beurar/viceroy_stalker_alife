@@ -18,11 +18,11 @@ if (isNil "STALKER_hiddenMarkers") then { STALKER_hiddenMarkers = [] };
 } forEach STALKER_hiddenMarkers;
 STALKER_hiddenMarkers = [];
 
-private _pos = [] call viceroy_stalker_alife_core_fnc_findHiddenPosition;
+private _pos = [] call FUNC(findHiddenPosition);
 if (isNil {_pos}) exitWith { false };
 
 private _name = format ["hidden_%1", diag_tickTime + random 1000];
-private _marker = [_name, _pos, "ICON", "mil_ambush", "#(0,1,0,1)", 1, "", [1,1], _global] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+private _marker = [_name, _pos, "ICON", "mil_ambush", "#(0,1,0,1)", 1, "", [1,1], _global] call FUNC(createGlobalMarker);
 STALKER_hiddenMarkers pushBack _marker;
 
 true

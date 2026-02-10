@@ -13,7 +13,7 @@ if (isServer) exitWith { _args call _fnc };
 private _var = format ["VIC_res_%1_%2", clientOwner, diag_tickTime];
 missionNamespace setVariable [_var, nil];
 
-[_fnc, _args, _var, clientOwner] remoteExec ["viceroy_stalker_alife_server_fnc_callServerHelper", 2];
+[_fnc, _args, _var, clientOwner] remoteExec ["FUNC(callServerHelper)", 2];
 
 waitUntil { !isNil { missionNamespace getVariable _var } };
 

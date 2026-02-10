@@ -15,13 +15,13 @@ params ["_center", ["_radius",500], ["_count",-1]];
 
 if (!isServer) exitWith { false };
 
-if (["VSA_enableMinefields", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith { false };
+if (["VSA_enableMinefields", true] call FUNC(getSetting) isEqualTo false) exitWith { false };
 
 if (isNil "STALKER_iedSites") then { STALKER_iedSites = [] };
 
 private _spawned = 0;
 
-if (_count < 0) then { _count = ["VSA_IEDSiteCount",10] call viceroy_stalker_alife_cba_fnc_getSetting; };
+if (_count < 0) then { _count = ["VSA_IEDSiteCount",10] call FUNC(getSetting); };
 
 private _towns = nearestLocations [_center, ["NameVillage","NameCity","NameCityCapital","NameLocal"], _radius];
 private _useFallback = _towns isEqualTo [];
@@ -29,20 +29,20 @@ private _useFallback = _towns isEqualTo [];
 for "_i" from 1 to _count do {
     private _pos = [];
     if (_useFallback) then {
-        _pos = [_center, _radius, 20] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+        _pos = [_center, _radius, 20] call FUNC(findRoadPosition);
     } else {
         private _town = selectRandom _towns;
         private _tPos = locationPosition _town;
-        _pos = [_tPos, 200, 10] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+        _pos = [_tPos, 200, 10] call FUNC(findRoadPosition);
     };
     if (isNil {_pos}) then { continue };
 
-    [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    [_pos] call FUNC(createProximityAnchor);
 
     private _marker = "";
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         _marker = format ["ied_%1_%2", count STALKER_iedSites, diag_tickTime];
-        [_marker, _pos, "ICON", "mil_triangle", "#(0.9,0.2,0.2,1)", 0.2, "IED"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ICON", "mil_triangle", "#(0.9,0.2,0.2,1)", 0.2, "IED"] call FUNC(createGlobalMarker);
     };
 
     STALKER_iedSites pushBack [_pos, objNull, _marker, false];

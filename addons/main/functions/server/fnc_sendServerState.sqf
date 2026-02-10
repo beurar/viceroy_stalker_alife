@@ -163,6 +163,6 @@ _payload pushBack (if (_sendWrecks) then { (if (isNil "STALKER_wreckPositions") 
 _payload pushBack _serverCounts;
 
 // Send packaged state back to the requesting client using remoteReturn helper
-[_var, _payload] remoteExecCall ["viceroy_stalker_alife_server_fnc_remoteReturn", _client];
+[_var, _payload] remoteExecCall ["FUNC(remoteReturn)", _client];
 
 true

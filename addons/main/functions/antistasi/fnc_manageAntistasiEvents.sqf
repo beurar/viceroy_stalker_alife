@@ -4,7 +4,7 @@
     - Periodically checks for night and randomly triggers the Defend Town from Zombies mission
 */
 
-if !(call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate) exitWith {};
+if !(call FUNC(isAntistasiUltimate)) exitWith {};
 if (!isServer) exitWith {};
 
 [] spawn {

@@ -9,11 +9,11 @@
 if (!isServer) exitWith {
 };
 
-if (["VSA_enableBlowouts", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableBlowouts", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
-private _minDelay = ["VSA_blowoutMinDelay",12] call viceroy_stalker_alife_cba_fnc_getSetting; // hours
-private _maxDelay = ["VSA_blowoutMaxDelay",72] call viceroy_stalker_alife_cba_fnc_getSetting; // hours
+private _minDelay = ["VSA_blowoutMinDelay",12] call FUNC(getSetting); // hours
+private _maxDelay = ["VSA_blowoutMaxDelay",72] call FUNC(getSetting); // hours
 
 if (_maxDelay < _minDelay) then { _maxDelay = _minDelay; };
 
@@ -22,7 +22,7 @@ if (_maxDelay < _minDelay) then { _maxDelay = _minDelay; };
     private _next = time + (_minH + random (_maxH - _minH)) * 3600;
     while {true} do {
         if (time >= _next) then {
-            [] call viceroy_stalker_alife_blowouts_fnc_triggerBlowout;
+            [] call FUNC(triggerBlowout);
             _next = time + (_minH + random (_maxH - _minH)) * 3600;
         };
         sleep 60;

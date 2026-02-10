@@ -15,34 +15,34 @@ params ["_centerPos"];
 
 if (!isServer) exitWith {};
 
-if (["VSA_enableMutants", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableMutants", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
 if (isNil "STALKER_activeHostiles") then { STALKER_activeHostiles = []; };
 
-private _groupCount = ["VSA_mutantGroupCountHostile", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _threat     = ["VSA_mutantThreat", 3] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _nightOnly  = ["VSA_mutantNightOnlyHostile", false] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _spawnWeight = ["VSA_mutantSpawnWeight", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _groupCount = ["VSA_mutantGroupCountHostile", 1] call FUNC(getSetting);
+private _threat     = ["VSA_mutantThreat", 3] call FUNC(getSetting);
+private _nightOnly  = ["VSA_mutantNightOnlyHostile", false] call FUNC(getSetting);
+private _spawnWeight = ["VSA_mutantSpawnWeight", 50] call FUNC(getSetting);
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {};
 
 private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-if (!([_centerPos, _dist] call viceroy_stalker_alife_core_fnc_hasPlayersNearby)) exitWith {};
+if (!([_centerPos, _dist] call FUNC(hasPlayersNearby))) exitWith {};
 
 for "_i" from 1 to _groupCount do {
     if (random 100 >= _spawnWeight) then { continue }; 
     private _spawnPos = _centerPos getPos [100 + random 100, random 360];
-    _spawnPos = [_spawnPos] call viceroy_stalker_alife_core_fnc_findLandPosition;
+    _spawnPos = [_spawnPos] call FUNC(findLandPosition);
     if (isNil {_spawnPos} || {_spawnPos isEqualTo []}) then { continue };
     private _grp = createGroup east;
     for "_j" from 1 to _threat do {
         private _u = _grp createUnit ["O_ALF_Mutant", _spawnPos, [], 0, "FORM"];
-        [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_u] call FUNC(initMutantUnit);
     };
     [_grp, _spawnPos] call BIS_fnc_taskPatrol;
     private _markerName = format ["hostile_%1_%2", _i, diag_tickTime];
     private _marker = _markerName;
-    [_marker, _spawnPos, "ICON", "mil_dot", VIC_colorMutant, 1] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_marker, _spawnPos, "ICON", "mil_dot", VIC_colorMutant, 1] call FUNC(createGlobalMarker);
     STALKER_activeHostiles pushBack [_grp, "hostile", _spawnPos, _marker, true];
 }; 
 

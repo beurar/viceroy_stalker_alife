@@ -27,7 +27,7 @@ for "_i" from ((count STALKER_anomalyFields) - 1) to 0 step -1 do {
     };
 
     private _dist = 400;
-    private _newActive = [_anchor,_dist,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_anchor,_dist,_active] call FUNC(evalSiteProximity);
 
     if (_newActive) then {
         if (!_active || {_objs isEqualTo [] || {{isNull _x} count _objs == count _objs}}) then {

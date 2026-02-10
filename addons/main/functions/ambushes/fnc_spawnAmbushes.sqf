@@ -12,22 +12,22 @@ params ["_center", ["_radius",500], ["_count",-1]];
 if (!isServer) exitWith {
 };
 
-if (["VSA_enableAmbushes", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableAmbushes", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 if (isNil "STALKER_ambushes") then { STALKER_ambushes = []; };
 
-if (_count < 0) then { _count = ["VSA_ambushCount", 3] call viceroy_stalker_alife_cba_fnc_getSetting; };
+if (_count < 0) then { _count = ["VSA_ambushCount", 3] call FUNC(getSetting); };
 
-private _townRadius = ["VSA_townRadius", 500] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _bandDist  = ["VSA_ambushTownDistance", 200] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _townRadius = ["VSA_townRadius", 500] call FUNC(getSetting);
+private _bandDist  = ["VSA_ambushTownDistance", 200] call FUNC(getSetting);
 private _outerRadius = _townRadius + _bandDist;
 
 for "_i" from 1 to _count do {
     private _pos = nil;
 
     for "_j" from 1 to 30 do {
-        private _candidate = [_center, _radius, 5] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+        private _candidate = [_center, _radius, 5] call FUNC(findRoadPosition);
 
         private _locations = nearestLocations [
             _candidate,
@@ -42,12 +42,12 @@ for "_i" from 1 to _count do {
     };
     if (isNil {_pos}) then { continue; };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
 
     private _marker = "";
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         _marker = format ["amb_%1", diag_tickTime + _i];
-        [_marker, _pos, "ICON", "mil_ambush", "#(0.1,0.1,0.1,1)", 0.2, "Ambush"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ICON", "mil_ambush", "#(0.1,0.1,0.1,1)", 0.2, "Ambush"] call FUNC(createGlobalMarker);
     };
 
     STALKER_ambushes pushBack [_pos, _anchor, objNull, [], [], false, _marker, false];

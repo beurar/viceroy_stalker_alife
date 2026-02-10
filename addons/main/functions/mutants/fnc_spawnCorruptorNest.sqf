@@ -7,7 +7,7 @@
 params ["_pos"];
 
 
-if !( ["Corruptor"] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) exitWith {
+if !( ["Corruptor"] call FUNC(isMutantEnabled) ) exitWith {
 };
 
-[_pos, "WBK_SpecialZombie_Corrupted_3"] call viceroy_stalker_alife_mutants_fnc_spawnMutantNest;
+[_pos, "WBK_SpecialZombie_Corrupted_3"] call FUNC(spawnMutantNest);

@@ -11,7 +11,7 @@
 */
 params [["_duration",600],["_reward",50]];
 
-if !(call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate) exitWith {false};
+if !(call FUNC(isAntistasiUltimate)) exitWith {false};
 if (!isServer) exitWith {false};
 
 missionNamespace setVariable ["STALKER_mutantHunt", [0,_reward,diag_tickTime + _duration]];

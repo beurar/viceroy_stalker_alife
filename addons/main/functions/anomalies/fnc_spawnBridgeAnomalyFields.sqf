@@ -9,14 +9,14 @@ params [["_type", -1]];
 // Gather known bridges
 private _bridges = missionNamespace getVariable ["VIC_cachedBridges", []];
 if (_bridges isEqualTo []) then {
-    _bridges = [] call viceroy_stalker_alife_core_fnc_findBridges;
+    _bridges = [] call FUNC(findBridges);
     missionNamespace setVariable ["VIC_cachedBridges", _bridges];
 };
 
 if (isNil "STALKER_anomalyFields") then { STALKER_anomalyFields = [] };
 if (isNil "STALKER_anomalyMarkers") then { STALKER_anomalyMarkers = [] };
 
-private _stableChance = ["VSA_stableFieldChance", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _stableChance = ["VSA_stableFieldChance", 50] call FUNC(getSetting);
 
 {
     private _pos = getPosATL _x;
@@ -30,13 +30,13 @@ private _stableChance = ["VSA_stableFieldChance", 50] call viceroy_stalker_alife
     private _spawned = [_pos, 75, -1, _pos] call VIC_fnc_createField_bridgeAnomaly;
     if (_spawned isEqualTo []) then { continue };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
     private _marker = (_spawned select 0) getVariable ["zoneMarker", ""];
     private _site   = if (_marker isEqualTo "") then { getPosATL (_spawned select 0) } else { getMarkerPos _marker };
     if (_marker != "") then {
         _marker setMarkerBrushLocal "Border";
         _marker setMarkerAlpha 1;
-        if (_stable) then { _marker setMarkerText (["bridge", _site] call viceroy_stalker_alife_anomalies_fnc_generateFieldName); };
+        if (_stable) then { _marker setMarkerText (["bridge", _site] call FUNC(generateFieldName)); };
     };
     private _dur = missionNamespace getVariable ["STALKER_AnomalyFieldDuration", 30];
     private _exp = diag_tickTime + (_dur * 60);

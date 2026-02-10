@@ -45,7 +45,7 @@ if (isServer && !isNil "STALKER_anomalyFields") then {
                     case VIC_fnc_createField_zapper: {"zapper"};
                     default {""};
                 };
-                _marker setMarkerText ([_type, _site] call viceroy_stalker_alife_anomalies_fnc_generateFieldName);
+                _marker setMarkerText ([_type, _site] call FUNC(generateFieldName));
             };
         };
         _exp = diag_tickTime + (_dur * 60);

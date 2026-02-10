@@ -8,6 +8,6 @@
 */
 params ["_pos"];
 
-private _surf = [_pos] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
-if ((ASLToAGL _surf) call viceroy_stalker_alife_core_fnc_isWaterPosition) exitWith { [] };
+private _surf = [_pos] call FUNC(getSurfacePosition);
+if ((ASLToAGL _surf) call FUNC(isWaterPosition)) exitWith { [] };
 _surf

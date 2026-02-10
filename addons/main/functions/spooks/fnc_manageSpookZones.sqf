@@ -20,7 +20,7 @@ private _range = missionNamespace getVariable ["STALKER_activityRadius", 1500];
 
     private _pos = getPosATL _zone;
     private _active = _zone getVariable ["VIC_active", true];
-    private _newActive = [_pos,_range,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_pos,_range,_active] call FUNC(evalSiteProximity);
     _zone setVariable ["VIC_active", _newActive];
 
     private _spawned = _zone getVariable ["spawnedSpooks", []];

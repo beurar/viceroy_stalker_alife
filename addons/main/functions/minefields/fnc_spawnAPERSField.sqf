@@ -19,7 +19,7 @@ for "_xOff" from -_radius to _radius step _spacing do {
     for "_yOff" from -_radius to _radius step _spacing do {
         if ((_xOff * _xOff + _yOff * _yOff) > (_radius * _radius)) then { continue; };
         private _pos = [(_center select 0) + _xOff, (_center select 1) + _yOff, 0];
-        _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPos;
+        _pos = [_pos] call FUNC(findLandPos);
         if (isNil {_pos} || {_pos isEqualTo []}) then { continue; };
         private _mine = createMine ["APERSMine", _pos, [], 0];
         _objs pushBack _mine;

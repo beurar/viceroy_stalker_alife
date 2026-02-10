@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "XEH_PREP.hpp"
 
 // --- Custom marker colours -------------------------------------------------
 VIC_colorMutant      = "#(0.545,0.27,0.074,1)";

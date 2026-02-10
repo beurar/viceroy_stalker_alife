@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /*
     STALKER ALife  postInit
 */
@@ -7,23 +8,23 @@
     // ABORT if in Main Menu background ("Intro") or Editor Preview
     if ((missionName select [0, 5]) == "Intro" || is3DEN) exitWith {};
 
-    missionNamespace setVariable ["STALKER_activityRadius", ["VSA_playerNearbyRange", 1500] call viceroy_stalker_alife_cba_fnc_getSetting];
-    [] call viceroy_stalker_alife_core_fnc_registerEmissionHooks;
-    if (call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate && { ["VSA_disableA3UWeather", false] call viceroy_stalker_alife_cba_fnc_getSetting }) then {
+    missionNamespace setVariable ["STALKER_activityRadius", ["VSA_playerNearbyRange", 1500] call FUNC(getSetting)];
+    [] call FUNC(registerEmissionHooks);
+    if (call FUNC(isAntistasiUltimate) && { ["VSA_disableA3UWeather", false] call FUNC(getSetting) }) then {
         [] call VIC_fnc_disableA3UWeather;
     };
     if (isServer && {isNil "VIC_activityThread"}) then {
         VIC_activityThread = [] spawn {
             sleep 8;
             while {true} do {
-                [] call viceroy_stalker_alife_mutants_fnc_updateProximity;
+                [] call FUNC(updateProximity);
                 sleep 6;
             };
         };
     };
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
-        [] call viceroy_stalker_alife_core_fnc_setupDebugActions;
-        [] remoteExec ["viceroy_stalker_alife_markers_fnc_markPlayerRanges", 0];
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
+        [] call FUNC(setupDebugActions);
+        [] remoteExec [QFUNC(markPlayerRanges), 0];
     };
     [] call antistasi_fnc_manageAntistasiEvents;
     
@@ -45,8 +46,8 @@
 // Track units killed during emissions for later zombification
 ["EntityKilled", {
     params ["_unit"];
-    [_unit] call viceroy_stalker_alife_zombification_fnc_trackDeadForZombify;
-    [_unit] call viceroy_stalker_alife_markers_fnc_markDeathLocation;
+    [_unit] call trackDeadForZombify;
+    [_unit] call FUNC(markDeathLocation);
 }] call CBA_fnc_addEventHandler;
 
 ["CBA_SettingChanged", {
@@ -54,8 +55,8 @@
     if (_setting isEqualTo "VSA_debugMode") then {
         if (hasInterface) then {
             if (_value) then {
-                [] call viceroy_stalker_alife_core_fnc_setupDebugActions;
-                [] call viceroy_stalker_alife_markers_fnc_markPlayerRanges;
+                [] call FUNC(setupDebugActions);
+                [] call FUNC(markPlayerRanges);
             } else {
                 if (!isNil "STALKER_playerRangeMarker" && {STALKER_playerRangeMarker != ""}) then {
                     deleteMarkerLocal STALKER_playerRangeMarker;

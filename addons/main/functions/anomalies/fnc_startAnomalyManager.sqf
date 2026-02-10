@@ -10,7 +10,7 @@ missionNamespace setVariable ["VIC_anomalyManagerRunning", true];
 
 [] spawn {
     while { missionNamespace getVariable ["VIC_anomalyManagerRunning", false] } do {
-        [] call viceroy_stalker_alife_anomalies_fnc_manageAnomalyFields;
+        [] call FUNC(manageAnomalyFields);
         sleep 6;
     };
 };

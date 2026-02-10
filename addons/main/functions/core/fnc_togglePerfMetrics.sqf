@@ -17,7 +17,7 @@ if (_active) then {
     // start
     private _t = [] spawn {
         while { missionNamespace getVariable ["VIC_perfActive", true] } do {
-            private _res = [ { [] call viceroy_stalker_alife_server_fnc_getServerMetrics }, [] ] call viceroy_stalker_alife_server_fnc_callServer;
+            private _res = [ { [] call FUNC(getServerMetrics) }, [] ] call FUNC(callServer);
             private _tick = _res select 0;
             private _counts = _res select 1;
             // display in chat

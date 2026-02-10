@@ -9,12 +9,12 @@ if (!isServer) exitWith {};
 if (isNil "STALKER_ambushes") exitWith {};
 
 private _range = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-private _minUnits = ["VSA_ambushMinUnits", 3] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _maxUnits = ["VSA_ambushMaxUnits", 6] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _minUnits = ["VSA_ambushMinUnits", 3] call FUNC(getSetting);
+private _maxUnits = ["VSA_ambushMaxUnits", 6] call FUNC(getSetting);
 
 {
     _x params ["_pos","_anchor","_veh","_mines","_groups","_triggered","_marker",["_active",false]];
-    private _newActive = [_anchor,_range,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_anchor,_range,_active] call FUNC(evalSiteProximity);
 
     if (_newActive) then {
         if (isNull _veh) then {
@@ -23,7 +23,7 @@ private _maxUnits = ["VSA_ambushMaxUnits", 6] call viceroy_stalker_alife_cba_fnc
         };
 
         if (_mines isEqualTo []) then {
-            private _roadPos = [_pos, 50, 5] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+            private _roadPos = [_pos, 50, 5] call FUNC(findRoadPosition);
             private _dir = 0;
             if (!isNil {_roadPos} && { _roadPos isNotEqualTo [] }) then {
                 private _road = roadAt _roadPos;
@@ -42,12 +42,12 @@ private _maxUnits = ["VSA_ambushMaxUnits", 6] call viceroy_stalker_alife_cba_fnc
             };
         };
 
-        if (!_triggered && {[_pos,20] call viceroy_stalker_alife_core_fnc_hasPlayersNearby}) then {
+        if (!_triggered && {[_pos,20] call FUNC(hasPlayersNearby)}) then {
             private _grp1 = createGroup east;
             private _grp2 = createGroup east;
             private _count = floor(random (_maxUnits - _minUnits + 1)) + _minUnits;
             private _half = ceil(_count / 2);
-            private _roadPos = [_pos, 50, 5] call viceroy_stalker_alife_core_fnc_findRoadPosition;
+            private _roadPos = [_pos, 50, 5] call FUNC(findRoadPosition);
             private _dir = 0;
             if (!isNil {_roadPos} && { _roadPos isNotEqualTo [] }) then {
             private _road = roadAt _roadPos;

@@ -22,10 +22,10 @@ if (isNil "STALKER_panicGroups") then { STALKER_panicGroups = []; };
 
 // Exit if panic or AI behaviour tweaks are disabled
 if !(missionNamespace getVariable ["VSA_AIPanicEnabled", true]) exitWith {};
-if (["VSA_enableAIBehaviour", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
-if (["VSA_aiNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting && {dayTime > 5 && dayTime < 20}) exitWith {};
+if (["VSA_enableAIBehaviour", true] call FUNC(getSetting) isEqualTo false) exitWith {};
+if (["VSA_aiNightOnly", false] call FUNC(getSetting) && {dayTime > 5 && dayTime < 20}) exitWith {};
 
-private _threshold = ["VSA_panicThreshold", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _threshold = ["VSA_panicThreshold", 50] call FUNC(getSetting);
 private _groups = [];
 
 {

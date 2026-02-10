@@ -18,6 +18,6 @@ private _list = _centerPos nearRoads _radius;
 if (_list isNotEqualTo []) exitWith { getPosATL (selectRandom _list) };
 
 // Fallback if no roads found in radius
-[] call viceroy_stalker_alife_core_fnc_getRandomRoad
+[] call FUNC(getRandomRoad)
 
 

@@ -9,13 +9,13 @@
 if (!isServer) exitWith {};
 if (isNil "STALKER_wanderers") exitWith {};
 
-private _groupSize = ["VSA_ambientStalkerSize", 4] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _groupSize = ["VSA_ambientStalkerSize", 4] call FUNC(getSetting);
 private _range = missionNamespace getVariable ["STALKER_activityRadius", 1500];
 
 {
     _x params ["_grp","_pos","_anchor","_marker","_active"];
 
-    private _newActive = [_anchor,_range,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_anchor,_range,_active] call FUNC(evalSiteProximity);
 
     if (_newActive) then {
         if (isNull _grp || { units _grp isEqualTo [] }) then {

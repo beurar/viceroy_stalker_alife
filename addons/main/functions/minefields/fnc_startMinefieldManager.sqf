@@ -10,8 +10,8 @@ missionNamespace setVariable ["VIC_minefieldManagerRunning", true];
 
 [] spawn {
     while { missionNamespace getVariable ["VIC_minefieldManagerRunning", false] } do {
-        [] call viceroy_stalker_alife_minefields_fnc_manageMinefields;
-        [] call viceroy_stalker_alife_minefields_fnc_manageBoobyTraps;
+        [] call FUNC(manageMinefields);
+        [] call FUNC(manageBoobyTraps);
         sleep 6;
     };
 };

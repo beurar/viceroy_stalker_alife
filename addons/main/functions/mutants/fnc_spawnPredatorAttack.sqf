@@ -13,20 +13,20 @@ params ["_player"];
 if (!isServer) exitWith {
 };
 
-if (["VSA_enableMutants", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableMutants", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 if (isNil "STALKER_activePredators") then { STALKER_activePredators = []; };
 
-private _range = ["VSA_predatorRange", 1500] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _range = ["VSA_predatorRange", 1500] call FUNC(getSetting);
 private _spawnPos = _player getPos [_range, random 360];
-_spawnPos = [_spawnPos] call viceroy_stalker_alife_core_fnc_findLandPosition;
+_spawnPos = [_spawnPos] call FUNC(findLandPosition);
 if (isNil {_spawnPos} || {_spawnPos isEqualTo []}) exitWith {
 };
 
-if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+if (["VSA_debugMode", false] call FUNC(getSetting)) then {
     private _spawnMarker = format ["pred_%1", diag_tickTime];
-    [_spawnMarker, _spawnPos, "ICON", "mil_dot", VIC_colorMutant, 1, "Predator Spawn"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_spawnMarker, _spawnPos, "ICON", "mil_dot", VIC_colorMutant, 1, "Predator Spawn"] call FUNC(createGlobalMarker);
 };
 
 private _dogClasses       = ["armst_blinddog1","armst_blinddog2","armst_blinddog3"];
@@ -61,7 +61,7 @@ private _mapType = switch (_type) do {
     case "crusher": {"Smasher"};
     default {""};
 };
-if (_mapType != "" && { !( [_mapType] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) }) exitWith {
+if (_mapType != "" && { !( [_mapType] call FUNC(isMutantEnabled) ) }) exitWith {
 };
 private _grp = createGroup east;
 
@@ -69,50 +69,50 @@ switch (_type) do {
     case "dog": {
         for "_i" from 1 to 4 do {
             private _u = _grp createUnit [selectRandom _dogClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "boar": {
         for "_i" from 1 to 3 do {
             private _u = _grp createUnit [selectRandom _boarClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "snork": {
         for "_i" from 1 to 3 do {
             private _u = _grp createUnit [selectRandom _snorkClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "pseudodog": {
         for "_i" from 1 to 3 do {
             private _u = _grp createUnit [selectRandom _pseudodogClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "cat": {
         for "_i" from 1 to 2 do {
             private _u = _grp createUnit [selectRandom _catClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "chimera": {
         private _u = _grp createUnit [selectRandom _chimeraClasses, _spawnPos, [], 0, "FORM"];
-        [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_u] call FUNC(initMutantUnit);
     };
     case "bloodsucker": {
         for "_i" from 1 to 3 do {
             private _u = _grp createUnit [selectRandom _bloodsuckerClasses, _spawnPos, [], 0, "FORM"];
-            [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_u] call FUNC(initMutantUnit);
         };
     };
     case "goliath": {
         private _u = _grp createUnit [selectRandom _goliathClasses, _spawnPos, [], 0, "FORM"];
-        [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_u] call FUNC(initMutantUnit);
     };
     case "crusher": {
         private _u = _grp createUnit [selectRandom _crusherClasses, _spawnPos, [], 0, "FORM"];
-        [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_u] call FUNC(initMutantUnit);
     };
 };
 
@@ -120,7 +120,7 @@ switch (_type) do {
 
 private _markerName = format ["pred_%1", diag_tickTime];
 private _marker = _markerName;
-[_marker, _spawnPos, "ICON", "mil_warning", VIC_colorMutant, 1] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+[_marker, _spawnPos, "ICON", "mil_warning", VIC_colorMutant, 1] call FUNC(createGlobalMarker);
 
 STALKER_activePredators pushBack [_grp, _player, _marker, true];
 

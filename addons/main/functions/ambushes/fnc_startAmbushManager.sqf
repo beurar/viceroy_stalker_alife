@@ -10,7 +10,7 @@ missionNamespace setVariable ["VIC_ambushManagerRunning", true];
 
 [] spawn {
     while { missionNamespace getVariable ["VIC_ambushManagerRunning", false] } do {
-        [] call viceroy_stalker_alife_ambushes_fnc_manageAmbushes;
+        [] call FUNC(manageAmbushes);
         sleep 6;
     };
 };

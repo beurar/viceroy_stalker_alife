@@ -14,7 +14,7 @@
 */
 params ["_start", ["_step",50], ["_depthThreshold",15], ["_maxRadius",500]];
 
-private _surf = [_start] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+private _surf = [_start] call FUNC(getLandSurfacePosition);
 if (_surf isEqualTo []) exitWith { [] };
 private _lowestHeight = _surf select 2;
 
@@ -28,7 +28,7 @@ while {_queue isNotEqualTo []} do {
     if (_p in _visited) then { continue; };
     _visited pushBack _p;
 
-    private _s = [_p] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+    private _s = [_p] call FUNC(getLandSurfacePosition);
     if (_s isEqualTo []) then { continue; };
     private _h = _s select 2;
 

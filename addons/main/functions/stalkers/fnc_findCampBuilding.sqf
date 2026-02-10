@@ -12,7 +12,7 @@
 params [["_minPos",-1]];
 
 if (_minPos < 0) then {
-    _minPos = ["VSA_minCampPositions", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
+    _minPos = ["VSA_minCampPositions", 1] call FUNC(getSetting);
 };
 
 

@@ -10,14 +10,14 @@ if (isNil "STALKER_mutantNests") exitWith {};
 {
     _x params ["_nest", "_grp", "_pos", "_class"];
     private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-    private _near = [_pos, _dist] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+    private _near = [_pos, _dist] call FUNC(hasPlayersNearby);
     if (_near) then {
         if (isNull _nest) then { _nest = "Land_Campfire_F" createVehicle _pos; };
         if (isNull _grp || { units _grp isEqualTo [] }) then {
             private _new = createGroup east;
             for "_i" from 1 to 3 do {
                 private _u = _new createUnit [_class, _pos, [], 0, "FORM"];
-                [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+                [_u] call FUNC(initMutantUnit);
             };
             STALKER_mutantNests set [_forEachIndex, [_nest, _new, _pos, _class]];
         } else {

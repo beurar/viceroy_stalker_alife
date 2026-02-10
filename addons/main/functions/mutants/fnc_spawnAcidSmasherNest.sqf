@@ -7,7 +7,7 @@
 params ["_pos"];
 
 
-if !( ["Acid Smasher"] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) exitWith {
+if !( ["Acid Smasher"] call FUNC(isMutantEnabled) ) exitWith {
 };
 
-[_pos, "WBK_SpecialZombie_Smasher_Acid_3"] call viceroy_stalker_alife_mutants_fnc_spawnMutantNest;
+[_pos, "WBK_SpecialZombie_Smasher_Acid_3"] call FUNC(spawnMutantNest);

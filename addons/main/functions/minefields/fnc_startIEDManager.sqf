@@ -10,7 +10,7 @@ missionNamespace setVariable ["VIC_IEDManagerRunning", true];
 
 [] spawn {
     while { missionNamespace getVariable ["VIC_IEDManagerRunning", false] } do {
-        [] call viceroy_stalker_alife_minefields_fnc_manageIEDSites;
+        [] call FUNC(manageIEDSites);
         sleep 6;
     };
 };

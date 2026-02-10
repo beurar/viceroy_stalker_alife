@@ -5,8 +5,8 @@
 params ["_unit"];
 
 // respect CBA settings
-if (["VSA_enableZombification", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
-if (["VSA_zombiesNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting && {dayTime > 5 && dayTime < 20}) exitWith {};
+if (["VSA_enableZombification", true] call FUNC(getSetting) isEqualTo false) exitWith {};
+if (["VSA_zombiesNightOnly", false] call FUNC(getSetting) && {dayTime > 5 && dayTime < 20}) exitWith {};
 
 // only track during an active emission
 if !(missionNamespace getVariable ["emission_active", false]) exitWith {};
@@ -15,8 +15,8 @@ if !(missionNamespace getVariable ["emission_active", false]) exitWith {};
 private _queue = missionNamespace getVariable ["ALF_zombieQueue", []];
 
 if (!isNull _unit) then {
-    if (count _queue < (["VSA_zombieCount", 15] call viceroy_stalker_alife_cba_fnc_getSetting)) then {
-        if (random 100 < (["VSA_zombieSpawnWeight", 50] call viceroy_stalker_alife_cba_fnc_getSetting)) then {
+    if (count _queue < (["VSA_zombieCount", 15] call FUNC(getSetting))) then {
+        if (random 100 < (["VSA_zombieSpawnWeight", 50] call FUNC(getSetting))) then {
             _queue pushBack _unit;
         };
     };

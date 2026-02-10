@@ -38,7 +38,7 @@ if (!isServer) exitWith { _name };
 
 private _target = if (_global) then { 0 } else { remoteExecutedOwner };
 
-[_name, _pos, _shape, _type, _color, _alpha, _text, _size] remoteExecCall ["viceroy_stalker_alife_markers_fnc_createLocalMarker", _target, true];
+[_name, _pos, _shape, _type, _color, _alpha, _text, _size] remoteExecCall ["FUNC(createLocalMarker)", _target, true];
 
 
 

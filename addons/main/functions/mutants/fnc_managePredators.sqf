@@ -9,20 +9,20 @@ if (!isServer) exitWith {
 };
 if (isNil "STALKER_activePredators") then { STALKER_activePredators = []; };
 
-private _chance = ["VSA_predatorAttackChance", 5] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _chance = ["VSA_predatorAttackChance", 5] call FUNC(getSetting);
 
 if (allPlayers isNotEqualTo [] && {random 100 < _chance}) then {
     private _player = selectRandom allPlayers;
     if (!isNull _player) then {
-        [_player] call viceroy_stalker_alife_mutants_fnc_spawnPredatorAttack;
+        [_player] call FUNC(spawnPredatorAttack);
     };
 };
 
-private _range = ["VSA_predatorRange", 1500] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _range = ["VSA_predatorRange", 1500] call FUNC(getSetting);
 {
     _x params ["_grp", "_target", "_marker", "_near"];
     private _alive = if (isNull _grp) then {0} else { {alive _x} count units _grp };
-    _near = [_target, _range] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+    _near = [_target, _range] call FUNC(hasPlayersNearby);
     if (_alive == 0 || {!_near}) then {
         if (!isNull _grp) then {
             { deleteVehicle _x } forEach units _grp;

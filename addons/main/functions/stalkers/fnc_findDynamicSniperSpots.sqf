@@ -13,7 +13,7 @@
 */
 params ["_center", "_minDist", "_maxDist"];
 
-private _debug = ["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _debug = ["VSA_debugMode", false] call FUNC(getSetting);
 if (_debug) then {
 };
 

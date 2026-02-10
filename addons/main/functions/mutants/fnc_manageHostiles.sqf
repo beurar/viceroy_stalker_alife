@@ -7,18 +7,18 @@
 if (!isServer) exitWith {};
 if (isNil "STALKER_activeHostiles") exitWith {};
 
-private _size = ["VSA_mutantThreat", 3] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _size = ["VSA_mutantThreat", 3] call FUNC(getSetting);
 
 {
     _x params ["_grp", "_type", "_pos", "_marker", "_near"];
     private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-    _near = [_pos, _dist] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+    _near = [_pos, _dist] call FUNC(hasPlayersNearby);
     if (_near) then {
         if (isNull _grp || { units _grp isEqualTo [] }) then {
             private _new = createGroup east;
             for "_i" from 1 to _size do {
                 private _u = _new createUnit ["O_ALF_Mutant", _pos, [], 0, "FORM"];
-                [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+                [_u] call FUNC(initMutantUnit);
             };
             [_new, _pos] call BIS_fnc_taskPatrol;
             _grp = _new;

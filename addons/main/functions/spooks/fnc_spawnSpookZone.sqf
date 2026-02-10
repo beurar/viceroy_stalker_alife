@@ -17,11 +17,11 @@ if (isNil "drg_spook_zone_positions") then {
     [] call spooks_fnc_setupSpookZones;
 };
 
-if (["VSA_enableSpooks", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableSpooks", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
-private _count = ["VSA_spookZoneCount", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _weight = ["VSA_spookSpawnWeight", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _nightOnly = ["VSA_spooksNightOnly", true] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _count = ["VSA_spookZoneCount", 1] call FUNC(getSetting);
+private _weight = ["VSA_spookSpawnWeight", 50] call FUNC(getSetting);
+private _nightOnly = ["VSA_spooksNightOnly", true] call FUNC(getSetting);
 private _duration = missionNamespace getVariable ["STALKER_SpookDuration",15];
 
 private _spookConfigs = [
@@ -42,9 +42,9 @@ for "_i" from 1 to _count do {
     private _isDay = (dayTime > 5 && dayTime < 20);
     {
         _x params ["_class","_wSetting","_cSetting","_tSetting"];
-        private _w = [_wSetting,0] call viceroy_stalker_alife_cba_fnc_getSetting;
-        private _c = [_cSetting,1] call viceroy_stalker_alife_cba_fnc_getSetting;
-        private _t = [_tSetting,0] call viceroy_stalker_alife_cba_fnc_getSetting;
+        private _w = [_wSetting,0] call FUNC(getSetting);
+        private _c = [_cSetting,1] call FUNC(getSetting);
+        private _t = [_tSetting,0] call FUNC(getSetting);
         if (_t == 1 && _isDay) exitWith {};
         if (_t == 2 && !_isDay) exitWith {};
         if (_w > 0 && _c > 0) then { _pool pushBack [_class,_w,_c]; };
@@ -76,7 +76,7 @@ for "_i" from 1 to _count do {
 
     private _markerName = format ["spook_%1", diag_tickTime];
     private _marker = _markerName;
-    [_marker, _pos, "ELLIPSE", "", "#(0.2,0.2,0.2,1)", 1, format ["%1 x%2", _class select [4], _num]] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_marker, _pos, "ELLIPSE", "", "#(0.2,0.2,0.2,1)", 1, format ["%1 x%2", _class select [4], _num]] call FUNC(createGlobalMarker);
     [_marker, [25,25]] remoteExec ["setMarkerSize", 0];
     _zone setVariable ["zoneMarker", _marker];
     private _range = missionNamespace getVariable ["STALKER_activityRadius", 1500];
@@ -84,7 +84,7 @@ for "_i" from 1 to _count do {
     [_zone, _marker, _range] spawn {
         params ["_zone","_marker","_range"];
         while {alive _zone} do {
-            private _near = [getPosATL _zone, _range] call viceroy_stalker_alife_core_fnc_hasPlayersNearby;
+            private _near = [getPosATL _zone, _range] call FUNC(hasPlayersNearby);
             _marker setMarkerAlpha ([0.2, 1] select (_near));
             sleep 5;
         };

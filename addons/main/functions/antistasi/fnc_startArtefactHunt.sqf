@@ -10,7 +10,7 @@
 */
 params [["_reward",100]];
 
-if !(call viceroy_stalker_alife_antistasi_fnc_isAntistasiUltimate) exitWith {false};
+if !(call FUNC(isAntistasiUltimate)) exitWith {false};
 if (!isServer) exitWith {false};
 if (isNil "STALKER_anomalyFields" || {STALKER_anomalyFields isEqualTo []}) exitWith {false};
 
@@ -24,7 +24,7 @@ _artifact addItemCargoGlobal ["ss_artifact_dummy",1];
 missionNamespace setVariable ["STALKER_artifactTarget", _artifact];
 missionNamespace setVariable ["STALKER_artifactReward", _reward];
 
-[_artifact, ["Take Artefact", { deleteVehicle (_this select 0); [] call viceroy_stalker_alife_antistasi_fnc_completeArtefactHunt; }]] remoteExec ["addAction", 0, _artifact];
+[_artifact, ["Take Artefact", { deleteVehicle (_this select 0); [] call FUNC(completeArtefactHunt); }]] remoteExec ["addAction", 0, _artifact];
 
 if (!isNil "A3U_fnc_createTask") then {
     ["VIC_ArtefactHunt","Artefact Hunt","Retrieve the artefact from the anomaly.",_pos] call A3U_fnc_createTask;

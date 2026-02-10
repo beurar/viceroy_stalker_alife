@@ -16,7 +16,7 @@ if (_active) then {
     hintSilent "Site overlay disabled";
 } else {
     // turn on
-    [] call viceroy_stalker_alife_markers_fnc_markSitesOverlay;
+    [] call FUNC(markSitesOverlay);
     missionNamespace setVariable ["VIC_debug_sitesActive", true];
     hintSilent "Site overlay enabled";
 };

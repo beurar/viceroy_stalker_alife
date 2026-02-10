@@ -33,8 +33,8 @@ params [
 private _startFog = fog;
 private _startRain = rain;
 private _startOvercast = overcast;
-private _range = ["VSA_stormRadius", 1500] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _gasEnabled = ["VSA_stormGasDischarges", true] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _range = ["VSA_stormRadius", 1500] call FUNC(getSetting);
+private _gasEnabled = ["VSA_stormGasDischarges", true] call FUNC(getSetting);
 
 private _stepsOvercast = floor _overcastTime;
 if (_stepsOvercast > 0) then {
@@ -64,7 +64,7 @@ for "_i" from 1 to _ticks do {
     for "_j" from 1 to _currentLightning do {
         private _center = getPos (selectRandom allPlayers);
         private _pos = _center getPos [random _range, random 360];
-        private _surf = [_pos] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
+        private _surf = [_pos] call FUNC(getSurfacePosition);
         // createAgent is required for Logic objects as they have a brain
         private _logic = createAgent ["Logic", _surf, [], 0, "CAN_COLLIDE"];
         [_logic, [], true] call BIS_fnc_moduleLightning;
@@ -74,7 +74,7 @@ for "_i" from 1 to _ticks do {
     for "_j" from 1 to _currentDischarge do {
         private _center = getPos (selectRandom allPlayers);
         private _pos = _center getPos [random _range, random 360];
-        private _surf = [_pos] call viceroy_stalker_alife_core_fnc_getSurfacePosition;
+        private _surf = [_pos] call FUNC(getSurfacePosition);
         private _fncDischarge = missionNamespace getVariable ["diwako_anomalies_main_fnc_createPsyDischarge", {}];
         if (_fncDischarge isEqualTo {}) then {
         } else {
@@ -82,9 +82,9 @@ for "_i" from 1 to _ticks do {
         };
         if (_gasEnabled) then {
             // Spawn a Nova mist after the discharge finishes using CBA settings
-            private _radius  = ["VSA_stormGasRadius", 20] call viceroy_stalker_alife_cba_fnc_getSetting;
-            private _density = ["VSA_stormGasDensity", 3] call viceroy_stalker_alife_cba_fnc_getSetting;
-            private _vertical = ["VSA_stormGasVertical", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
+            private _radius  = ["VSA_stormGasRadius", 20] call FUNC(getSetting);
+            private _density = ["VSA_stormGasDensity", 3] call FUNC(getSetting);
+            private _vertical = ["VSA_stormGasVertical", 1] call FUNC(getSetting);
 
             // Convert the surface position from ASL to AGL so the gas spawns on the ground
             private _agl = ASLToAGL _surf;

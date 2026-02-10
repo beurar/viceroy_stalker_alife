@@ -8,7 +8,7 @@
 
 if (!isServer) exitWith {};
 if (isNil "STALKER_activeHerds") exitWith {};
-private _chance = ["VSA_mutantSpawnWeight",50] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _chance = ["VSA_mutantSpawnWeight",50] call FUNC(getSetting);
 
 {
     _x params ["_leader", "_grp", "_max", "_count", "_near", "_marker"];
@@ -17,17 +17,17 @@ private _chance = ["VSA_mutantSpawnWeight",50] call viceroy_stalker_alife_cba_fn
 
     if (isNull _leader || {!alive _leader}) then {
         private _pos = if (!isNull _leader) then { getPos _leader } else { [random worldSize, random worldSize, 0] };
-        _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPosition;
+        _pos = [_pos] call FUNC(findLandPosition);
         if (isNil {_pos} || {_pos isEqualTo []}) then { continue };
         if ({ alive _x } count units _grp > 0) then {
             _leader = selectRandom (units _grp);
         } else {
             _leader = _grp createUnit ["C_ALF_Mutant", _pos, [], 0, "FORM"];
-            [_leader] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_leader] call FUNC(initMutantUnit);
             _leader disableAI "TARGET";
             _leader disableAI "AUTOTARGET";
             _leader setVariable ["VSA_herdIndex", _forEachIndex];
-            _leader addEventHandler ["Killed", { [_this#0] call viceroy_stalker_alife_mutants_fnc_onMutantKilled }];
+            _leader addEventHandler ["Killed", { [_this#0] call FUNC(onMutantKilled) }];
             [_grp, _pos] call BIS_fnc_taskPatrol;
             if (_count < 1) then { _count = 1; };
         };
@@ -41,11 +41,11 @@ private _chance = ["VSA_mutantSpawnWeight",50] call viceroy_stalker_alife_cba_fn
         if (_alive < _count) then {
             for "_i" from (_alive + 1) to _count do {
                 private _u = _grp createUnit ["C_ALF_Mutant", _pos, [], 0, "FORM"];
-                [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+                [_u] call FUNC(initMutantUnit);
                 _u disableAI "TARGET";
                 _u disableAI "AUTOTARGET";
                 _u setVariable ["VSA_herdIndex", _forEachIndex];
-                _u addEventHandler ["Killed", { [_this#0] call viceroy_stalker_alife_mutants_fnc_onMutantKilled }];
+                _u addEventHandler ["Killed", { [_this#0] call FUNC(onMutantKilled) }];
             };
             [_grp, _pos] call BIS_fnc_taskPatrol;
         };

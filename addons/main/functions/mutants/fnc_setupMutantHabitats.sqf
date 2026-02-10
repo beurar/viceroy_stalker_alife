@@ -13,7 +13,7 @@ STALKER_mutantHabitatData = [];
 private _createMarker = {
     params ["_type", "_pos"];
 
-    if !( [_type] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) exitWith { false };
+    if !( [_type] call FUNC(isMutantEnabled) ) exitWith { false };
 
     // Skip this location if it overlaps an existing habitat or anomaly field
     private _overlap = false;
@@ -29,39 +29,39 @@ private _createMarker = {
     private _base = format ["hab_%1_%2", toLower _type, diag_tickTime + random 1000];
 
     private _area = _base + "_area";
-    [_area, _pos, "ELLIPSE", "", VIC_colorMutant, 1, format ["%1 Habitat Area", _type]] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_area, _pos, "ELLIPSE", "", VIC_colorMutant, 1, format ["%1 Habitat Area", _type]] call FUNC(createGlobalMarker);
     [_area, [150,150]] remoteExec ["setMarkerSize", 0];
 
     private _label = _base + "_label";
-    [_label, _pos, "ICON", "mil_dot", VIC_colorMutant, 1] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_label, _pos, "ICON", "mil_dot", VIC_colorMutant, 1] call FUNC(createGlobalMarker);
     private _max = switch (_type) do {
-        case "Bloodsucker": { ["VSA_habitatSize_Bloodsucker",12] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Blind Dog": { ["VSA_habitatSize_Dog",50] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Pseudodog": { ["VSA_habitatSize_Dog",50] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Snork": { ["VSA_habitatSize_Snork",12] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Boar": { ["VSA_habitatSize_Boar",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Cat": { ["VSA_habitatSize_Cat",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Flesh": { ["VSA_habitatSize_Flesh",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Controller": { ["VSA_habitatSize_Controller",8] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Pseudogiant": { ["VSA_habitatSize_Pseudogiant",6] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Izlom": { ["VSA_habitatSize_Izlom",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Corruptor": { ["VSA_habitatSize_Corruptor",8] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Smasher": { ["VSA_habitatSize_Smasher",8] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Acid Smasher": { ["VSA_habitatSize_AcidSmasher",8] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Behemoth": { ["VSA_habitatSize_Behemoth",6] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Parasite": { ["VSA_habitatSize_Parasite",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Jumper": { ["VSA_habitatSize_Jumper",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Spitter": { ["VSA_habitatSize_Spitter",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Stalker": { ["VSA_habitatSize_Stalker",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Bully": { ["VSA_habitatSize_Bully",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Hivemind": { ["VSA_habitatSize_Hivemind",10] call viceroy_stalker_alife_cba_fnc_getSetting };
-        case "Zombie": { ["VSA_habitatSize_Zombie",10] call viceroy_stalker_alife_cba_fnc_getSetting };
+        case "Bloodsucker": { ["VSA_habitatSize_Bloodsucker",12] call FUNC(getSetting) };
+        case "Blind Dog": { ["VSA_habitatSize_Dog",50] call FUNC(getSetting) };
+        case "Pseudodog": { ["VSA_habitatSize_Dog",50] call FUNC(getSetting) };
+        case "Snork": { ["VSA_habitatSize_Snork",12] call FUNC(getSetting) };
+        case "Boar": { ["VSA_habitatSize_Boar",10] call FUNC(getSetting) };
+        case "Cat": { ["VSA_habitatSize_Cat",10] call FUNC(getSetting) };
+        case "Flesh": { ["VSA_habitatSize_Flesh",10] call FUNC(getSetting) };
+        case "Controller": { ["VSA_habitatSize_Controller",8] call FUNC(getSetting) };
+        case "Pseudogiant": { ["VSA_habitatSize_Pseudogiant",6] call FUNC(getSetting) };
+        case "Izlom": { ["VSA_habitatSize_Izlom",10] call FUNC(getSetting) };
+        case "Corruptor": { ["VSA_habitatSize_Corruptor",8] call FUNC(getSetting) };
+        case "Smasher": { ["VSA_habitatSize_Smasher",8] call FUNC(getSetting) };
+        case "Acid Smasher": { ["VSA_habitatSize_AcidSmasher",8] call FUNC(getSetting) };
+        case "Behemoth": { ["VSA_habitatSize_Behemoth",6] call FUNC(getSetting) };
+        case "Parasite": { ["VSA_habitatSize_Parasite",10] call FUNC(getSetting) };
+        case "Jumper": { ["VSA_habitatSize_Jumper",10] call FUNC(getSetting) };
+        case "Spitter": { ["VSA_habitatSize_Spitter",10] call FUNC(getSetting) };
+        case "Stalker": { ["VSA_habitatSize_Stalker",10] call FUNC(getSetting) };
+        case "Bully": { ["VSA_habitatSize_Bully",10] call FUNC(getSetting) };
+        case "Hivemind": { ["VSA_habitatSize_Hivemind",10] call FUNC(getSetting) };
+        case "Zombie": { ["VSA_habitatSize_Zombie",10] call FUNC(getSetting) };
         default {10};
     };
 
     _label setMarkerText format ["%1 Habitat: 0/%2", _type, _max];
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
 
     STALKER_mutantHabitats pushBack [_area, _label, grpNull, _pos, _anchor, _type, _max, 0, false];
     STALKER_mutantHabitatData pushBack [_type, _pos, _max];
@@ -142,7 +142,7 @@ _buildings = _buildings arrayIntersect _buildings; // remove duplicates
             case "Hill": { "rural" };
             default { "generic" };
         };
-        if (!(_pos call viceroy_stalker_alife_core_fnc_isWaterPosition)) then {
+        if (!(_pos call FUNC(isWaterPosition))) then {
             private _type = [_env] call _selectType;
             [_type, _pos] call _createMarker;
         };
@@ -154,7 +154,7 @@ for "_i" from 1 to 20 do {
     private _b = selectRandom _buildings;
     private _pos = getPosATL _b;
     _pos = [_pos, 0, 25, 5, 0, 0, 0] call BIS_fnc_findSafePos;
-    if (!(_pos call viceroy_stalker_alife_core_fnc_isWaterPosition)) then {
+    if (!(_pos call FUNC(isWaterPosition))) then {
         private _type = ["urban"] call _selectType;
         [_type, _pos] call _createMarker;
     };
@@ -164,7 +164,7 @@ private _forestSites = selectBestPlaces [_center, worldSize, "forest", 1, 50];
 {
     private _pos = (_x select 0);
     _pos = [_pos, 0, 75, 5, 0, 0, 0] call BIS_fnc_findSafePos;
-    if (!(_pos call viceroy_stalker_alife_core_fnc_isWaterPosition)) then {
+    if (!(_pos call FUNC(isWaterPosition))) then {
         private _type = ["forest"] call _selectType;
         [_type, _pos] call _createMarker;
     };
@@ -174,7 +174,7 @@ private _swampSites = selectBestPlaces [_center, worldSize, "meadow", 1, 50];
 {
     private _pos = (_x select 0);
     _pos = [_pos, 0, 75, 5, 0, 0, 0] call BIS_fnc_findSafePos;
-    if (!(_pos call viceroy_stalker_alife_core_fnc_isWaterPosition)) then {
+    if (!(_pos call FUNC(isWaterPosition))) then {
         private _type = ["swamp"] call _selectType;
         [_type, _pos] call _createMarker;
     };
@@ -187,12 +187,12 @@ private _existing = STALKER_mutantHabitats apply { _x#5 };
         if (_buildings isNotEqualTo []) then {
             private _p = getPosATL (selectRandom _buildings);
             _p = [_p, 0, 25, 5, 0, 0, 0] call BIS_fnc_findSafePos;
-            if (!(_p call viceroy_stalker_alife_core_fnc_isWaterPosition)) then { [_x, _p] call _createMarker; };
+            if (!(_p call FUNC(isWaterPosition))) then { [_x, _p] call _createMarker; };
         };
     };
 } forEach _allTypes;
 
 // Persist generated habitats for future sessions
-["STALKER_mutantHabitatData", STALKER_mutantHabitatData] call viceroy_stalker_alife_cache_fnc_saveCache;
+["STALKER_mutantHabitatData", STALKER_mutantHabitatData] call FUNC(saveCache);
 
 true

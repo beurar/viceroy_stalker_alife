@@ -3,7 +3,7 @@
     Identifies road positions that connect to three or more other road segments.
 
     Params:
-        0: ARRAY - List of road positions. If empty, uses viceroy_stalker_alife_core_fnc_findRoads.
+        0: ARRAY - List of road positions. If empty, uses FUNC(findRoads).
 
     Returns:
         ARRAY of positions on crossroads in AGL coordinates
@@ -11,7 +11,7 @@
 params [["_roads", []]];
 
 if (_roads isEqualTo []) then {
-    _roads = [] call viceroy_stalker_alife_core_fnc_findRoads;
+    _roads = [] call FUNC(findRoads);
 };
 
 

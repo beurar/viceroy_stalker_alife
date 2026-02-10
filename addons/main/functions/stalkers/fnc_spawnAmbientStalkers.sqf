@@ -11,14 +11,14 @@
 
 if (!isServer) exitWith {};
 
-if (["VSA_enableAmbientStalkers", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableAmbientStalkers", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
 if (isNil "STALKER_stalkerGroups") then { STALKER_stalkerGroups = []; };
 if (isNil "STALKER_wanderers") then { STALKER_wanderers = []; };
 
-private _groupCount = ["VSA_ambientStalkerGroups", 2] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _groupSize  = ["VSA_ambientStalkerSize", 4] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _nightOnly  = ["VSA_ambientStalkerNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _groupCount = ["VSA_ambientStalkerGroups", 2] call FUNC(getSetting);
+private _groupSize  = ["VSA_ambientStalkerSize", 4] call FUNC(getSetting);
+private _nightOnly  = ["VSA_ambientStalkerNightOnly", false] call FUNC(getSetting);
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {};
 
@@ -29,9 +29,9 @@ for "_i" from 1 to _groupCount do {
     private _center = selectRandom _players;
     private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
     private _pos = _center getPos [ random (_dist * 0.75), random 360 ];
-    _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPosition;
+    _pos = [_pos] call FUNC(findLandPosition);
     if (isNil {_pos} || {_pos isEqualTo []}) then { continue };
-    if (!([_pos, _dist] call viceroy_stalker_alife_core_fnc_hasPlayersNearby)) then { continue };
+    if (!([_pos, _dist] call FUNC(hasPlayersNearby))) then { continue };
 
     // Random faction and side for this wanderer group
     // Format: [name, [allowed sides], unit classes]
@@ -173,7 +173,7 @@ for "_i" from 1 to _groupCount do {
     [_grp, _pos] call BIS_fnc_taskPatrol;
 
     private _marker = "";
-    if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+    if (["VSA_debugMode", false] call FUNC(getSetting)) then {
         _marker = format ["stk_%1_%2", count STALKER_stalkerGroups, diag_tickTime];
         private _color = switch (_faction) do {
             case "Bandits": {VIC_colorBandits};
@@ -189,10 +189,10 @@ for "_i" from 1 to _groupCount do {
             case "Monolith": {VIC_colorMonolith};
             default {"#(1,1,1,1)"};
         };
-        [_marker, _pos, "ICON", "mil_dot", _color, 0.2] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        [_marker, _pos, "ICON", "mil_dot", _color, 0.2] call FUNC(createGlobalMarker);
     };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
 
     STALKER_stalkerGroups pushBack [_grp, _marker];
     STALKER_wanderers pushBack [_grp, _pos, _anchor, _marker, true];

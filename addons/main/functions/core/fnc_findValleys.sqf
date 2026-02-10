@@ -19,7 +19,7 @@
 
 params [["_step", 250], ["_depthThreshold", 15], ["_maxRadius", 750]];
 
-private _debug = ["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _debug = ["VSA_debugMode", false] call FUNC(getSetting);
 if (_debug && {isServer}) then {
     if (isNil "STALKER_valleySeedMarkers") then { STALKER_valleySeedMarkers = [] };
     { if (_x != "") then { deleteMarker _x } } forEach STALKER_valleySeedMarkers;
@@ -34,7 +34,7 @@ for "_gx" from 0 to worldSize step _step do {
     if ((_gx / _step) % 5 == 0) then { sleep 0.01; };
     for "_gy" from 0 to worldSize step _step do {
         private _center = [_gx, _gy, 0];
-        private _surfCenter = [_center] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+        private _surfCenter = [_center] call FUNC(getLandSurfacePosition);
         if (_surfCenter isEqualTo []) then { continue; };
         private _centerHeight = _surfCenter select 2;
 
@@ -46,7 +46,7 @@ for "_gx" from 0 to worldSize step _step do {
             private _d = _x;
             for "_r" from 1 to 3 do {
                 private _pos = _center getPos [_r * _step, _d];
-                private _surf = [_pos] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+                private _surf = [_pos] call FUNC(getLandSurfacePosition);
                 if (_surf isEqualTo []) then { continue; };
                 private _h = _surf select 2;
                 if (_h < _lowestHeight) then {
@@ -69,7 +69,7 @@ for "_gx" from 0 to worldSize step _step do {
             if (_p in _visited) then { continue; };
             _visited pushBack _p;
 
-            private _surf = [_p] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+            private _surf = [_p] call FUNC(getLandSurfacePosition);
             if (_surf isEqualTo []) then { continue; };
             private _h = _surf select 2;
 
@@ -87,7 +87,7 @@ for "_gx" from 0 to worldSize step _step do {
             _valleys pushBack _valley;
             if (_debug && {isServer}) then {
                 private _name = format ["valleySeed_%1", diag_tickTime + random 1000];
-                private _m = [_name, _lowestPos, "ICON", "mil_dot", "#(0,0,1,1)"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+                private _m = [_name, _lowestPos, "ICON", "mil_dot", "#(0,0,1,1)"] call FUNC(createGlobalMarker);
                 STALKER_valleySeedMarkers pushBack _m;
             };
         };
@@ -101,7 +101,7 @@ if (isNil "STALKER_valleys") then { STALKER_valleys = [] };
 
 
 // Persist the cached valleys for later sessions
-["STALKER_valleys", STALKER_valleys] call viceroy_stalker_alife_cache_fnc_saveCache;
+["STALKER_valleys", STALKER_valleys] call FUNC(saveCache);
 
 _valleys
 

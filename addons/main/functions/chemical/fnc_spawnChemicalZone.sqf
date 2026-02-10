@@ -41,7 +41,7 @@ if (isNil "STALKER_chemicalZones") then {
 };
 
 if (_chemType < 0) then {
-    _chemType = ["VSA_chemicalGasType", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
+    _chemType = ["VSA_chemicalGasType", 1] call FUNC(getSetting);
 };
 
 if (_duration < 0) then {
@@ -64,7 +64,7 @@ if (isNil "CBRN_fnc_spawnMist") then {
 private _markerName = format ["chem_%1", diag_tickTime];
 private _atl = ASLToATL (AGLToASL _agl);
 private _marker = _markerName;
-[_marker, _atl, "ELLIPSE", "", VIC_colorGasYellow, 1, format ["Chemical %1m", _radius]] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+[_marker, _atl, "ELLIPSE", "", VIC_colorGasYellow, 1, format ["Chemical %1m", _radius]] call FUNC(createGlobalMarker);
 [_marker, [_radius, _radius]] remoteExec ["setMarkerSize", 0];
 
 // Record the zone and when it should be removed

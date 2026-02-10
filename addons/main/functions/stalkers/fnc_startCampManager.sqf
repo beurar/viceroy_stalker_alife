@@ -14,11 +14,11 @@ missionNamespace setVariable ["VIC_campManagerRunning", true];
     missionNamespace setVariable ["VIC_lastCampSpawnAttempt", 0];
     while { missionNamespace getVariable ["VIC_campManagerRunning", false] } do {
         // Update existing camps based on player proximity
-        [] call viceroy_stalker_alife_stalkers_fnc_manageStalkerCamps;
+        [] call FUNC(manageStalkerCamps);
 
         if (isNil "STALKER_camps") then { STALKER_camps = []; };
-        private _min = ["VSA_minStalkerCamps", 1] call viceroy_stalker_alife_cba_fnc_getSetting;
-        private _max = ["VSA_maxStalkerCamps", 5] call viceroy_stalker_alife_cba_fnc_getSetting;
+        private _min = ["VSA_minStalkerCamps", 1] call FUNC(getSetting);
+        private _max = ["VSA_maxStalkerCamps", 5] call FUNC(getSetting);
 
         private _count = count STALKER_camps;
 
@@ -40,10 +40,10 @@ missionNamespace setVariable ["VIC_campManagerRunning", true];
             if ((count STALKER_camps) < _min) then {
                 private _needed = _min - (count STALKER_camps);
                 for "_i" from 1 to _needed do {
-                    private _building = [] call viceroy_stalker_alife_stalkers_fnc_findCampBuilding;
+                    private _building = [] call FUNC(findCampBuilding);
                     if (isNull _building) exitWith {};
                     private _pos = getPosATL _building;
-                    [_pos] call viceroy_stalker_alife_stalkers_fnc_spawnStalkerCamp;
+                    [_pos] call FUNC(spawnStalkerCamp);
                 };
             };
             missionNamespace setVariable ["VIC_lastCampSpawnAttempt", diag_tickTime];

@@ -17,7 +17,7 @@ params ["_center", ["_radius", 200], ["_spacing", 15], ["_friendlyGroups", []], 
 
 // PREVENTION: If called in unscheduled environment (init/triggers), spawn it to allow suspension/sleeping.
 if (!canSuspend) exitWith {
-    _this spawn viceroy_stalker_alife_stalkers_fnc_spawnSmartFlarePerimeter;
+    _this spawn FUNC(spawnSmartFlarePerimeter);
     []
 };
 
@@ -76,7 +76,7 @@ if (count _nearBuildings < 3) then {
 };
 
 // 2. VISUALIZE POLYGON
-if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+if (["VSA_debugMode", false] call FUNC(getSetting)) then {
     for "_i" from 0 to (count _polygon - 1) do {
         private _p1 = _polygon select _i;
         private _p2 = _polygon select ((_i + 1) % (count _polygon));
@@ -184,7 +184,7 @@ for "_i" from 0 to (count _polygon - 1) do {
                  _mine setDir (_wireDir + 90);
                  _objs pushBack _mine;
                  
-                 if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+                 if (["VSA_debugMode", false] call FUNC(getSetting)) then {
                      private _m = createMarker [format ["flr_tw_%1_%2_%3", diag_tickTime, _i, _k], _minePos];
                      _m setMarkerTypeLocal "mil_dot"; _m setMarkerColorLocal _color; _m setMarkerTextLocal "TW"; _m setMarkerSize [0.5,0.5];
                  };
@@ -248,7 +248,7 @@ for "_i" from 0 to (count _polygon - 1) do {
              
              if (!_isStructureNear) then {
                  private _minePos = _pt getPos [(random 6) - 3, _edgeDir + 90];
-                 _minePos = [_minePos, 5] call viceroy_stalker_alife_core_fnc_findLandPos;
+                 _minePos = [_minePos, 5] call FUNC(findLandPos);
                  if (isNil "_minePos" || {_minePos isEqualTo []}) then { continue; };
                  
                  private _type = ["APERSMine", "APERSBoundingMine"] select (random 1 > 0.5);
@@ -256,7 +256,7 @@ for "_i" from 0 to (count _polygon - 1) do {
                  private _m = createMine [_type, _minePos, [], 0];
                  _objs pushBack _m;
                  
-                  if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+                  if (["VSA_debugMode", false] call FUNC(getSetting)) then {
                      private _m = createMarker [format ["flr_ap_%1_%2_%3", diag_tickTime, _i, _k], _minePos];
                      _m setMarkerTypeLocal "mil_dot"; _m setMarkerColorLocal "ColorOrange"; _m setMarkerSize [0.4,0.4];
                  };

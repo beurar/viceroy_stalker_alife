@@ -11,7 +11,7 @@ params [["_zombies",5],["_hordes",2],["_mark",false]];
 
 
 if (!isServer) exitWith {};
-if (["VSA_enableNecroplague", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {};
+if (["VSA_enableNecroplague", true] call FUNC(getSetting) isEqualTo false) exitWith {};
 
 private _classes = ["WBK_Zombie1","WBK_Zombie2","WBK_Zombie3"];
 
@@ -23,16 +23,16 @@ private _classes = ["WBK_Zombie1","WBK_Zombie2","WBK_Zombie3"];
     for "_h" from 1 to _hordes do {
         private _angle = (_h - 1) * _angleStep;
         private _pos = _player getPos [600, _angle];
-        _pos = [_pos] call viceroy_stalker_alife_core_fnc_findLandPosition;
+        _pos = [_pos] call FUNC(findLandPosition);
         if (isNil {_pos} || {_pos isEqualTo []}) then { continue };
         if (_mark) then {
             private _markerName = format ["necro_%1", diag_tickTime + random 1000];
-            [_markerName, _pos, "ICON", "mil_dot", "#(0.6,0,0,1)", 1, "Necro Spawn"] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+            [_markerName, _pos, "ICON", "mil_dot", "#(0.6,0,0,1)", 1, "Necro Spawn"] call FUNC(createGlobalMarker);
         };
         private _grp = createGroup east;
         for "_i" from 1 to _zombies do {
             private _unit = _grp createUnit [selectRandom _classes, _pos, [], 0, "FORM"];
-            [_unit] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+            [_unit] call FUNC(initMutantUnit);
         };
         [_grp, _player] call BIS_fnc_taskAttack;
     };

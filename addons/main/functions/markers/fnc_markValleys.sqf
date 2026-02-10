@@ -19,7 +19,7 @@ if (isNil "STALKER_valleyMarkers") then { STALKER_valleyMarkers = [] };
 STALKER_valleyMarkers = [];
 
 if (isNil "STALKER_valleys") then {
-    private _cached = ["STALKER_valleys"] call viceroy_stalker_alife_cache_fnc_loadCache;
+    private _cached = ["STALKER_valleys"] call FUNC(loadCache);
     if (isNil {_cached}) exitWith { false };
     STALKER_valleys = _cached;
 };
@@ -32,7 +32,7 @@ private _valleys = STALKER_valleys;
     {
         private _pos = _x;
         private _name = format ["valley_%1", diag_tickTime + random 1000];
-        private _marker = [_name, _pos, "ICON", "mil_arrow", "#(0,0,1,1)", 1, "", [1,1], _global] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        private _marker = [_name, _pos, "ICON", "mil_arrow", "#(0,0,1,1)", 1, "", [1,1], _global] call FUNC(createGlobalMarker);
         STALKER_valleyMarkers pushBack _marker;
     } forEach _area;
 } forEach _valleys;

@@ -13,13 +13,13 @@ if (isNil "STALKER_campCooldowns") then { STALKER_campCooldowns = [] };
 // Remove expired cooldown entries (5 minute window)
 STALKER_campCooldowns = STALKER_campCooldowns select { diag_tickTime - (_x select 1) < 300 };
 
-private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+private _anchor = [_pos] call FUNC(createProximityAnchor);
 
 if (!isServer) exitWith {};
 
 if (isNil "STALKER_camps") then { STALKER_camps = []; };
 
-private _spacing = ["VSA_stalkerCampSpacing", 300] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _spacing = ["VSA_stalkerCampSpacing", 300] call FUNC(getSetting);
 private _tooClose = false;
 {
     if (_pos distance (_x select 2) < _spacing) exitWith { _tooClose = true; };
@@ -28,7 +28,7 @@ if (_tooClose) exitWith {
     // Silently skip spawning if too close to another camp
 };
 
-private _size = ["VSA_stalkerCampSize", 4] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _size = ["VSA_stalkerCampSize", 4] call FUNC(getSetting);
 
 // Available factions and their unit classes
 // Each entry: [FactionName, [allowed sides], [unit classes]]
@@ -183,7 +183,7 @@ _crate addItemCargoGlobal [selectRandom _items, 1];
 _crate addWeaponCargoGlobal [selectRandom _weapons,1];
 
 // Tripflare perimeter around camp
-[_pos, 12, 8] call viceroy_stalker_alife_stalkers_fnc_spawnFlareTripwires;
+[_pos, 12, 8] call FUNC(spawnFlareTripwires);
 
 // Some units relax by the fire
 private _sitCount = (count units _grp) min 2;
@@ -209,7 +209,7 @@ if (local _grp) then {
 };
 
 private _marker = "";
-if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then {
+if (["VSA_debugMode", false] call FUNC(getSetting)) then {
     _marker = format ["camp_%1", diag_tickTime];
     private _color = switch (_faction) do {
         case "Bandits": {VIC_colorBandits};
@@ -225,7 +225,7 @@ if (["VSA_debugMode", false] call viceroy_stalker_alife_cba_fnc_getSetting) then
         case "Monolith": {VIC_colorMonolith};
         default {"#(1,1,1,1)"};
     };
-    [_marker, _pos, "ICON", "mil_box", _color, 0.2, _faction, [1,1], true] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+    [_marker, _pos, "ICON", "mil_box", _color, 0.2, _faction, [1,1], true] call FUNC(createGlobalMarker);
 };
 
 STALKER_camps pushBack [_campfire, _grp, _pos, _anchor, _marker, _side, _faction, false];

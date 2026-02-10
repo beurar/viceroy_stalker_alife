@@ -13,7 +13,7 @@ missionNamespace setVariable ["STALKER_lastSniperGen", diag_tickTime];
 
 [] spawn {
     while { missionNamespace getVariable ["VIC_sniperManagerRunning", false] } do {
-        [] call viceroy_stalker_alife_stalkers_fnc_manageSnipers;
+        [] call FUNC(manageSnipers);
         sleep 6;
     };
 };

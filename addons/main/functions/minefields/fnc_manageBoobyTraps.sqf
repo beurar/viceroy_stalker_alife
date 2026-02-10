@@ -15,7 +15,7 @@ private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
     _x params ["_pos","_anchor","_objs","_marker",["_active",false]];
     // Rely on the stored position instead of the anchor object so traps remain
     // functional if the anchor is removed
-    private _newActive = [_pos,_dist,_active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_pos,_dist,_active] call FUNC(evalSiteProximity);
     if (_newActive) then {
         if (!_active) then {
             // Spawn tripwire or fallback APERS mine vehicles

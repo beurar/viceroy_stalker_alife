@@ -27,7 +27,7 @@ _dummy;
 
 private _base = if (_centerPos isEqualType objNull) then { getPos _centerPos } else { _centerPos };
 
-private _townRadius = ["VSA_townRadius", 500] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _townRadius = ["VSA_townRadius", 500] call FUNC(getSetting);
 
 private _condition = if (_excludeTowns) then {
     {

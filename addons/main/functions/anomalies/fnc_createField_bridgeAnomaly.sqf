@@ -17,50 +17,50 @@ if (isNil {_site} || {count _site == 0}) then {
     };
 } else {
 };
-_site = [_site] call viceroy_stalker_alife_core_fnc_findLandPos;
+_site = [_site] call FUNC(findLandPos);
 if (isNil {_site} || {count _site == 0}) exitWith {
     []
 };
 
 if (_count < 0) then {
-    private _max = ["VSA_anomaliesPerField", 40] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _max = ["VSA_anomaliesPerField", 40] call FUNC(getSetting);
     _max = _max max 5;
     _count = floor (random (_max - 5 + 1)) + 5;
-    private _dens = ["VSA_anomalyDensity_Bridge",100] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _dens = ["VSA_anomalyDensity_Bridge",100] call FUNC(getSetting);
     _count = round (_count * (_dens / 100));
 };
 
-private _size = ["VSA_bridgeFieldRadius", 200] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _size = ["VSA_bridgeFieldRadius", 200] call FUNC(getSetting);
 
 if (isNil "STALKER_anomalyMarkers") then { STALKER_anomalyMarkers = [] };
 private _markerName = format ["anom_bridge_%1", diag_tickTime];
-private _marker = [_markerName, _site, "ELLIPSE", "", VIC_colorBridgeCyan, 1, format ["Bridge Anomaly %1m", _size]] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+private _marker = [_markerName, _site, "ELLIPSE", "", VIC_colorBridgeCyan, 1, format ["Bridge Anomaly %1m", _size]] call FUNC(createGlobalMarker);
 _marker setMarkerSizeLocal [_size,_size];
 _marker setMarkerBrush "Border";
 STALKER_anomalyMarkers pushBack _marker;
 
 private _weights = [
-    ["burner",      ["VSA_anomalyWeight_Burner",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["clicker",     ["VSA_anomalyWeight_Clicker",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["electra",     ["VSA_anomalyWeight_Electra",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["fruitpunch",  ["VSA_anomalyWeight_Fruitpunch",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["gravi",       ["VSA_anomalyWeight_Gravi",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["meatgrinder", ["VSA_anomalyWeight_Meatgrinder",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["springboard", ["VSA_anomalyWeight_Springboard",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["whirligig",   ["VSA_anomalyWeight_Whirligig",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["launchpad",   ["VSA_anomalyWeight_Launchpad",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["leech",       ["VSA_anomalyWeight_Leech",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["trapdoor",    ["VSA_anomalyWeight_Trapdoor",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["zapper",      ["VSA_anomalyWeight_Zapper",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    ["razor",       ["VSA_anomalyWeight_Razor",100] call viceroy_stalker_alife_cba_fnc_getSetting]
+    ["burner",      ["VSA_anomalyWeight_Burner",100] call FUNC(getSetting)],
+    ["clicker",     ["VSA_anomalyWeight_Clicker",100] call FUNC(getSetting)],
+    ["electra",     ["VSA_anomalyWeight_Electra",100] call FUNC(getSetting)],
+    ["fruitpunch",  ["VSA_anomalyWeight_Fruitpunch",100] call FUNC(getSetting)],
+    ["gravi",       ["VSA_anomalyWeight_Gravi",100] call FUNC(getSetting)],
+    ["meatgrinder", ["VSA_anomalyWeight_Meatgrinder",100] call FUNC(getSetting)],
+    ["springboard", ["VSA_anomalyWeight_Springboard",100] call FUNC(getSetting)],
+    ["whirligig",   ["VSA_anomalyWeight_Whirligig",100] call FUNC(getSetting)],
+    ["launchpad",   ["VSA_anomalyWeight_Launchpad",100] call FUNC(getSetting)],
+    ["leech",       ["VSA_anomalyWeight_Leech",100] call FUNC(getSetting)],
+    ["trapdoor",    ["VSA_anomalyWeight_Trapdoor",100] call FUNC(getSetting)],
+    ["zapper",      ["VSA_anomalyWeight_Zapper",100] call FUNC(getSetting)],
+    ["razor",       ["VSA_anomalyWeight_Razor",100] call FUNC(getSetting)]
 ];
 
 private _spawned = [];
 for "_i" from 1 to _count do {
     private _off = _site getPos [random _size, random 360];
-    private _surf = [_off] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+    private _surf = [_off] call FUNC(getLandSurfacePosition);
     if (_surf isEqualTo []) then { continue };
-    private _type = [_weights] call viceroy_stalker_alife_core_fnc_weightedPick;
+    private _type = [_weights] call FUNC(weightedPick);
     private _anom = objNull;
     switch (_type) do {
         case "burner": {

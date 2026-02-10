@@ -36,4 +36,4 @@ private _setting = switch (_type) do {
     default {""};
 };
 if (_setting isEqualTo "") exitWith { true };
-[_setting, true] call viceroy_stalker_alife_cba_fnc_getSetting;
+[_setting, true] call FUNC(getSetting);

@@ -51,8 +51,8 @@ if (count _state > 8) then {
 };
 
 // Place cached markers and other helpful debug visuals locally
-if (!isNil "viceroy_stalker_alife_cache_fnc_placeCachedMarkers") then {
-    [] call viceroy_stalker_alife_cache_fnc_placeCachedMarkers;
+if (!isNil "FUNC(placeCachedMarkers)") then {
+    [] call FUNC(placeCachedMarkers);
 };
 
 true

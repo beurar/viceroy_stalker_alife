@@ -15,7 +15,7 @@ _entry params ["_pos","_radius","_active","_marker","_expires"];
 
 if (!_active) then {
     private _dur = if (_expires < 0) then {-1} else {_expires - diag_tickTime};
-    [_pos,_radius,_dur] call viceroy_stalker_alife_chemical_fnc_spawnChemicalZone;
+    [_pos,_radius,_dur] call FUNC(spawnChemicalZone);
     _active = true;
 };
 if (_marker != "") then { _marker setMarkerAlpha 1; };

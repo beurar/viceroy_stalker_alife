@@ -9,11 +9,11 @@ if (!isServer) exitWith {};
 if (isNil "STALKER_camps") exitWith {};
 
 private _dist = missionNamespace getVariable ["STALKER_activityRadius", 1500];
-private _size = ["VSA_stalkerCampSize", 4] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _size = ["VSA_stalkerCampSize", 4] call FUNC(getSetting);
 
 for "_i" from ((count STALKER_camps) - 1) to 0 step -1 do {
     STALKER_camps select _i params ["_camp", "_grp", "_pos", "_anchor", "_marker", "_side", "_faction", ["_active", false]];
-    private _newActive = [_anchor, _dist, _active] call viceroy_stalker_alife_core_fnc_evalSiteProximity;
+    private _newActive = [_anchor, _dist, _active] call FUNC(evalSiteProximity);
     if (_newActive) then {
         if (isNull _camp) then {
             // Spawn the campfire a few meters away from the building

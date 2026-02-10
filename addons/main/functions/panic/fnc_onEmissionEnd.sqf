@@ -6,6 +6,6 @@
 
 
 // Restore AI behaviour after the emission ends
-[] call viceroy_stalker_alife_ai_fnc_resetAIBehavior;
+[] call FUNC(resetAIBehavior);
 
 true

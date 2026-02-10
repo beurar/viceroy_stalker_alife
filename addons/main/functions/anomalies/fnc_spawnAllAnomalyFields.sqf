@@ -17,17 +17,17 @@ _radius;
 
 
 
-if (["VSA_enableAnomalies", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_enableAnomalies", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 // Prepare anomaly marker tracking
 if (isNil "STALKER_anomalyMarkers") then { STALKER_anomalyMarkers = [] };
-private _maxFields = ["VSA_maxAnomalyFields", 20] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _maxFields = ["VSA_maxAnomalyFields", 20] call FUNC(getSetting);
 
-private _fieldCount = ["VSA_anomalyFieldCount", 3] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _spawnWeight = ["VSA_anomalySpawnWeight", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _stableChance  = ["VSA_stableFieldChance", 50] call viceroy_stalker_alife_cba_fnc_getSetting;
-private _nightOnly   = ["VSA_anomalyNightOnly", false] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _fieldCount = ["VSA_anomalyFieldCount", 3] call FUNC(getSetting);
+private _spawnWeight = ["VSA_anomalySpawnWeight", 50] call FUNC(getSetting);
+private _stableChance  = ["VSA_stableFieldChance", 50] call FUNC(getSetting);
+private _nightOnly   = ["VSA_anomalyNightOnly", false] call FUNC(getSetting);
 
 if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
 };
@@ -35,20 +35,20 @@ if (_nightOnly && {dayTime > 5 && dayTime < 20}) exitWith {
 if (isNil "STALKER_anomalyFields") then { STALKER_anomalyFields = [] };
 
 private _weights = [
-    [VIC_fnc_createField_burner,      ["VSA_anomalyWeight_Burner",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_clicker,     ["VSA_anomalyWeight_Clicker",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_electra,     ["VSA_anomalyWeight_Electra",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_fruitpunch,  ["VSA_anomalyWeight_Fruitpunch",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_gravi,       ["VSA_anomalyWeight_Gravi",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_meatgrinder, ["VSA_anomalyWeight_Meatgrinder",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_springboard, ["VSA_anomalyWeight_Springboard",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_whirligig,   ["VSA_anomalyWeight_Whirligig",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_launchpad,   ["VSA_anomalyWeight_Launchpad",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_leech,       ["VSA_anomalyWeight_Leech",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_trapdoor,    ["VSA_anomalyWeight_Trapdoor",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_zapper,      ["VSA_anomalyWeight_Zapper",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_razor,       ["VSA_anomalyWeight_Razor",100] call viceroy_stalker_alife_cba_fnc_getSetting],
-    [VIC_fnc_createField_bridgeAnomaly,["VSA_anomalyWeight_Bridge",100] call viceroy_stalker_alife_cba_fnc_getSetting]
+    [VIC_fnc_createField_burner,      ["VSA_anomalyWeight_Burner",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_clicker,     ["VSA_anomalyWeight_Clicker",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_electra,     ["VSA_anomalyWeight_Electra",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_fruitpunch,  ["VSA_anomalyWeight_Fruitpunch",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_gravi,       ["VSA_anomalyWeight_Gravi",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_meatgrinder, ["VSA_anomalyWeight_Meatgrinder",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_springboard, ["VSA_anomalyWeight_Springboard",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_whirligig,   ["VSA_anomalyWeight_Whirligig",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_launchpad,   ["VSA_anomalyWeight_Launchpad",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_leech,       ["VSA_anomalyWeight_Leech",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_trapdoor,    ["VSA_anomalyWeight_Trapdoor",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_zapper,      ["VSA_anomalyWeight_Zapper",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_razor,       ["VSA_anomalyWeight_Razor",100] call FUNC(getSetting)],
+    [VIC_fnc_createField_bridgeAnomaly,["VSA_anomalyWeight_Bridge",100] call FUNC(getSetting)]
 ];
 
 for "_i" from 1 to _fieldCount do {
@@ -57,10 +57,10 @@ for "_i" from 1 to _fieldCount do {
 
     if (random 100 >= _spawnWeight) then { continue };
 
-    private _pos = [[random worldSize, random worldSize, 0], worldSize, 10] call viceroy_stalker_alife_core_fnc_findLandPos;
+    private _pos = [[random worldSize, random worldSize, 0], worldSize, 10] call FUNC(findLandPos);
     if (isNil {_pos} || {_pos isEqualTo []}) then { continue };
 
-    private _fn = [_weights] call viceroy_stalker_alife_core_fnc_weightedPick;
+    private _fn = [_weights] call FUNC(weightedPick);
     private _typeName = switch (_fn) do {
         case VIC_fnc_createField_burner: {"burner"};
         case VIC_fnc_createField_electra: {"electra"};
@@ -86,7 +86,7 @@ for "_i" from 1 to _fieldCount do {
         continue;
     };
 
-    private _anchor = [_pos] call viceroy_stalker_alife_core_fnc_createProximityAnchor;
+    private _anchor = [_pos] call FUNC(createProximityAnchor);
 
     private _marker = (_spawned select 0) getVariable ["zoneMarker", ""];
     private _site   = if (_marker isEqualTo "") then { getPosATL (_spawned select 0) } else { getMarkerPos _marker };
@@ -94,7 +94,7 @@ for "_i" from 1 to _fieldCount do {
         _marker setMarkerBrushLocal "Border";
         _marker setMarkerAlpha 1;
         if (_stable) then {
-            _marker setMarkerText ([_typeName, _site] call viceroy_stalker_alife_anomalies_fnc_generateFieldName);
+            _marker setMarkerText ([_typeName, _site] call FUNC(generateFieldName));
         };
     };
 
@@ -104,6 +104,6 @@ for "_i" from 1 to _fieldCount do {
 }; 
 
 // Bridges are now spawned via separate helper
-[_type] call viceroy_stalker_alife_anomalies_fnc_spawnBridgeAnomalyFields;
+[_type] call FUNC(spawnBridgeAnomalyFields);
 
 true

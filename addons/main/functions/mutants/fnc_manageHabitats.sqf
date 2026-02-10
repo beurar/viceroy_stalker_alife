@@ -43,7 +43,7 @@ private _getClass = {
 
     _x params ["_area","_label","_grp","_pos","_anchor","_type","_max","_count","_near"];
 
-    if !( [_type] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) then {
+    if !( [_type] call FUNC(isMutantEnabled) ) then {
         _max = 0; _count = 0;
     };
 
@@ -53,9 +53,9 @@ private _getClass = {
             _grp = createGroup east;
             for "_i" from 1 to _count do {
                 private _u = _grp createUnit [_class, _pos, [], 0, "FORM"];
-                [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+                [_u] call FUNC(initMutantUnit);
                 _u setVariable ["VSA_habitatIndex", _forEachIndex];
-                _u addEventHandler ["Killed", { [_this#0] call viceroy_stalker_alife_mutants_fnc_onMutantKilled }];
+                _u addEventHandler ["Killed", { [_this#0] call FUNC(onMutantKilled) }];
             };
             [_grp,_pos] call BIS_fnc_taskDefend;
         };

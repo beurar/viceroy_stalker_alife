@@ -6,6 +6,6 @@
 
 
 // Trigger panic behaviour on nearby AI
-[] call viceroy_stalker_alife_ai_fnc_triggerAIPanic;
+[] call FUNC(triggerAIPanic);
 
 true

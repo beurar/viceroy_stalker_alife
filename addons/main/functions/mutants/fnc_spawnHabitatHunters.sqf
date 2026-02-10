@@ -15,7 +15,7 @@ if (isNil "STALKER_mutantHabitats") exitWith {};
         [_player distance2D _pos, _pos, _type]
     };
     _habitats sort true;
-    _habitats = _habitats select { ([_x#2] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled) };
+    _habitats = _habitats select { ([_x#2] call FUNC(isMutantEnabled)) };
     _habitats = _habitats select [0,5];
 
 private _getClass = {
@@ -51,7 +51,7 @@ private _getClass = {
     private _grp = createGroup east;
     for "_i" from 1 to 3 do {
         private _u = _grp createUnit [ [_type] call _getClass, _pos, [], 0, "FORM" ];
-        [_u] call viceroy_stalker_alife_mutants_fnc_initMutantUnit;
+        [_u] call FUNC(initMutantUnit);
     };
     [_grp, _player] call BIS_fnc_taskAttack;
 } forEach _habitats;

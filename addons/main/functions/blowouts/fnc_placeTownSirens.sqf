@@ -11,7 +11,7 @@ params [["_class","Land_Siren_F"]];
 if (!isServer) exitWith {
 };
 
-if (["VSA_blowoutSirens", true] call viceroy_stalker_alife_cba_fnc_getSetting isEqualTo false) exitWith {
+if (["VSA_blowoutSirens", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
 STALKER_blowoutSirens = [];

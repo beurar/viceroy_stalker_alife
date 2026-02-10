@@ -25,7 +25,7 @@ private _clusters = STALKER_buildingClusters;
     {
         private _pos = _x;
         private _name = format ["bcl_%1", diag_tickTime + random 1000];
-        private _marker = [_name, _pos, "ICON", "mil_objective", "#(0,0,1,1)", 1, "", [1,1], _global] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+        private _marker = [_name, _pos, "ICON", "mil_objective", "#(0,0,1,1)", 1, "", [1,1], _global] call FUNC(createGlobalMarker);
         STALKER_buildingClusterMarkers pushBack _marker;
     } forEach _x;
 } forEach _clusters;

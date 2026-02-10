@@ -5,6 +5,6 @@
 
 
 
-[] call viceroy_stalker_alife_anomalies_fnc_cycleAnomalyFields;
+[] call FUNC(cycleAnomalyFields);
 
 true

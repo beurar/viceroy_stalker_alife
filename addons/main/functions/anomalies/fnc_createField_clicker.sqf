@@ -17,25 +17,25 @@ if (isNil {_site} || {count _site == 0}) then {
     };
 } else {
 };
-_site = [_site] call viceroy_stalker_alife_core_fnc_findLandPos;
+_site = [_site] call FUNC(findLandPos);
 if (isNil {_site} || {count _site == 0}) exitWith {
     []
 };
 
 if (_count < 0) then {
-    private _max = ["VSA_anomaliesPerField", 40] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _max = ["VSA_anomaliesPerField", 40] call FUNC(getSetting);
     _max = _max max 5;
     _count = floor (random (_max - 5 + 1)) + 5;
-    private _dens = ["VSA_anomalyDensity_Clicker",100] call viceroy_stalker_alife_cba_fnc_getSetting;
+    private _dens = ["VSA_anomalyDensity_Clicker",100] call FUNC(getSetting);
     _count = round (_count * (_dens / 100));
 };
 
-private _size = ["VSA_anomalyFieldRadius", 200] call viceroy_stalker_alife_cba_fnc_getSetting;
+private _size = ["VSA_anomalyFieldRadius", 200] call FUNC(getSetting);
 
 // Create a marker for this anomaly field
 if (isNil "STALKER_anomalyMarkers") then { STALKER_anomalyMarkers = [] };
 private _markerName = format ["anom_clicker_%1", diag_tickTime];
-private _marker = [_markerName, _site, "ELLIPSE", "", VIC_colorClickerMagenta, 1, format ["Clicker %1m", _size]] call viceroy_stalker_alife_markers_fnc_createGlobalMarker;
+private _marker = [_markerName, _site, "ELLIPSE", "", VIC_colorClickerMagenta, 1, format ["Clicker %1m", _size]] call FUNC(createGlobalMarker);
 _marker setMarkerSizeLocal [_size,_size];
 _marker setMarkerBrush "Border";
 STALKER_anomalyMarkers pushBack _marker;
@@ -43,7 +43,7 @@ STALKER_anomalyMarkers pushBack _marker;
 private _spawned = [];
 for "_i" from 1 to _count do {
     private _off = _site getPos [random _size, random 360];
-    private _surf = [_off] call viceroy_stalker_alife_core_fnc_getLandSurfacePosition;
+    private _surf = [_off] call FUNC(getLandSurfacePosition);
     if (_surf isEqualTo []) then { continue };
     private _create = missionNamespace getVariable ["diwako_anomalies_main_fnc_createClicker", {}];
     if (_create isEqualTo {}) then {

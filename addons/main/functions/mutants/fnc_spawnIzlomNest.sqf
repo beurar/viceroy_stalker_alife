@@ -7,7 +7,7 @@
 params ["_pos"];
 
 
-if !( ["Izlom"] call viceroy_stalker_alife_mutants_fnc_isMutantEnabled ) exitWith {
+if !( ["Izlom"] call FUNC(isMutantEnabled) ) exitWith {
 };
 
-[_pos, "armst_izlom"] call viceroy_stalker_alife_mutants_fnc_spawnMutantNest;
+[_pos, "armst_izlom"] call FUNC(spawnMutantNest);
