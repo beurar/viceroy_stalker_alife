@@ -207,6 +207,13 @@ player addAction ["<t color='#ff0000'>Spawn Booby Traps</t>", {
         [getPos player, 200] remoteExec ["FUNC(spawnBoobyTraps)", 2];
     };
 }];
+player addAction ["<t color='#ff0000'>Spawn Building Traps</t>", {
+    if (isServer) then {
+        [getPos player, 200] call FUNC(spawnBuildingTraps);
+    } else {
+        [getPos player, 200] remoteExec ["FUNC(spawnBuildingTraps)", 2];
+    };
+}];
 player addAction ["<t color='#ff0000'>Spawn Ambush</t>", {
     if (isServer) then {
         [getPos player, 300] call FUNC(spawnAmbushes);
@@ -331,6 +338,27 @@ player addAction ["<t color='#00ff00'>Regenerate Map Points</t>", {
     };
 }];
 
+player addAction ["<t color='#ff0000'>Spawn Road Convoy</t>", {
+    if (isServer) then {
+        [getPos player] call FUNC(spawnRoadConvoy);
+    } else {
+        [getPos player] remoteExec ["FUNC(spawnRoadConvoy)", 2];
+    };
+}];
+player addAction ["<t color='#ff0000'>Spawn Heli Patrol</t>", {
+    if (isServer) then {
+        [getPos player] call FUNC(spawnHeliPatrol);
+    } else {
+        [getPos player] remoteExec ["FUNC(spawnHeliPatrol)", 2];
+    };
+}];
+player addAction ["<t color='#ff0000'>Spawn Military Outpost</t>", {
+    if (isServer) then {
+        [getPos player] call FUNC(spawnMilitaryOutpost);
+    } else {
+        [getPos player] remoteExec ["FUNC(spawnMilitaryOutpost)", 2];
+    };
+}];
 player addAction ["<t color='#00ff00'>Load Cache and Init Managers</t>", {
     if (isServer) then {
         [] call FUNC(initMap);

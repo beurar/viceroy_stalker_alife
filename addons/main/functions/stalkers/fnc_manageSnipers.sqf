@@ -174,19 +174,32 @@ private _toDeleteIndices = [];
                     _unit setPosATL _spawnPos;
                     [_unit] joinSilent _snpGrp; 
                     
-                    // Sniper Setup
+                    // Sniper Setup - lock unit in place to prevent falling
                     _unit disableAI "PATH";
+                    _unit disableAI "FSM";
                     _unit forceSpeed 0;
                     _unit setSkill 1;
-                    _unit setUnitPos "UP"; 
-                    _unit spawn { sleep 10; _this setUnitPos "AUTO"; }; 
+                    _unit setUnitPos "MIDDLE";
                     
                     _unit setVariable ["VIC_isSniper", true];
+                    _unit setVariable ["VIC_sniperAnchor", _spawnPos];
                     _unit allowFleeing 0; 
                     
                     _unit enableAI "TARGET";
                     _unit enableAI "AUTOTARGET"; 
                     _unit enableAI "ANIM";
+
+                    // Position watchdog - reset position if unit drifts from anchor
+                    _unit spawn {
+                        private _anchor = _this getVariable ["VIC_sniperAnchor", []];
+                        if (_anchor isEqualTo []) exitWith {};
+                        while { alive _this && _this getVariable ["VIC_isSniper", false] } do {
+                            if (_this distance _anchor > 2) then {
+                                _this setPosATL _anchor;
+                            };
+                            sleep 5;
+                        };
+                    };
 
                     [_unit] call FUNC(sniperScan);
                 };

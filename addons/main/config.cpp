@@ -50,6 +50,7 @@ class CfgRemoteExec {
         class DFUNC(spawnIEDSites)       { allowedTargets = 2; };
         class DFUNC(startIEDManager)     { allowedTargets = 2; };
         class DFUNC(spawnBoobyTraps)     { allowedTargets = 2; };
+        class DFUNC(spawnBuildingTraps)  { allowedTargets = 2; };
         class DFUNC(spawnTripwirePerimeter) { allowedTargets = 2; };
         class DFUNC(startMinefieldManager) { allowedTargets = 2; };
         class DFUNC(spawnAmbushes)       { allowedTargets = 2; };
@@ -61,6 +62,12 @@ class CfgRemoteExec {
         class DFUNC(triggerAIPanic)      { allowedTargets = 2; };
         class DFUNC(resetAIBehavior)     { allowedTargets = 2; };
         class DFUNC(toggleFieldAvoid)    { allowedTargets = 2; };
+        class DFUNC(spawnRoadConvoy)     { allowedTargets = 2; };
+        class DFUNC(manageRoadConvoys)    { allowedTargets = 2; };
+        class DFUNC(spawnHeliPatrol)      { allowedTargets = 2; };
+        class DFUNC(manageHeliPatrols)    { allowedTargets = 2; };
+        class DFUNC(spawnMilitaryOutpost) { allowedTargets = 2; };
+        class DFUNC(manageMilitaryOutposts) { allowedTargets = 2; };
         class DFUNC(radioMessage)        { allowedTargets = 0; };
     };
 };

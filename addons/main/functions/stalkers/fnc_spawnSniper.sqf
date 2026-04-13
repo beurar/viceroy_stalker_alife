@@ -31,11 +31,47 @@ if (isNil {_spot}) exitWith {
 
 private _spotAGL = ASLToAGL _spot;
 
+// Find a building position to place the sniper on
+private _bld = nearestBuilding _spotAGL;
+private _spawnPos = _spotAGL;
+if (!isNull _bld && { _spotAGL distance _bld < 30 }) then {
+    private _bPos = _bld buildingPos -1;
+    private _upper = _bPos select { (_x select 2) > 2.5 };
+    if (_upper isNotEqualTo []) then {
+        _spawnPos = selectRandom _upper;
+    };
+};
+
 private _grp = createGroup east;
-_grp createUnit ["O_sniper_F", _spotAGL, [], 0, "FORM"];
-// Increase search radius and prioritize high vantage points
-[_grp, _spotAGL, 100, [], true, true, 0, true] call lambs_wp_fnc_taskGarrison;
-[_spotAGL, 6, 0, 4] call FUNC(spawnTripwirePerimeter);
+private _unit = _grp createUnit ["O_sniper_F", _spawnPos, [], 0, "CAN_COLLIDE"];
+_unit setPosATL _spawnPos;
+
+// Lock sniper in place to prevent falling
+_unit disableAI "PATH";
+_unit disableAI "FSM";
+_unit forceSpeed 0;
+_unit setUnitPos "MIDDLE";
+_unit setVariable ["VIC_isSniper", true];
+_unit setVariable ["VIC_sniperAnchor", _spawnPos];
+_unit allowFleeing 0;
+_unit enableAI "TARGET";
+_unit enableAI "AUTOTARGET";
+_unit enableAI "ANIM";
+
+// Position watchdog
+_unit spawn {
+    private _anchor = _this getVariable ["VIC_sniperAnchor", []];
+    if (_anchor isEqualTo []) exitWith {};
+    while { alive _this && _this getVariable ["VIC_isSniper", false] } do {
+        if (_this distance _anchor > 2) then {
+            _this setPosATL _anchor;
+        };
+        sleep 5;
+    };
+};
+
+[_unit] call FUNC(sniperScan);
+[_spotAGL, 6, 4] call FUNC(spawnTripwirePerimeter);
 
 private _anchor = [_spotAGL] call FUNC(createProximityAnchor);
 

@@ -210,6 +210,14 @@ SUBPREP(stalkers,spawnStalkerCamp);
 SUBPREP(stalkers,spawnStalkerCamps);
 SUBPREP(stalkers,startCampManager);
 SUBPREP(stalkers,startSniperManager);
+SUBPREP(stalkers,spawnBuildingTraps);
+SUBPREP(stalkers,manageBuildingTraps);
+SUBPREP(stalkers,spawnRoadConvoy);
+SUBPREP(stalkers,manageRoadConvoys);
+SUBPREP(stalkers,spawnHeliPatrol);
+SUBPREP(stalkers,manageHeliPatrols);
+SUBPREP(stalkers,spawnMilitaryOutpost);
+SUBPREP(stalkers,manageMilitaryOutposts);
 
 /// server
 SUBPREP(server,applyServerState);

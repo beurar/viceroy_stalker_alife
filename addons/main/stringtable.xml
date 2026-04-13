@@ -448,6 +448,24 @@
             <Key ID="STR_VSA_bridgeFieldRadius_Tooltip">
                 <Original>Radius of bridge anomaly fields</Original>
             </Key>
+            <Key ID="STR_VSA_buildingTrapCount">
+                <Original>Building Trap Count</Original>
+            </Key>
+            <Key ID="STR_VSA_buildingTrapCount_Tooltip">
+                <Original>Number of trapped buildings to place per area</Original>
+            </Key>
+            <Key ID="STR_VSA_buildingTrapTriggerRange">
+                <Original>Building Trap Trigger Range</Original>
+            </Key>
+            <Key ID="STR_VSA_buildingTrapTriggerRange_Tooltip">
+                <Original>Distance in meters at which a building trap activates when a player approaches</Original>
+            </Key>
+            <Key ID="STR_VSA_buildingTrapZombieChance">
+                <Original>Zombie Trap Chance</Original>
+            </Key>
+            <Key ID="STR_VSA_buildingTrapZombieChance_Tooltip">
+                <Original>Probability (0-1) that a building trap spawns zombies instead of hostile stalkers</Original>
+            </Key>
             <Key ID="STR_VSA_chemicalGasType">
                 <Original>Chemical Gas Type</Original>
             </Key>
@@ -575,6 +593,12 @@
             </Key>
             <Key ID="STR_VSA_enableBoobyTraps_Tooltip">
                 <Original>Place tripwires and booby traps in buildings</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBuildingTraps">
+                <Original>Enable Building Traps</Original>
+            </Key>
+            <Key ID="STR_VSA_enableBuildingTraps_Tooltip">
+                <Original>Spawn zombie or stalker ambushes inside buildings when players approach</Original>
             </Key>
             <Key ID="STR_VSA_enableBully">
                 <Original>Enable Bullies</Original>

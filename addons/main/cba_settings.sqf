@@ -2160,6 +2160,59 @@
     }
 ] call CBA_fnc_addSetting;
 
+// Building Traps
+[
+    "VSA_enableBuildingTraps",
+    "CHECKBOX",
+    [localize "STR_VSA_enableBuildingTraps", localize "STR_VSA_enableBuildingTraps_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    true,
+    true,
+    {
+        params ["_value"];
+        VSA_enableBuildingTraps = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_buildingTrapCount",
+    "SLIDER",
+    [localize "STR_VSA_buildingTrapCount", localize "STR_VSA_buildingTrapCount_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [0, 30, 5, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_buildingTrapCount = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_buildingTrapTriggerRange",
+    "SLIDER",
+    [localize "STR_VSA_buildingTrapTriggerRange", localize "STR_VSA_buildingTrapTriggerRange_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [10, 100, 30, 0],
+    true,
+    {
+        params ["_value"];
+        VSA_buildingTrapTriggerRange = _value;
+    }
+] call CBA_fnc_addSetting;
+
+[
+    "VSA_buildingTrapZombieChance",
+    "SLIDER",
+    [localize "STR_VSA_buildingTrapZombieChance", localize "STR_VSA_buildingTrapZombieChance_Tooltip"],
+    [localize "STR_VSA_Category_Minefields"],
+    [0, 1, 0.5, 2],
+    true,
+    {
+        params ["_value"];
+        VSA_buildingTrapZombieChance = _value;
+    }
+] call CBA_fnc_addSetting;
+
 // Wrecks
 [
     "VSA_enableWrecks",

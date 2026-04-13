@@ -74,29 +74,6 @@ private _counter = 0;
     };
 } forEach _buildings;
 
-// 2. Find Terrain Vantage Points (Hilltops/Cliffs)
-// We use selectBestPlaces as a heuristic for hills and open meadows (clear lines of sight)
-// "hills" favors high ground, "meadow" favors open ground.
-private _terrainSpots = selectBestPlaces [_refPos, _maxDist, "(2 * hills) + meadow - forest - houses", 25, 20];
-{
-    _x params ["_pos", "_value"];
-    _pos = [_pos select 0, _pos select 1];
-    _pos set [2, 0]; // AGL 0
-    
-    // Check if it fits distance criteria (selectBestPlaces is square/circle area, need to verify min dist)
-    if (_pos distance2D _refPos > _minDist && _pos distance2D _refPos <= _maxDist) then {
-        
-        // Check elevation: Is it higher than the player/center?
-        private _zCenter = getTerrainHeightASL _refPos;
-        private _zSpot = getTerrainHeightASL _pos;
-        
-        // We want positions that have a command of the terrain, preferably higher than the player
-        if (_zSpot > _zCenter + 10) then { 
-             _spots pushBack _pos;
-        };
-    };
-} forEach _terrainSpots;
-
 if (_debug) then {
 };
 

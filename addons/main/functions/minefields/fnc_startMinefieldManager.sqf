@@ -12,6 +12,7 @@ missionNamespace setVariable ["VIC_minefieldManagerRunning", true];
     while { missionNamespace getVariable ["VIC_minefieldManagerRunning", false] } do {
         [] call FUNC(manageMinefields);
         [] call FUNC(manageBoobyTraps);
+        [] call FUNC(manageBuildingTraps);
         sleep 6;
     };
 };
