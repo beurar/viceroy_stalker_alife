@@ -141,7 +141,7 @@ private _toDeleteIndices = [];
                         _bldPos = _upperPos;
                     };
                     
-                    if (count _bldPos > 0) then {
+                    if (_bldPos isNotEqualTo []) then {
                         _maxSnipers = (count _bldPos) min 4; 
                     };
                 };

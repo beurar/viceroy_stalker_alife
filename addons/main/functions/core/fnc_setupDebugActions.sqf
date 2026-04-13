@@ -9,13 +9,31 @@ if (missionNamespace getVariable ["VSA_debugActionsAdded", false]) exitWith {};
 missionNamespace setVariable ["VSA_debugActionsAdded", true];
 
 // --- Spawning Actions ---
-player addAction ["<t color='#00FFFF'>[DEBUG] Force Psy Sky Override</t>", {
-    systemChat "Attempting manual override of Psy Sky texture...";
-    diwako_anomalies_main_fnc_showPsyWavesInSky = compileScript ["\z\viceroy_stalker_alife\addons\main\functions\overrides\fnc_showPsyWavesInSky.sqf"];
-    if (isNil "diwako_anomalies_main_fnc_showPsyWavesInSky") then {
-        systemChat "Override FAILED: Variable is still nil.";
+player addAction ["<t color='#00FFFF'>[DEBUG] Set Texture: Default</t>", {
+    VSA_currentPsySkyTexture = "\z\viceroy_stalker_alife\addons\main\data\blowout_psy_sky_ca.paa";
+    systemChat "Psy Sky Texture: Default (blowout_psy_sky_ca.paa)";
+    [] call FUNC(watchPsySkyTexture);
+}];
+player addAction ["<t color='#00FFFF'>[DEBUG] Set Texture: blowoutsky_1</t>", {
+    VSA_currentPsySkyTexture = "\z\viceroy_stalker_alife\addons\main\data\blowoutsky_1.paa";
+    systemChat "Psy Sky Texture: blowoutsky_1.paa";
+    [] call FUNC(watchPsySkyTexture);
+}];
+player addAction ["<t color='#00FFFF'>[DEBUG] Set Texture: blowoutsky_2</t>", {
+    VSA_currentPsySkyTexture = "\z\viceroy_stalker_alife\addons\main\data\blowoutsky_2.paa";
+    systemChat "Psy Sky Texture: blowoutsky_2.paa";
+    [] call FUNC(watchPsySkyTexture);
+}];
+player addAction ["<t color='#00FFFF'>[DEBUG] Set Texture: blowoutsky_3</t>", {
+    VSA_currentPsySkyTexture = "\z\viceroy_stalker_alife\addons\main\data\blowoutsky_3.paa";
+    systemChat "Psy Sky Texture: blowoutsky_3.paa";
+    [] call FUNC(watchPsySkyTexture);
+}];
+player addAction ["<t color='#FFA500'>[DEBUG] Toggle All World Lights OFF/ON</t>", {
+    if (isServer) then {
+        [] call FUNC(debugToggleAllWorldLights);
     } else {
-        systemChat "Override SUCCESS: Function reassigned.";
+        [] remoteExec ["FUNC(debugToggleAllWorldLights)", 2];
     };
 }];
 
@@ -344,6 +362,22 @@ player addAction ["<t color='#00ff0f'>Resync Server State</t>", {
         [] call FUNC(sendServerState);
     } else {
         [] call FUNC(requestServerState);
+    };
+}];
+
+// --- Weather Actions ---
+player addAction ["<t color='#00FFFF'>[DEBUG] Simulate Storm Weather</t>", {
+    if (isServer) then {
+        ["STORM"] call FUNC(debugWeather);
+    } else {
+        ["STORM"] remoteExec [QFUNC(debugWeather), 2];
+    };
+}];
+player addAction ["<t color='#00FFFF'>[DEBUG] Clear Weather</t>", {
+    if (isServer) then {
+        ["CLEAR"] call FUNC(debugWeather);
+    } else {
+        ["CLEAR"] remoteExec [QFUNC(debugWeather), 2];
     };
 }];
 

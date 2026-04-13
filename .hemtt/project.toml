@@ -45,3 +45,7 @@ options.ignore = [
     "ASLtoAGL",
     "AGLtoASL",
 ]
+
+rapify = false
+file_patching = false
+binarize = true

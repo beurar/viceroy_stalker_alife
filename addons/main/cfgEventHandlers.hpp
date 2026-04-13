@@ -1,7 +1,10 @@
 //viceroy_stalke_alife eventhandlers
 class Extended_PreStart_EventHandlers {
     class ADDON {
-        init = QUOTE(call COMPILE_SCRIPT(XEH_preStart));
+        // Startup lockup isolation mode:
+        // PreStart is intentionally disabled to avoid any automatic execution before menu render.
+        // Rollback: restore the original XEH_preStart init line.
+        // init = QUOTE(call COMPILE_SCRIPT(XEH_preStart));
     };
 };
 

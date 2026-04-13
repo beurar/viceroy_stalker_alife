@@ -1,5 +1,5 @@
 #include "\z\viceroy_stalker_alife\addons\main\script_component.hpp"
-// Manually expanded macros to match diwako_anomalies_main
+
 if !(hasInterface) exitWith {};
 params [["_show", false]];
 

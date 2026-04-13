@@ -66,6 +66,8 @@ SUBPREP(chemical,spawnValleyChemicalZones);
 
 //// core
 SUBPREP(core,createProximityAnchor);
+SUBPREP(core,debugToggleAllWorldLights);
+SUBPREP(core,debugWeather);
 SUBPREP(core,evalSiteProximity);
 SUBPREP(core,findBeachesInMap);
 SUBPREP(core,findBridges);
@@ -98,6 +100,9 @@ SUBPREP(core,spawnWorker);
 SUBPREP(core,togglePerfMetrics);
 SUBPREP(core,toggleSiteOverlay);
 SUBPREP(core,weightedPick);
+SUBPREP(core,watchBlowoutPP);
+SUBPREP(core,watchBlowoutWorldLights);
+SUBPREP(core,watchPsySkyTexture);
 
 //// init
 SUBPREP(init,initManagers);

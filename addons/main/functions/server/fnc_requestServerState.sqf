@@ -24,7 +24,7 @@ _clientCounts pushBack (if (isNil "STALKER_wreckPositions") then { -1 } else { c
 
 [_var, clientOwner, _clientCounts] remoteExec ["FUNC(sendServerState)", 2];
 
-waitUntil { !isNil { missionNamespace getVariable _var } };
+waitUntil { sleep 0.1; !isNil { missionNamespace getVariable _var } };
 private _state = missionNamespace getVariable _var;
 missionNamespace setVariable [_var, nil];
 

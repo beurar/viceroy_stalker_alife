@@ -24,6 +24,7 @@ class CfgRemoteExec {
         mode = 2;
         jip = 0;
         
+        class DFUNC(debugWeather)        { allowedTargets = 2; };
         class DFUNC(triggerPsyStorm)     { allowedTargets = 2; };
         class DFUNC(triggerBlowout)      { allowedTargets = 2; };
         class DFUNC(spawnChemicalZone)   { allowedTargets = 2; };

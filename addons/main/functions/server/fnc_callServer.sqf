@@ -15,7 +15,7 @@ missionNamespace setVariable [_var, nil];
 
 [_fnc, _args, _var, clientOwner] remoteExec ["FUNC(callServerHelper)", 2];
 
-waitUntil { !isNil { missionNamespace getVariable _var } };
+waitUntil { sleep 0.1; !isNil { missionNamespace getVariable _var } };
 
 private _result = missionNamespace getVariable _var;
 missionNamespace setVariable [_var, nil];

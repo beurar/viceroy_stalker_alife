@@ -20,6 +20,12 @@ _radius;
 if (["VSA_enableAnomalies", true] call FUNC(getSetting) isEqualTo false) exitWith {
 };
 
+// Prevent concurrent spawning runs
+if (!isNil "VIC_anomalySpawnRunning" && {VIC_anomalySpawnRunning}) exitWith {
+    diag_log "spawnAllAnomalyFields: already running, skipping";
+};
+VIC_anomalySpawnRunning = true;
+
 // Prepare anomaly marker tracking
 if (isNil "STALKER_anomalyMarkers") then { STALKER_anomalyMarkers = [] };
 private _maxFields = ["VSA_maxAnomalyFields", 20] call FUNC(getSetting);
@@ -105,5 +111,7 @@ for "_i" from 1 to _fieldCount do {
 
 // Bridges are now spawned via separate helper
 [_type] call FUNC(spawnBridgeAnomalyFields);
+
+VIC_anomalySpawnRunning = false;
 
 true

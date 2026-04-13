@@ -62,7 +62,14 @@
     {
         params ["_value"];
         VSA_enableAnomalies = _value;
-        if (isServer && {VSA_enableAnomalies}) then {
+        // Startup lockup isolation mode:
+        // Prevent automatic world spawning from settings initialization callbacks.
+        // Rollback: remove the VSA_startupIsolationMode check.
+        if (
+            isServer
+            && {VSA_enableAnomalies}
+            && {!(missionNamespace getVariable ["VSA_startupIsolationMode", false])}
+        ) then {
             [] spawn VSA_fnc_spawnAllAnomalyFields;
         };
         if (isServer && {!VSA_enableAnomalies}) then {
@@ -438,7 +445,14 @@
     {
         params ["_value"];
         VSA_enableChemicalZones = _value;
-        if (isServer && {VSA_enableChemicalZones}) then {
+        // Startup lockup isolation mode:
+        // Prevent automatic world spawning from settings initialization callbacks.
+        // Rollback: remove the VSA_startupIsolationMode check.
+        if (
+            isServer
+            && {VSA_enableChemicalZones}
+            && {!(missionNamespace getVariable ["VSA_startupIsolationMode", false])}
+        ) then {
             [] spawn VSA_fnc_spawnRandomChemicalZones;
         };
     }
